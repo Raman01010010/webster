@@ -1,0 +1,10 @@
+Thu Nov 02 2023 19:11:54 GMT+0530 (India Standard Time)	333ce514-febf-4dcb-9454-c0ec091b0549	GET	undefined	/
+Thu Nov 02 2023 19:11:54 GMT+0530 (India Standard Time)	f0a6f218-9bc5-4969-a8ae-80ca58d7dda7	GET	undefined	/favicon.ico
+Thu Nov 02 2023 19:12:06 GMT+0530 (India Standard Time)	8738d03c-5e8f-4c21-8205-3d6ca5faf6ee	POST	undefined	//register/
+Thu Nov 02 2023 19:12:45 GMT+0530 (India Standard Time)	83f2e2aa-e5f7-4ff8-b210-1975a305ffd6	POST	undefined	/register/
+Thu Nov 02 2023 19:14:15 GMT+0530 (India Standard Time)	1cdb5a7f-054c-44a8-b728-9269af4214b4	POST	undefined	/register/
+Thu Nov 02 2023 19:14:34 GMT+0530 (India Standard Time)	84586be2-2fe1-4613-80c3-117d064c0157	POST	undefined	/register/
+Thu Nov 02 2023 19:15:28 GMT+0530 (India Standard Time)	e299f04f-5cec-47d3-8233-75fafe63a522	POST	undefined	/register/otp
+Thu Nov 02 2023 19:15:42 GMT+0530 (India Standard Time)	608e9a27-e803-44ee-bcbc-5f626016ed39	POST	undefined	/register/otp
+Thu Nov 02 2023 19:16:04 GMT+0530 (India Standard Time)	b79d1c82-f395-47e5-8569-0459ae569933	POST	undefined	/register/otp
+Thu Nov 02 2023 19:17:26 GMT+0530 (India Standard Time)	f7b4272f-392f-4401-a849-c9e4697b9431	POST	undefined	/register/otp
