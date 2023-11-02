@@ -5,7 +5,9 @@ const {logger}=require('./middleware/logEvents')
 const errorHandler=require('./middleware/errorHandler')
 const cors=require('cors')
 const corsOption=require('./config/corsOptions')
+const verifyJWT=require('./middleware/verifyJWT')
 const cookieParser=require('cookie-parser')
+const credentials = require('./middleware/credential')
 
 
 const PORT=process.env.PORT||3500
@@ -28,7 +30,7 @@ app.use(cookieParser())
 
 
 
-
+app.use(verifyJWT)
 
 
 
