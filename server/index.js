@@ -27,11 +27,11 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser())
 
-app.use('/register',require('./routes/register'))
+app.use('/user',require('./routes/user'))
 app.use('/auth',require('./routes/auth'))
-
+app.use('/refresh',require('./routes/refresh'))
 app.use(verifyJWT)
-
+app.use('/user',require('./routes/userUpdate'))
 
 
 app.all('/*',(req,res)=>{

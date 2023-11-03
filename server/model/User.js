@@ -32,7 +32,11 @@ const userSchema = new Schema({
         default:"xx",
         required:false
     },
-    refreshToken: String
+    refreshToken: String,
+    status:[{org:String,role:String,desc:String}],
+    education:[{org:String,degree:String,time:String}],
+    skills:{type:Array},
+    projects:[{name:String,tech:Array,colab:Array}]
 });
 
 module.exports = mongoose.model('user_w', userSchema);
