@@ -30,6 +30,7 @@ app.use(cookieParser())
 app.use('/register',require('./routes/register'))
 
 
+
 app.use(verifyJWT)
 
 
