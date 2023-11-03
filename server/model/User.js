@@ -33,6 +33,7 @@ const userSchema = new Schema({
         required:false
     },
     refreshToken: String,
+    location:String,
     status:[{org:String,role:String,desc:String}],
     education:[{org:String,degree:String,time:String}],
     skills:{type:Array},
