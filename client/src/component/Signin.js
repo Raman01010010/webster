@@ -24,7 +24,7 @@ const { setAuth } = useAuth();
       if(t.status==200){
         setCol('red')
       }
-      if((!t.data.email)){
+      if((!t.data?.email)){
         setCol('gray')
       }
       console.log(t.data)

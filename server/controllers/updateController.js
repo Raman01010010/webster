@@ -6,6 +6,7 @@ const update=async (req, res) => {
     try {
       const userEmail = req.user;
       console.log(userEmail)
+      console.log("bcbc")
       const updatedUserData = req.body; // The updated data for the user
   
       // Use findOneAndUpdate to update the user by their email

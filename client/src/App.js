@@ -13,8 +13,8 @@ function App() {
     <>
     <User.Provider value={{newUser,setNewUser}}>
       <Router>
-     {(!newUser.email)&&<Navbar/>}
-     {(newUser.email)&&<Navbar2/>}
+     {(!newUser.accessToken)&&<Navbar/>}
+     {(newUser.accessToken)&&<Navbar2/>}
       </Router>
     </User.Provider>
     </>

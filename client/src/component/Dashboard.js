@@ -1,8 +1,20 @@
 import { useContext } from "react"
 import { User } from "../context/User"
+import useAxiosPrivate from "../hooks/useAxiosPrivate"
 export default function Dashboard(){
     const {newUser}=useContext(User)
+    const axiosPrivate=useAxiosPrivate();
     console.log(newUser)
+   async function handleClick(){
+        console.log("clciked")
+ 
+        try{
+const res=await axiosPrivate.put('user1/update',{"email":""})
+console.log(res)
+        }catch(error){
+            console.log(error)
+        }
+    }
     return(<>
     <section className="text-gray-400 bg-gray-900 body-font">
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -29,7 +41,7 @@ export default function Dashboard(){
         <button className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">
           View Profile
         </button>
-        <button className="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg">
+        <button onClick={handleClick} className="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg">
           Explore
         </button>
       </div>

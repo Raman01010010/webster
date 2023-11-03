@@ -19,7 +19,7 @@ export const addClient=async (data)=>{
 }
 export const verifyOtp=async (data)=>{
     try{
-        return await axios.post(`register/otp`,data)
+        return await axios.post(`/user/otp`,data)
 
     }catch(error){
         console.log("Error add",error.response)
