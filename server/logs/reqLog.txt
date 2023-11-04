@@ -429,7 +429,6 @@ Sat Nov 04 2023 01:10:08 GMT+0530 (India Standard Time)	82ee011f-6a09-4864-b815-
 Sat Nov 04 2023 01:11:08 GMT+0530 (India Standard Time)	43005910-d9cb-432e-8c45-248b3a649e20	GET	http://172.29.50.69:3000	/post
 Sat Nov 04 2023 01:11:10 GMT+0530 (India Standard Time)	ba398228-1b7f-4ebe-a995-262c12c3a63f	GET	http://172.29.50.69:3000	/post
 Sat Nov 04 2023 01:11:10 GMT+0530 (India Standard Time)	7bd32aa2-b175-43cc-a53a-738282c5eb91	GET	undefined	/Screenshot%20(688)1699037255453.png
-<<<<<<< Updated upstream
 Sat Nov 04 2023 13:58:00 GMT+0530 (India Standard Time)	4e0d5319-ae44-4b47-955b-7ae90af397d5	OPTIONS	http://localhost:3001	/user/register
 Sat Nov 04 2023 13:58:01 GMT+0530 (India Standard Time)	aad1882f-6440-4396-a098-e3bd99b19e94	OPTIONS	http://localhost:3001	/user/register
 Sat Nov 04 2023 13:58:05 GMT+0530 (India Standard Time)	904937fb-da64-4c63-9099-0f7d9ccc8ec5	OPTIONS	http://localhost:3001	/user/register
@@ -445,7 +444,6 @@ Sat Nov 04 2023 14:01:48 GMT+0530 (India Standard Time)	cf0d9079-8af6-4e1f-8740-
 Sat Nov 04 2023 14:01:48 GMT+0530 (India Standard Time)	07ce9c40-d24d-49a8-92ac-748657db1f78	POST	http://localhost:3001	/check
 Sat Nov 04 2023 14:02:26 GMT+0530 (India Standard Time)	f926a1a3-24ae-4c48-ae70-29dddc49b7f8	OPTIONS	http://localhost:3001	/auth
 Sat Nov 04 2023 14:02:26 GMT+0530 (India Standard Time)	03256ce2-674c-4fc3-89ae-ba63c04e6fdd	POST	http://localhost:3001	/auth
-=======
 Sat Nov 04 2023 11:22:55 GMT+0530 (India Standard Time)	b328cc25-168d-4482-8e14-a226809835bc	GET	http://localhost:3000	/post
 Sat Nov 04 2023 11:22:55 GMT+0530 (India Standard Time)	cedb7a97-b7a3-4251-ae51-4e83ce1ededb	OPTIONS	http://localhost:3000	/check
 Sat Nov 04 2023 11:22:55 GMT+0530 (India Standard Time)	104373a1-5b06-4dac-a292-6736170a615a	POST	http://localhost:3000	/check
@@ -493,4 +491,18 @@ Sat Nov 04 2023 12:17:49 GMT+0530 (India Standard Time)	585c8e40-3efc-449d-ad63-
 Sat Nov 04 2023 12:17:49 GMT+0530 (India Standard Time)	eafcfff5-a220-48ea-8d54-8127ecf41d2e	GET	http://localhost:3000	/post
 Sat Nov 04 2023 12:17:49 GMT+0530 (India Standard Time)	3facf3ce-43e2-447d-ad28-1f8e9e377979	GET	undefined	/Screenshot%20(688)1699037255453.png
 Sat Nov 04 2023 12:17:49 GMT+0530 (India Standard Time)	b8eca425-2c76-4009-a287-333b544b5188	GET	undefined	/gmail1699077422363.png
->>>>>>> Stashed changes
+Sat Nov 04 2023 14:43:16 GMT+0530 (India Standard Time)	34f93d92-632c-4d81-bb0c-f529d33d6c74	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:43:16 GMT+0530 (India Standard Time)	116be93a-0fce-427d-a6c9-7b51f532fdb5	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:43:16 GMT+0530 (India Standard Time)	890f6fb9-da39-4645-939a-445f96ad72c6	GET	undefined	/xx
+Sat Nov 04 2023 14:44:14 GMT+0530 (India Standard Time)	b233d5da-0079-426f-aa8a-754e02e9c8ae	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:44:14 GMT+0530 (India Standard Time)	9dbfffae-b3b8-4324-bd10-f260612fe5a3	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:44:14 GMT+0530 (India Standard Time)	7dd6dbea-1260-488e-bd28-55a377ec040e	GET	undefined	/Screenshot%20(688)1699037255453.png
+Sat Nov 04 2023 14:44:14 GMT+0530 (India Standard Time)	49800994-d79b-457e-a5e3-838811479021	GET	undefined	/gmail1699077422363.png
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	ca7205c3-4bb4-4dcd-bb16-7f26a4a0ed2b	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	ba0db54e-9e08-4765-b466-ce2a852f9e01	GET	http://localhost:3000	/post
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	232c0a21-de6c-4468-82c4-3bf6a7301177	GET	undefined	/Screenshot%20(688)1699037255453.png
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	ae8f9b7a-a9ec-49c8-bdb8-b6f0548e198f	GET	undefined	/gmail1699077422363.png
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	a34e4b33-b863-4129-b8c6-20ab83f966e0	OPTIONS	http://localhost:3000	/check
+Sat Nov 04 2023 14:44:28 GMT+0530 (India Standard Time)	15e9409f-95a2-4ba5-b806-8cd434a6ea3d	POST	http://localhost:3000	/check
+Sat Nov 04 2023 14:44:30 GMT+0530 (India Standard Time)	3b925854-f607-44ab-9186-b47b7b385b17	OPTIONS	http://localhost:3000	/auth
+Sat Nov 04 2023 14:44:30 GMT+0530 (India Standard Time)	8980fbbb-958a-4af6-b5cb-0b593b864fea	POST	http://localhost:3000	/auth
