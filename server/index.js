@@ -26,12 +26,14 @@ app.use(cors(corsOption))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser())
-
-app.use('/register',require('./routes/register'))
-
-
-
+app.use( express.static('uploads'));
+app.use('/user',require('./routes/user'))
+app.use('/auth',require('./routes/auth'))
+app.use('/refresh',require('./routes/refresh'))
+app.use('/upload',require('./routes/uploadPost'))
+app.use('/post',require('./routes/post'))
 app.use(verifyJWT)
+app.use('/user1',require('./routes/userUpdate'))
 
 
 

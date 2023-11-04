@@ -1,14 +1,30 @@
+import logo from './logo.svg';
+import { User } from './context/User';
+import React from 'react';
 import './App.css';
-import Drawer from './Drawer.js';
-import Navbar from './Navbar.js';
-import Resume from './Resume.js';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Home from './component/Home';
+import Navbar from './component/Navbar';
+import Navbar2 from './component/Navbar2';
+import Post1 from './component/Post';
+import AllPost from './component/AllPost';
+import Reactions from './component/Reactions';
 function App() {
+  const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
+
   return (
-    <div className="App">
-      <header className="App-header">
-         
-      </header>
-    </div>
+    <>
+    <User.Provider value={{newUser,setNewUser}}>
+      <Router>
+     {(!newUser.accessToken)&&<Navbar/>}
+     {(newUser.accessToken)&&<Navbar2/>}
+   
+     <AllPost/>
+   
+     <Post1/>
+      </Router>
+    </User.Provider>
+    </>
   );
 }
 
