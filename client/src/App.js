@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import { User } from './context/User';
 import React from 'react';
 import './App.css';
