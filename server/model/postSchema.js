@@ -27,6 +27,7 @@ const postSchema = new Schema({
     hashtag:{
         type:Array
     },
+
     reaction: {
         like: [
           {
@@ -44,6 +45,7 @@ const postSchema = new Schema({
           },
         ],
       },
+      react:[{emoji:String,by:String}],
     comments:[{content:String,time:String,user:String}]
 });
 

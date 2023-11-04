@@ -1,8 +1,9 @@
 import axios from "../api/axios";
 import React, { useState, useEffect } from "react";
 import {Reactions,Counter} from "./Reactions";
+const url="http://localhost:3500/"
 
-const url="http://172.29.50.69:3500/"
+//const url="http://172.29.50.69:3500/"
 export default function AllPost() {
   const [posts, setPosts] = useState([]);
  const [show,setShow]=useState(0)
@@ -15,6 +16,7 @@ function handle(){
     })
   
 }
+
   useEffect(() => {
     // Use an async function within the effect
     const fetchData = async () => {
@@ -81,7 +83,7 @@ function handle(){
                    
                   </div>
                 
-               { show&&<div onClick={handle}> <Reactions/></div>}
+               { show&&<div onClick={handle} > <Reactions/></div>}
                 { !show&& <div onClick={handle}> <Counter/></div>}
                 </footer>
               </div>
