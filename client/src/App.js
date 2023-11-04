@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import { User } from './context/User';
 import React from 'react';
 import './App.css';
@@ -9,6 +9,8 @@ import Navbar2 from './component/Navbar2';
 import Post1 from './component/Post';
 import AllPost from './component/AllPost';
 import Reactions from './component/Reactions';
+import Job from './component/Job';
+
 function App() {
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
 
@@ -18,9 +20,9 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   
      <AllPost/>
-   
+     <Job/>
+
      <Post1/>
       </Router>
     </User.Provider>

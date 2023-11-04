@@ -1,5 +1,6 @@
 //const {format}=require('date-fns')
 //console.log(format(new Date(),'yyyyMMdd\tHH:mm:ss'))
+
 console.log(new Date())
 const fs=require('fs')
 const fsPromises=require('fs').promises
