@@ -109,7 +109,7 @@ if(res1.length){
         },
         {
             $pull: {
-                react: { by: by, emoji:emoji} // Pull the entry with the specified email
+                react: { by: by} // Pull the entry with the specified email
             }
         })
 

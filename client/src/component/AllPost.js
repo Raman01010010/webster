@@ -56,6 +56,25 @@ async function handle1(){
     fetchData(); // Call the async function
   }, []);
 
+
+
+
+
+  async function handleSelect(item, key) {
+    console.log(6565);
+    console.log(key);
+    console.log(item);
+  
+    // Use the updated state returned by setLike
+    const updatedLike = {"id": item._id, "react": {"emoji": key, "by": 'rmnprj@outlook.com'}};
+    setLike(updatedLike);
+  
+    console.log(updatedLike);
+  
+    const res = await axios.post('/post/react', updatedLike);
+    console.log(res);
+  }
+  
   return (
     <>
     <div style={{height:"12vh"}}></div>
@@ -105,7 +124,7 @@ async function handle1(){
                    
                   </div>
                 
-                  <ReactionBarSelector onSelect={handleSelect} reactions={[{label: "like", node: <div>👍</div>, key: "like"},{label: "congrats", node: <div>🎉</div>, key: "congrats"},{label: "Celebrate", node: <div>🎊</div>, key: "Celebrate"},{label: "Love", node: <div>💓</div>, key: "Love"}]} />
+                  <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "like", node: <div>👍</div>, key: "like"},{label: "congrats", node: <div>🎉</div>, key: "congrats"},{label: "Celebrate", node: <div>🎊</div>, key: "Celebrate"},{label: "Love", node: <div>💓</div>, key: "Love"}]} />
                 </footer>
               </div>
             </article>
