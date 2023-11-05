@@ -1,8 +1,7 @@
-import * as React from "react";
-import Review from './Review'
+import React, { useState, useEffect } from "react";
+import Review from "./Review";
 
 import Box from "@mui/material/Box";
-import {useState} from "react"
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -23,43 +22,61 @@ const steps = [
   "Additional Questions", // Add an additional step
 ];
 
+  
+  
+
+
 export default function Job() {
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [responses, setResponses] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      resume: "",
-      additionalQuestions: ["", "", "", ""].map(() => ["", "", "", ""]),
-    });
-    const additionalQuestions = [
-        "What is your level of proficiency in English?",
-        "Are you willing to undergo a background check, in accordance with local law/regulations?",
-        "Are you comfortable commuting to this job's location?",
-        "Other Additional Question",
-      ];
-    const handleResponseChange = (field, value, questionIndex) => {
-      if (field === "additionalQuestions") {
-        // If the field is additionalQuestions, create a copy of the array and set the new value at the specified index
-        const updatedAdditionalQuestions = [...responses.additionalQuestions];
-        updatedAdditionalQuestions[questionIndex] = [
-          ...updatedAdditionalQuestions[questionIndex],
-        ];
-        updatedAdditionalQuestions[questionIndex] = value;
-        setResponses((prevResponses) => ({
-          ...prevResponses,
-          additionalQuestions: updatedAdditionalQuestions,
-        }));
-      } else {
-        // If the field is not additionalQuestions, update it normally
-        setResponses((prevResponses) => ({
-          ...prevResponses,
-          [field]: value,
-        }));
-      }
-    };
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [responses, setResponses] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    place:"",
+    resume: "",
+    additionalQuestions: ["", "", ""],
+    location: "",
+  });
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
+const checkFormCompletion = () => {
+    // Replace these conditions with your actual form validation logic
+    const isStep1Complete = activeStep==0 && responses.name !="" && responses.email != "" && responses.phone != "" && responses.place != "";
+    const isStep2Complete = activeStep==1 && (responses.resume != ""||true);
+    const isStep3Complete = activeStep==2 && responses.additionalQuestions[0]!="" && responses.additionalQuestions[1]!="" && responses.additionalQuestions[2]!="" ; // Add your validation logic for step 3
+    const isStep4Complete = activeStep==3 && (responses.location != "");
+
+    const isFormValid = isStep1Complete || isStep2Complete || isStep3Complete || isStep4Complete;
   
-  
+    setIsFormComplete(isFormValid);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [responses]);
+  const additionalQuestions = [
+    "What is your level of proficiency in English?",
+    "Are you willing to undergo a background check, in accordance with local law/regulations?",
+    "Are you comfortable commuting to this job's location?",
+    "Other Additional Question",
+  ];
+  const handleResponseChange = (field, value, questionIndex) => {
+    if (field === "additionalQuestions") {
+      // If the field is additionalQuestions, create a copy of the array and set the new value at the specified index
+      const updatedAdditionalQuestions = [...responses.additionalQuestions];
+      updatedAdditionalQuestions[questionIndex] = value;
+      setResponses((prevResponses) => ({
+        ...prevResponses,
+        additionalQuestions: updatedAdditionalQuestions,
+      }));
+    } else {
+      // If the field is not additionalQuestions, update it normally
+      setResponses((prevResponses) => ({
+        ...prevResponses,
+        [field]: value,
+      }));
+    }
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -73,7 +90,7 @@ export default function Job() {
     setActiveStep(0);
   };
 
-  const Submit=()=>{}
+  const Submit = () => {};
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -137,9 +154,9 @@ export default function Job() {
                               id="name"
                               name="name"
                               value={responses.name}
-                  onChange={(e) =>
-                    handleResponseChange("name", e.target.value)
-                  }
+                              onChange={(e) =>
+                                setResponses({...responses,name:e.target.value})
+                              }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
                           </div>
@@ -149,7 +166,7 @@ export default function Job() {
                             <label
                               htmlFor="email"
                               className="leading-7 text-sm text-gray-600"
-                            >
+                             >
                               Email
                             </label>
                             <input
@@ -157,9 +174,9 @@ export default function Job() {
                               id="email"
                               name="email"
                               value={responses.email}
-                  onChange={(e) =>
-                    handleResponseChange("email", e.target.value)
-                  }
+                              onChange={(e) =>
+                                setResponses({...responses,email:e.target.value})
+                              }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
                           </div>
@@ -177,18 +194,32 @@ export default function Job() {
                               id="phone" // Change the id to something like "phone"
                               name="phone" // Change the name to something like "phone"
                               value={responses.phone}
-                  onChange={(e) =>
-                    handleResponseChange("phone", e.target.value)
-                  }
+                              onChange={(e) =>
+                                setResponses({...responses,phone:e.target.value})
+                              }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
                           </div>
                         </div>
-
                         <div className="p-2 w-full">
-                          <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover-bg-indigo-600 rounded text-lg">
-                            Button
-                          </button>
+                          <div className="relative">
+                            <label
+                              htmlFor="place"
+                              className="leading-7 text-sm text-gray-600"
+                            >
+                              location
+                            </label>
+                            <input
+                              type="location" // Change the type to "tel" for phone number
+                              id="place" // Change the id to something like "phone"
+                              name="place" // Change the name to something like "phone"
+                              value={responses.place}
+                              onChange={(e) =>
+                                setResponses({...responses,place:e.target.value})
+                              }
+                              className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -216,133 +247,166 @@ export default function Job() {
             </Button>
           </div>
         ) : activeStep === 2 ? (
-            <div>
+          <div>
             <h1>Additional Questions</h1>
-            {additionalQuestions.map((question, questionIndex) => (
-              <div key={questionIndex}>
+            <div>
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  What is your level of proficiency in English?
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="None of the above" // Set the default value to "None of the above"
+                  name="radio-buttons-group"
+                  value={responses.additionalQuestions[0]}
+                  onChange={(e) =>
+                    handleResponseChange("additionalQuestions", e.target.value, 0)
+                  }
+                >
+                  <FormControlLabel
+                    value="Conversational"
+                    control={<Radio />}
+                    label="Conversational"
+                  />
+                  <FormControlLabel
+                    value="Professional"
+                    control={<Radio />}
+                    label="Professional"
+                  />
+                  <FormControlLabel
+                    value="Native or bilingual"
+                    control={<Radio />}
+                    label="Native or bilingual"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  Are you willing to undergo a background check, in accordance
+                  with local law/regulations?Are you willing to undergo a
+                  background check, in accordance with local law/regulations?
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="None of the above"
+                  name="radio-buttons-group"
+                  value={responses.additionalQuestions[1]}
+                  onChange={(e) =>
+                    handleResponseChange("additionalQuestions", e.target.value, 1)
+                  }
+                >
+                  <FormControlLabel
+                    value="Yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel value="No" control={<Radio />} label="No" />
+                </RadioGroup>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  Are you comfortable commuting to this job's location?{" "}
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="None of the above"
+                  name="radio-buttons-group"
+                  value={responses.additionalQuestions[2]}
+                  onChange={(e) =>
+                    handleResponseChange("additionalQuestions", e.target.value, 2)
+                  }
+                >
+                  <FormControlLabel
+                    value="Yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel value="No" control={<Radio />} label="No" />
+                </RadioGroup>
+              </FormControl>
+            </div>
+          </div>
+        ) : activeStep === 3 ? (
+          <>
+            <div>
+              <h1>Additional Questions</h1>
+              <div> Work Authorization</div>
+              <div>
                 <FormControl>
-                  <FormLabel id={`demo-radio-buttons-group-label-${questionIndex}`}>
-                    {question}
-                  </FormLabel>
+                  <FormLabel id="demo-radio-buttons-group-label">
+                  We must fill this position urgently. Can you start immediately?                  </FormLabel>
                   <RadioGroup
-                    aria-labelledby={`demo-radio-buttons-group-label-${questionIndex}`}
-                    value={responses.additionalQuestions[questionIndex]}
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="None of the above"
+                    name="radio-buttons-group"
+                    value={responses.location}
                     onChange={(e) =>
                       handleResponseChange(
-                        "additionalQuestions",
-                        e.target.value,
-                        questionIndex
+                        "location",
+                        e.target.value
                       )
                     }
-                    name={`radio-buttons-group-${questionIndex}`}
                   >
                     <FormControlLabel
-                      value="Conversational"
+                      value="Yes"
                       control={<Radio />}
-                      label="Conversational"
+                      label="Yes"
                     />
                     <FormControlLabel
-                      value="Professional"
+                      value="No"
                       control={<Radio />}
-                      label="Professional"
-                    />
-                    <FormControlLabel
-                      value="Native or bilingual"
-                      control={<Radio />}
-                      label="Native or bilingual"
+                      label="No"
                     />
                   </RadioGroup>
                 </FormControl>
               </div>
-            ))}
-          </div>
-        ) : activeStep === 3 ? (
-            <>
-            <div>
-      <h1>Additional Questions</h1>
-      {additionalQuestions.map((question, questionIndex) => (
-        <div key={questionIndex}>
-          <FormControl>
-            <FormLabel id={`demo-radio-buttons-group-label-${questionIndex}`}>
-              {question}
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby={`demo-radio-buttons-group-label-${questionIndex}`}
-              value={responses.additionalQuestions[questionIndex]}
-              onChange={(e) =>
-                handleResponseChange(
-                  "additionalQuestions",
-                  e.target.value,
-                  questionIndex
-                )
-              }
-              name={`radio-buttons-group-${questionIndex}`}
-            >
-              <FormControlLabel
-                value="Yes"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                value="No"
-                control={<Radio />}
-                label="No"
-              />
-            </RadioGroup>
-          </FormControl>
-        </div>
-      ))}
-    </div>
-            </>
+            </div>
+          </>
         ) : null}
-        
       </Box>
-      <div>vivekkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
       {activeStep <= 3 && (
-  <>
-    <div>vivekkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
-    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-      {activeStep > 0 && (  // Show "Back" button when activeStep is greater than 0
-        <Button
-          color="inherit"
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
+        <>
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            {activeStep > 0 && ( // Show "Back" button when activeStep is greater than 0
+              <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+                Back
+              </Button>
+            )}
+            <Box sx={{ flex: "1 1 auto" }} />
+            <Button onClick={handleNext} disabled={!isFormComplete}>
+  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+</Button>
+
+          </Box>
+        </>
       )}
-      <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={handleNext}>
-        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-      </Button>
-    </Box>
-  </>
-)}
-      {
-    activeStep === 4 && (
-      <div>
-        {/* Your content to be rendered when activeStep is 4 */}
-        <h1>vivek</h1>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-      {activeStep > 0 && (  // Show "Back" button when activeStep is greater than 0
-        <Button
-          color="inherit"
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
+      {activeStep === 4 && (
+        <div>
+          {/* Your content to be rendered when activeStep is 4 */}
+          <Review
+            name={responses.name}
+            email={responses.email}
+            phone={responses.phone}
+            place={responses.place}
+            additionalQuestions={responses.additionalQuestions}
+            location={responses.location}
+            
+          />{" "}
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            {activeStep > 0 && ( // Show "Back" button when activeStep is greater than 0
+              <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+                Back
+              </Button>
+            )}
+            <Box sx={{ flex: "1 1 auto" }} />
+            <Button onClick={Submit}>Submit</Button>
+          </Box>
+        </div>
       )}
-      <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={Submit}>
-         Submit
-      </Button>
     </Box>
-      </div>
-    )
-  }
-    </Box>
-  
-  
   );
 }
