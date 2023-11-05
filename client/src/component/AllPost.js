@@ -1,27 +1,49 @@
 import axios from "../api/axios";
 import React, { useState, useEffect } from "react";
 import {Reactions,Counter} from "./Reactions";
-const url="http://localhost:3500/"
+//const url="http://localhost:3500/"
 
-//const url="http://172.29.50.69:3500/"
+const url="http://172.29.50.69:3500/"
 export default function AllPost() {
+  const [re,setRe]=useState("")
   const [posts, setPosts] = useState([]);
- const [show,setShow]=useState(0)
+ const [show,setShow]=useState(1)
 //console.log(extractedHashtags)
-function handle(){
+const [like,setLike]=useState({"id":"","react":{"by":"","by":""}})
+
+async function handle(item){
     console.log("hidfj")
-    console.log(show)
-    setShow(old=>{
-        return(!old)
-    })
+    //console.log(show)
+  //  console.log(re)
+console.log(re)
+    console.log(item._id)
+    setLike({"id":item._id,"react":re})
+
+
+    // })
   
 }
+async function handle1(){
+  console.log("hidfj")
+  //console.log(show)
+//  console.log(re)
+
+
+  const res=await axios.post('/post/react',like)
+  console.log(res)
+  console.log(like)
+  // setShow(old=>{
+  //     return(!old)
+  // })
+
+}
+//console.log("HIHIIHI")
 
   useEffect(() => {
     // Use an async function within the effect
     const fetchData = async () => {
       try {
-        const response = await axios.get('/post');
+        const response = await axios.get('/post/all');
         setPosts(response.data);
         console.log(response.data)
         // Assuming the response is an array of post objects
@@ -83,8 +105,8 @@ function handle(){
                    
                   </div>
                 
-               { show&&<div onClick={handle} > <Reactions/></div>}
-                { !show&& <div onClick={handle}> <Counter/></div>}
+               { show&&<div onClick={()=>handle(item)} > <Reactions k={re} api={handle1} set={setRe}/></div>}
+                { !show&& <div onClick={()=>handle(item)}> <Counter/></div>}
                 </footer>
               </div>
             </article>
