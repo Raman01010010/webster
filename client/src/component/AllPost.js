@@ -2,8 +2,10 @@ import axios from "../api/axios";
 import React, { useState, useEffect } from "react";
 import {Reactions,Counter} from "./Reactions";
 //const url="http://localhost:3500/"
+import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
 const url="http://172.29.50.69:3500/"
+
 export default function AllPost() {
   const [re,setRe]=useState("")
   const [posts, setPosts] = useState([]);
@@ -121,10 +123,11 @@ async function handle1(){
                     <a className="font-medium text-gray-200 hover:text-gray-100 transition duration-150 ease-in-out" href="#0">{item.email}</a>
                     <span className="text-gray-700"> - </span>
                     <span className="text-gray-500">{item.time}</span>
-                   
+                    <SlackCounter counters={item.react}/>
                   </div>
                 
-                  <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "like", node: <div>👍</div>, key: "like"},{label: "congrats", node: <div>🎉</div>, key: "congrats"},{label: "Celebrate", node: <div>🎊</div>, key: "Celebrate"},{label: "Love", node: <div>💓</div>, key: "Love"}]} />
+                  <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
+             
                 </footer>
               </div>
             </article>
