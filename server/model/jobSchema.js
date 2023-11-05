@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const jobSchema = new Schema({
-    head: {
+    titles: {
         type: String,
         required: true
     },
@@ -10,13 +10,22 @@ const jobSchema = new Schema({
         type: String,
         required: true
     },
-    location: {
+    locationtype: {
         type: String,
         required: true
     },
-    workplace:{
+    locationonsite:{
         type:String,
         required:false
+    },
+    skill:[
+        {
+            type:String
+        }
+    ],
+    lastdate:{
+        type: Date,
+        required: true,
     },
     jobtype:{
         type:String,
@@ -36,10 +45,12 @@ const jobSchema = new Schema({
             email: 
             {
               type: String, // You can change the data type as needed
+        
             },
             website: 
             {
               type: String, // You can change the data type as needed
+            
             },
         },
         applylink:{

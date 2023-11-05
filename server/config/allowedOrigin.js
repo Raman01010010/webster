@@ -3,6 +3,8 @@ const allowedOrigin=[
     'http://localhost:3500',
     'http://172.29.50.69:3000',
     'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002',
     'http://172.29.50.69:3500',
     
     'https://www.google.com'

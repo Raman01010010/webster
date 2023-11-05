@@ -8,30 +8,28 @@ const profileSchema = new Schema({
     },
     email: {
         type: String,
+        required: true,
+        unique:true
+    },
+    phone: {
+        type: String,
         required: true
     },
-    roles: {
-        User: {
-            type: Number,
-            default: 2001
-        },
-        Editor: Number,
-        Admin: Number
-    },
     
-    picture:{
+    place:{
         type:String,
-        default:"xx",
-        required:false
+        required:true
     },
     resume:{
         type:String,
-        required:true
     },
-    contact:{
-        type:String,
-        required:true
-    }
+    additionalQuestions: [
+        {
+          type: String
+        }
+      ],
+      location:{
+        type:String
+      }
 });
-
 module.exports = mongoose.model('profile', profileSchema);

@@ -1,11 +1,5 @@
 const post = require('../model/postSchema');
 
-
-
-
-
-
-
 const getAll=async(req,res)=>{
     console.log("dcnmdnvxv")
     console.log(req.body)

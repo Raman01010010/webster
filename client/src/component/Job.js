@@ -14,7 +14,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-
+import axios from "../api/axios";
 const steps = [
   "Select campaign settings",
   "Create an ad group",
@@ -90,7 +90,13 @@ const checkFormCompletion = () => {
     setActiveStep(0);
   };
 
-  const Submit = () => {};
+  const Submit = async() => {
+    try{
+const res=await axios.post('/profile',responses)
+console.log(res)}catch(error){
+    console.log(error)
+}
+  };
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
