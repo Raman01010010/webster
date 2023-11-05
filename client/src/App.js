@@ -21,9 +21,9 @@ function App() {
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
      <AllPost/>
-     <Job/>
+     
 
-     <Post1/>
+     {/* <Post1/> */}
       </Router>
     </User.Provider>
     </>
