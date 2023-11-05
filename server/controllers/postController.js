@@ -70,20 +70,72 @@ const react = async (req, res) => {
       res.status(500).send("Failed"); // 500 Internal Server Error
     }
   };
-  const react1=async (req,res)=>{
-    console.log("react1")
-    //res.status(201).send("react1")
-    console.log(req.body)
-try{
 
-    const res1=await post.find({ react: { $elemMatch: { by: 'rmnprjrrr@gmail.com' } } })
-    console.log(res1)
-}catch(error){
-    console.log(error)
+
+
+
+const react1 = async (req, res) => {
+    console.log("react1");
+    // res.status(201).send("react1");
+    const emoji=req.body?.react?.emoji
+    const by=req.body?.react?.by
+    console.log(req.body);
+    try {
+        const { id } = req.body; // Assuming you pass the _id in the request body
+        const res1 = await post.find({
+            $and: [
+                { _id: id }, // Match the _id
+                { react: { $elemMatch: { by:by,emoji:emoji } } } // Match the 'react' condition
+            ]
+        });
+        console.log(res1);
+if(res1.length){
+    const updateResult = await post.updateOne(
+        {
+            _id: id,
+            'react.by': by // Match the document by _id and the 'react.by' email
+        },
+        {
+            $pull: {
+                react: { by: by, emoji:emoji} // Pull the entry with the specified email
+            }
+        }
+    );
+}else{
+    const updateResult1 = await post.updateOne(
+        {
+            _id: id,
+            'react.by': by // Match the document by _id and the 'react.by' email
+        },
+        {
+            $pull: {
+                react: { by: by, emoji:emoji} // Pull the entry with the specified email
+            }
+        })
+
+        const updateResult2 = await post.updateOne(
+            {
+                _id: id,
+                // Match the document by _id and the 'react.by' email
+            },
+            {
+                $push: {
+                    react: { by: by, emoji:emoji} // Pull the entry with the specified email
+                }
+            })
+
+
 }
-res.status(201).send('wow')
 
-  }
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
+    res.status(201).send('wow');
+}
+
 
 
 

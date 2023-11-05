@@ -2,14 +2,14 @@ import axios from "../api/axios";
 import React, { useState, useEffect } from "react";
 import {Reactions,Counter} from "./Reactions";
 //const url="http://localhost:3500/"
-
+import { ReactionBarSelector } from '@charkour/react-reactions';
 const url="http://172.29.50.69:3500/"
 export default function AllPost() {
   const [re,setRe]=useState("")
   const [posts, setPosts] = useState([]);
  const [show,setShow]=useState(1)
 //console.log(extractedHashtags)
-const [like,setLike]=useState({"id":"","react":{"by":"","by":""}})
+const [like,setLike]=useState({"id":"","react":{"emoji":"","by":""}})
 
 async function handle(item){
     console.log("hidfj")
@@ -105,8 +105,7 @@ async function handle1(){
                    
                   </div>
                 
-               { show&&<div onClick={()=>handle(item)} > <Reactions k={re} api={handle1} set={setRe}/></div>}
-                { !show&& <div onClick={()=>handle(item)}> <Counter/></div>}
+                  <ReactionBarSelector onSelect={handleSelect} reactions={[{label: "like", node: <div>👍</div>, key: "like"},{label: "congrats", node: <div>🎉</div>, key: "congrats"},{label: "Celebrate", node: <div>🎊</div>, key: "Celebrate"},{label: "Love", node: <div>💓</div>, key: "Love"}]} />
                 </footer>
               </div>
             </article>
