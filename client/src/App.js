@@ -10,7 +10,7 @@ import Post1 from './component/Post';
 import AllPost from './component/AllPost';
 import Reactions from './component/Reactions';
 function App() {
-  const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
+  const [newUser, setNewUser] = React.useState({ "email": "dummy@gmail.com", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
 
   return (
     <>
@@ -18,7 +18,7 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   
+      
      <AllPost/>
    
      <Post1/>
