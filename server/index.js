@@ -32,8 +32,13 @@ app.use('/auth',require('./routes/auth'))
 app.use('/refresh',require('./routes/refresh'))
 app.use('/upload',require('./routes/uploadPost'))
 app.use('/post',require('./routes/post'))
-app.use(verifyJWT)
+
 app.use('/user1',require('./routes/userUpdate'))
+app.use('/getuser',require('./routes/user1'))
+app.use('/api/sendconnect',require('./routes/connection'))
+app.use('/getpending',require('./routes/pending'))
+app.use(verifyJWT)
+
 
 
 

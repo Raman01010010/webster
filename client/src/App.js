@@ -12,23 +12,7 @@ import Reactions from './component/Reactions';
 import { useEffect } from 'react';
 import { getR } from './api/api';
 function App() {
-
-  const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = ""//await getR();
-        console.log(res);
-       // newUser.accessToken=res.data?.accessToken
-        console.log(newUser)
-        //navigate('/dashboard')
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchData();
-  }, []); // Removed the async keyword
+  const [newUser, setNewUser] = React.useState({ "email": "dummy@gmail.com", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
 
   return (
     <>
@@ -36,7 +20,7 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   
+      
       </Router>
     </User.Provider>
     </>
