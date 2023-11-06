@@ -37,9 +37,9 @@ export default function Job() {
     additionalQuestions: ["", "", ""],
     location: "",
   });
-  const [isFormComplete, setIsFormComplete] = useState(false);
-
-const checkFormCompletion = () => {
+   const [isFormComplete, setIsFormComplete] = useState(false);
+    
+   const checkFormCompletion = () => {
     // Replace these conditions with your actual form validation logic
     const isStep1Complete = activeStep==0 && responses.name !="" && responses.email != "" && responses.phone != "" && responses.place != "";
     const isStep2Complete = activeStep==1 && (responses.resume != ""||true);
@@ -54,6 +54,8 @@ const checkFormCompletion = () => {
   useEffect(() => {
     checkFormCompletion();
   }, [responses]);
+
+
   const additionalQuestions = [
     "What is your level of proficiency in English?",
     "Are you willing to undergo a background check, in accordance with local law/regulations?",

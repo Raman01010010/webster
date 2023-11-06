@@ -1,88 +1,66 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
-
-export default function Vreview() {
+export default function Vreview({ data }) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Review Your Information
       </Typography>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
+      <Paper elevation={3} style={{ padding: '16px' }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Job Title:</Typography>
+            <Typography variant="body1">{data.titles}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Company Name:</Typography>
+            <Typography variant="body1">{data.company}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="subtitle1">Details of Company:</Typography>
+            <Typography variant="body1">{data.details}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Location Type:</Typography>
+            <Typography variant="body1">{data.locationtypes}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Location On-Site:</Typography>
+            <Typography variant="body1">{data.locationonsite}</Typography>
+          </Grid>
+          
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Last Date of Application:</Typography>
+            <Typography variant="body1">{data.lastdate}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1">Job Type:</Typography>
+            <Typography variant="body1">{data.jobtype}</Typography>
+          </Grid>
+          <Grid item xs={12}  sm={6}>
+            <Typography variant="subtitle1">Skills Required:</Typography>
+            {data.skills.map((skill, index) => (
+              <Typography variant="body1" key={index}>
+                {skill}
+              </Typography>
             ))}
           </Grid>
+         
+          <Grid item xs={12}  sm={6}>
+            <Typography variant="subtitle1">Apply Link:</Typography>
+            <Typography variant="body1">{data.applylink}</Typography>
+          </Grid>
+          <Grid item xs={12}   sm={6}>
+            <Typography variant="subtitle1">Contacts:</Typography>
+            <Typography variant="body1">Phone: {data.contact[0]}</Typography>
+            <Typography variant="body1">Email: {data.contact[1]}</Typography>
+            <Typography variant="body1">Website: {data.contact[2]}</Typography>
+          </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </React.Fragment>
   );
 }

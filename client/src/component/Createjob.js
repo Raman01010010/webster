@@ -11,14 +11,18 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import AddressForm from './Companydetails.js';
-import PaymentForm from './Skills.js';
-import Review from './Vreview.js';
+import Companydetails from './Companydetails.js';
+import Skills from './Skills.js';
+import Vreview from './Vreview.js';
+import { useContext } from 'react';
+import { User } from '../context/User';
+import axios from "../api/axios";
 
-function Copyright() {
+function Createjob() {
+  
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
+      {'Companydetails © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>{' '}
@@ -30,25 +34,47 @@ function Copyright() {
 
 const steps = ['Company profile', 'Skills required', 'Review '];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 export default function Checkout() {
+
+  const PostJob = async () => {
+    try {
+      const res = await axios.post('/job', comp);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <Companydetails />;
+      case 1:
+        return <Skills />;
+      case 2:
+        return <Vreview data={comp} />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+
+  const {comp,setComp}=useContext(User)
+  console.log(comp)
+  //const [data, setData] = React.useState({});
+
+ 
+
+ // console.log(data)
+  
+ const handleNext = () => {
+  if (activeStep === 2) {
+    PostJob();
+  }
+  setActiveStep(activeStep + 1);
+};
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -90,9 +116,7 @@ export default function Checkout() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your order number is #2001539. We have emailed your order confirmation and will send you an update when your order has shipped.
               </Typography>
             </React.Fragment>
           ) : (
@@ -104,7 +128,6 @@ export default function Checkout() {
                     Back
                   </Button>
                 )}
-
                 <Button
                   variant="contained"
                   onClick={handleNext}
@@ -116,7 +139,6 @@ export default function Checkout() {
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
       </Container>
     </React.Fragment>
   );

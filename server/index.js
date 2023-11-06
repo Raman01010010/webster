@@ -31,7 +31,7 @@ app.use('/auth',require('./routes/auth'))
 app.use('/refresh',require('./routes/refresh'))
 app.use('/upload',require('./routes/uploadPost'))
 app.use('/post',require('./routes/post'))
-app.use('/job',require('./routes/job'))
+app.use('/job', require('./routes/job'));
 app.use('/profile',require('./routes/profile'))
 
 

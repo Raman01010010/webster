@@ -4,19 +4,19 @@ const Schema = mongoose.Schema;
 const jobSchema = new Schema({
     titles: {
         type: String,
-        required: true
+        // required: true
     },
     company: {
         type: String,
-        required: true
+        
     },
     locationtype: {
         type: String,
-        required: true
+        // required: true
     },
     locationonsite:{
         type:String,
-        required:false
+       
     },
     skill:[
         {
@@ -25,7 +25,7 @@ const jobSchema = new Schema({
     ],
     lastdate:{
         type: Date,
-        required: true,
+        //required: true,
     },
     jobtype:{
         type:String,

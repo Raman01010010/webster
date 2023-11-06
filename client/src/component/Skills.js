@@ -3,8 +3,9 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Chip from '@mui/material/Chip'; // Import the Chip component
-
+import Chip from '@mui/material/Chip';
+import { useContext } from 'react';
+import { User } from '../context/User';
 const skillsList = [
   'HTML',
   'CSS',
@@ -15,8 +16,12 @@ const skillsList = [
   // Add more skills here
 ];
 
-export default function PaymentForm() {
-  const [selectedSkills, setSelectedSkills] = React.useState([]);
+export default function Skills() {
+  // const [selectedSkills, setSelectedSkills] = React.useState([]);
+  const {comp,setComp}=useContext(User)
+  console.log(comp)
+
+  
 
   return (
     <React.Fragment>
@@ -27,10 +32,15 @@ export default function PaymentForm() {
           id="size-small-standard-multi"
           size="small"
           options={skillsList}
-          getOptionLabel={(option) => option}
-          value={selectedSkills}
+          value={comp.skill}
           onChange={(event, newValue) => {
-            setSelectedSkills(newValue);
+           // setSelectedSkills(newValue);
+            setComp(old=>{
+              return({
+                ...old,
+                "skills":[...newValue]
+              })
+            })
           }}
           renderInput={(params) => (
             <TextField
@@ -45,7 +55,7 @@ export default function PaymentForm() {
               <Chip
                 label={option}
                 size="small"
-                color="primary" // Change the color to blue
+                color="primary"
                 {...getTagProps({ index })}
               />
             ))

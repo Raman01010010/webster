@@ -13,10 +13,20 @@ import Job from './component/Job';
 
 function App() {
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
-
+  const [comp,setComp]=React.useState({
+      titles: "",
+      company: "",
+      locationtype: "",
+      locationonsite: "",
+      lastdate: "",
+      jobtype: "",
+      details: "",
+      contact: ["","",""],
+      applylink: "",    
+      skill:[] })//
   return (
     <>
-    <User.Provider value={{newUser,setNewUser}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}

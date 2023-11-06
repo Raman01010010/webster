@@ -4,7 +4,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Job  from './Job'
 import Otp from "./Otp";
-import  Checkout from "./Createjob.js"
+import  Createjob from "./Createjob.js"
 export default function Container1(){
     return(<>
           <Routes>
@@ -13,7 +13,7 @@ export default function Container1(){
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/signup" element={<><Signup/></>} />
           <Route path="/otp" element={<><Otp/></>} />
-          <Route path="/checkout" element={<><Checkout/></>}/>
+          <Route path="/createjob" element={<><Createjob/></>}/>
           
     </Routes>
 
