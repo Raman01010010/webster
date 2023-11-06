@@ -10,10 +10,9 @@ export default function Container1(){
     return(<>
     <Dashboard/>
 
-         
-
           <Routes>
-
+          <Route path="/pending" element={<><Pending/></>} />
+        <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/cpost" element={<>   
    <Post1/></>} />
           <Route path="/post" element={<>            

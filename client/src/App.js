@@ -12,7 +12,7 @@ import Reactions from './component/Reactions';
 import { useEffect } from 'react';
 import { getR } from './api/api';
 function App() {
-  const [newUser, setNewUser] = React.useState({ "email": "dummy@gmail.com", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
+  const [newUser, setNewUser] = React.useState({ "email": "", "username": "", "pwd": "", "name": "", "accessToken": "" })
 
   return (
     <>
