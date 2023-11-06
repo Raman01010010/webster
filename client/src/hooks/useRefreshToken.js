@@ -16,7 +16,7 @@ const useRefreshToken = () => {
         setNewUser(prev => {
            // console.log(JSON.stringify(prev));
             //console.log(response.data.accessToken);
-            return { ...prev, accessToken: response.data.accessToken }
+            return { ...prev,email:response.data.email, accessToken: response.data.accessToken }
         });
         console.log(newUser)
         console.log(response.data)

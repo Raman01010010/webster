@@ -13,38 +13,12 @@ const { setAuth } = useAuth();
   const navigate = useNavigate();
 
 
-  React.useEffect(() => {
-    const delay = 500; // Adjust the delay as needed
-    const timerId = setTimeout(() => {
-      // Make the API call when the user stops typing
-      const check=async ()=>{
-        const t=await addUser(newUser
-     
-      )
-      if(t.status==200){
-        setCol('red')
-      }
-      if((!t.data?.email)){
-        setCol('gray')
-      }
-      console.log(t.data)
-      }
-check();
-       console.log("ramanc")
-  
-    }, delay);
-
-    return () => {
-      // Cleanup the timer when the component unmounts or when searchQuery changes
-      clearTimeout(timerId);
-    };
-  }, [newUser]);
 
 
 var at;
 const axiosPrivate=useAxiosPrivate()
   async function hand(){
-    const res= await axiosPrivate.get(`/employees`
+    const res= await axiosPrivate.put(`/user1/update`
     )
   console.log(res)
   at=res?.data?.accessToken;

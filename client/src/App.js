@@ -17,9 +17,9 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getR();
+        const res = ""//await getR();
         console.log(res);
-        newUser.accessToken=res.data?.accessToken
+       // newUser.accessToken=res.data?.accessToken
         console.log(newUser)
         //navigate('/dashboard')
       } catch (error) {
