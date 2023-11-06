@@ -37,9 +37,6 @@ function App() {
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
    
-     <AllPost/>
-   
-     <Post1/>
       </Router>
     </User.Provider>
     </>
