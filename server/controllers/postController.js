@@ -1,6 +1,6 @@
 const post = require('../model/postSchema');
 
-
+const Comment=require('../model/commentSchema')
 
 
 
@@ -135,9 +135,48 @@ if(res1.length){
     }
     res.status(201).send('wow');
 }
+const com=async(req,res)=>{
+  console.log(req.body)
+  try {
+    // Extract the comment data from the request body
+    const { postId, text, user } = req.body;
+
+    // Create a new comment document
+    const comment = new Comment({ postId, text, user });
+    const incrementValue = 1;
+    const result = await post.updateOne(
+      { _id: postId },
+      { $inc: { comm: incrementValue } }
+    );
+    console.log(result)
+    // Save the comment to the database
+    await comment.save();
+
+    // Respond with a success message or the newly created comment
+    res.status(201).json({ message: 'Comment created successfully', comment });
+  } catch (error) {
+    console.error('Error creating comment:', error);
+    res.status(500).json({ message: 'Error creating comment' });
+  }
+}
 
 
 
+const getCommentsForPost = async (req, res) => {
+  try {
+    // Extract the post ID from the request parameters
+    const postId = req.body.postId;
+
+    // Find all comments that have the same postId
+    const comments = await Comment.find({ postId })//.populate('postID');
+
+    // Respond with the list of comments
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments:', error);
+    res.status(500).json({ message: 'Error retrieving comments' });
+  }
+};
 
 
     // const query = {
@@ -164,4 +203,4 @@ if(res1.length){
   
 
   
-module.exports={getAll,react,react1}
+module.exports={getAll,react,react1,com,getCommentsForPost}

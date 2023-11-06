@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 
 // Define the Comment schema
 const commentSchema = new mongoose.Schema({
+  postId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'post', // Reference to a User schema (if you have one)
+    required: true,
+  },
   text: {
     type: String,
     required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to a User schema (if you have one)
+    ref: 'user_w', // Reference to a User schema (if you have one)
     required: true,
   },
   time: {
@@ -23,7 +28,7 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User who downvoted the comment
   }],
-  replies: [commentSchema], // Nested replies using the same schema
+  //replies: [commentSchema], // Nested replies using the same schema
 });
 
 // Create a Comment model

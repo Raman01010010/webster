@@ -45,8 +45,13 @@ const postSchema = new Schema({
           },
         ],
       },
+      comm:{
+        type:Number,
+        default:0
+      },
       react:[{emoji:String,by:String}],
-    comments:[{content:String,time:String,user:String}]
+    comments:[{content:String,time:String,user:String}],
+   
 });
 
 module.exports = mongoose.model('post', postSchema);
