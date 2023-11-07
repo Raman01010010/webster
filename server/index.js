@@ -34,7 +34,6 @@ app.use('/post',require('./routes/post'))
 app.use('/job', require('./routes/job'));
 app.use('/profile',require('./routes/profile'))
 
-
 app.use(verifyJWT)
 app.use('/user1',require('./routes/userUpdate'))
 

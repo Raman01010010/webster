@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
 export default function Vreview({ data }) {
+  
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -42,7 +43,7 @@ export default function Vreview({ data }) {
           </Grid>
           <Grid item xs={12}  sm={6}>
             <Typography variant="subtitle1">Skills Required:</Typography>
-            {data.skills.map((skill, index) => (
+            {data.skill.map((skill, index) => (
               <Typography variant="body1" key={index}>
                 {skill}
               </Typography>

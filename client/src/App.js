@@ -16,7 +16,6 @@ function App() {
   const [comp,setComp]=React.useState({
       titles: "",
       company: "",
-      locationtype: "",
       locationonsite: "",
       lastdate: "",
       jobtype: "",

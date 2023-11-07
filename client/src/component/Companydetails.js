@@ -10,35 +10,58 @@ import Chip from "@mui/material/Chip";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useContext } from "react";
 import { User } from "../context/User";
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 export default function Companydetails() {
   const { comp, setComp } = useContext(User);
-  // const [jobpage, setJobpage] = useState({
-  //   titles: "",
-  //   company: "",
-  //   locationtypes: "",
-  //   locationonsite: "",
-  //   lastdate: "",
-  //   jobtype: "",
-  //   details: "",
-  //   contact: ["", "", ""],
-  //   applylink: "",
-  // });
-
+ 
+  
   const handleResponseChange = (field, value, questionIndex) => {
     // If the field is additionalQuestions, create a copy of the array and set the new value at the specified index
     if (field === "contact") {
       const updatedContact = [...comp.contact];
       updatedContact[questionIndex] = value;
-  
+
       setComp((prevComp) => ({
         ...prevComp,
         contact: updatedContact,
       }));
-    }else {
+    } else {
       setComp({ ...comp, [field]: value });
     }
   };
 
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  const handleMobileNumberChange = (event) => {
+    const newMobileNumber = event.target.value;
+    setMobileNumber(newMobileNumber);
+
+    // Regular expression for a 10-digit mobile number (you can adjust it based on your needs)
+    const mobileNumberRegex = /^[0-9]{10}$/;
+
+    // Check if the entered mobile number matches the regex pattern
+    setIsValid(mobileNumberRegex.test(newMobileNumber));
+  };
+
+  const [email, setEmail] = useState("");
+  const [isVali, setIsVali] = useState(false);
+
+  const handleEmailChange = (event) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+
+    // Regular expression for email validation
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/;
+
+    // Check if the entered email matches the regex pattern
+    setIsVali(emailRegex.test(newEmail));
+  };
   const Workplace = [
     "On-Site",
     "Hybrid",
@@ -121,12 +144,15 @@ export default function Companydetails() {
             value={comp.contact[0]}
             onChange={(e) => {
               handleResponseChange("contact", e.target.value, 0);
+              handleMobileNumberChange(e);
             }}
-            ///////////////////////////////////////////
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
           />
+          <p style={{ color: isValid ? "green" : "red", fontSize: "14px" }}>
+            {isValid ? "Valid mobile number" : "Invalid mobile number"}
+          </p>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -137,12 +163,15 @@ export default function Companydetails() {
             value={comp.contact[1]}
             onChange={(e) => {
               handleResponseChange("contact", e.target.value, 1);
+              handleEmailChange(e);
             }}
-            //////////////////////////////////
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
           />
+          <p style={{ color: isVali ? "green" : "red", fontSize: "14px" }}>
+            {isVali ? "Valid Email" : "Invalid Email"}
+          </p>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -203,24 +232,26 @@ export default function Companydetails() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastdate"
-            name="lastdate"
-            label="last date of form"
-            value={comp.lastdate}
-            onChange={(e) => {
-              //setJobpage({ ...jobpage, lastdate: e.target.value })
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              
+            <DatePicker
+  label="Date Picker"
+  format="M/D/YYYY"
+  defaultValue={dayjs(comp.lastdate)} // Convert the date to a Day.js object
+  slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+  value={dayjs(comp.lastdate)} // Convert the date to a Day.js object
+  onChange={(newDate) => {
+    // Update the 'lastdate' in the 'comp' state with the new date in ISO format
+    setComp((old) => ({
+      ...old,
+      lastdate: newDate.toISOString(), // Convert the date to a string in ISO format
+    }));
+  }}
+/>
 
-              setComp((old) => ({
-                ...old,
-                lastdate: e.target.value,
-              }));
-            }}
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
+            </DemoContainer>
+          </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField

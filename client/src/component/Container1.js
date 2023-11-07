@@ -4,7 +4,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Job  from './Job'
 import Otp from "./Otp";
-import  Createjob from "./Createjob.js"
+import  Createjob from "./Createjob"
 export default function Container1(){
     return(<>
           <Routes>

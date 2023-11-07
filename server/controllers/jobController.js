@@ -17,4 +17,18 @@ const create=async(req,res)=>{
     }
 
 }
-module.exports={create}
+const showjob=async(req,res)=>{
+    //const pro =new job(req.body)
+    try{
+       const re=await job.find()
+       console.log(re)
+       res.status(200).send(re)
+
+       
+    }catch(error){
+        console.log(error)
+        res.status(400).send("failed")
+    }
+   // res.status(200).send(res)
+}
+module.exports={create,showjob}

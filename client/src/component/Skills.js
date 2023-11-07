@@ -38,7 +38,7 @@ export default function Skills() {
             setComp(old=>{
               return({
                 ...old,
-                "skills":[...newValue]
+                "skill":[...newValue]
               })
             })
           }}
