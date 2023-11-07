@@ -19,7 +19,7 @@ const skillsList = [
 export default function Skills() {
   // const [selectedSkills, setSelectedSkills] = React.useState([]);
   const {comp,setComp}=useContext(User)
-  console.log(comp)
+  // console.log(comp)
 
   
 

@@ -32,23 +32,13 @@ const jobSchema = new Schema({
         type:String,
         required:true
     },
-    contact:{
-        mobile: 
-            {
-              type: String, // You can change the data type as needed
-            },
-          
-            email: 
-            {
-              type: String, // You can change the data type as needed
-        
-            },
-            website: 
+    contact:[
+       
             {
               type: String, // You can change the data type as needed
             
-            },
-        },
+            }
+    ],
         applylink:{
             type:String
         }

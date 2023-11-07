@@ -75,7 +75,8 @@ export default function Checkout() {
   const PostJob = async () => {
     try {
       const res = await axios.post("/job", comp);
-      console.log(res);
+      console.log("posting")
+      console.log(comp);
     } catch (error) {
       console.log(error);
     }
