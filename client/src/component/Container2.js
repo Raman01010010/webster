@@ -6,14 +6,17 @@ import Otherusers from "./Otherusers";
 import Pending from "./Pending";
 import Post1 from "./Post";
 import AllPost from "./AllPost";
+import DefaultComponent from "./Comment";
+import Test from "./Test";
 export default function Container1(){
     return(<>
     <Dashboard/>
 
-         
+
 
           <Routes>
-
+          <Route path="/pending" element={<><Pending/></>} />
+        <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/cpost" element={<>   
    <Post1/></>} />
           <Route path="/post" element={<>            

@@ -11,6 +11,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+ 
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user_w', // Reference to a User schema (if you have one)

@@ -10,8 +10,7 @@ export default function Container1(){
     return(<>
     <Persist/>
           <Routes>
-        <Route path="/pending" element={<><Pending/></>} />
-        <Route path="/otherusers" element={<><Otherusers/></>} />
+    
                   
           <Route path="/" element={<><Home/></>} />
           <Route path="/signin" element={<><Signin/></>} />

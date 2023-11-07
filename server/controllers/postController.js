@@ -168,7 +168,7 @@ const getCommentsForPost = async (req, res) => {
     const postId = req.body.postId;
 
     // Find all comments that have the same postId
-    const comments = await Comment.find({ postId })//.populate('postID');
+    const comments = await Comment.find({ postId }).populate('user','username');
 
     // Respond with the list of comments
     res.json(comments);

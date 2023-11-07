@@ -4,6 +4,7 @@ import {Reactions,Counter} from "./Reactions";
 //const url="http://localhost:3500/"
 import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
+import Test from "./Test";
 const url="http://172.29.50.69:3500/"
 
 export default function AllPost() {
@@ -115,6 +116,7 @@ async function handle1(){
                   </h3>
                 </header>
                 <p className="text-lg text-gray-400 flex-grow">{item.content}</p>
+                <Test id={item._id}/>
                 <footer className="flex items-center mt-4">
                   <a href="#0">
                     <img className="rounded-full flex-shrink-0 mr-4" src="https://preview.cruip.com/open-pro/images/news-author-04.jpg" width={40} height={40} alt="Author 04" />
@@ -124,11 +126,13 @@ async function handle1(){
                     <span className="text-gray-700"> - </span>
                     <span className="text-gray-500">{item.time}</span>
                     <SlackCounter counters={item.react}/>
+                  
                   </div>
-                
+              
                   <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
              
                 </footer>
+                
               </div>
             </article>
           </div>
