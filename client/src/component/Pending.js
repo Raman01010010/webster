@@ -1,25 +1,26 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { User } from "../context/User";
+import { User } from '../context/User';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import axios from '../api/axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Pending = () => {
-  const [pending, setPending] = useState([]); 
+  const [pending, setPending] = useState([]);
   const { newUser } = useContext(User);
 
   useEffect(() => {
     const fetchpending = async () => {
       const data = {
-        newUser: newUser.email
+        newUser: newUser.email,
       };
       try {
         const res = await axios.post('/getpending', data);
         // Convert the object values into an array
-        console.log("xkjdfhshdfushdfi",res.data)
+        console.log('xkjdfhshdfushdfi', res.data);
         const pendingArray = Object.values(res.data);
         setPending(pendingArray);
-
       } catch (error) {
         console.error(error);
       }
@@ -27,6 +28,18 @@ const Pending = () => {
     fetchpending();
   }, []);
 
+  const acceptrequest = async (newUser, senderEmail) => {
+    const data = {
+      receiverEmail: newUser,
+      senderEmail: senderEmail,
+    };
+      const res = await axios.post('/acceptrequest', data);
+
+    // Display a success toast
+    toast.success('You both are Now connected to Each other', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   return (
     <div>
@@ -46,7 +59,12 @@ const Pending = () => {
                       <h2 className="text-gray-900 title-font font-medium">
                         {element.senderEmail}
                       </h2>
-                      <Button variant="contained" >Accept</Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => acceptrequest(newUser.email, element.senderEmail)}
+                      >
+                        Accept
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -55,6 +73,7 @@ const Pending = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 };

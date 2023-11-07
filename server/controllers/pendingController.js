@@ -5,9 +5,10 @@ exports.pending = async (req, res) => {
   try {
     const newuser = req.body.newUser;
 
-   console.log(req.body)
-    const connections = await connectSchema.find({ receiverEmail:newuser });
-   
+    console.log(req.body);
+    const connections = await connectSchema.find({ receiverEmail: newuser });
+
+    
     res.send(connections);
   } catch (error) {
     console.error(error);
