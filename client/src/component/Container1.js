@@ -15,7 +15,7 @@ export default function Container1(){
     return(<>
     <Persist/>
           <Routes>
-          <Route path="/job" element={<><Job/></>} />
+          <Route path="/job/:jobId" element={<><Job/></>} />
           <Route path="/" element={<><Home/></>} />
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/signup" element={<><Signup/></>} />

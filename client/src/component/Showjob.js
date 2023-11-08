@@ -5,7 +5,7 @@ import {Link } from 'react-router-dom';
 
 const Showjob = () => {
   const [jobData, setJobData] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,7 +71,7 @@ const Showjob = () => {
             <Typography variant="body1" sx={{ color: '#555', marginBottom: '8px' }}>
               <strong>Application Deadline:</strong> {job.lastdate}
             </Typography>
-            <Link to="/job">
+            <Link to={`/job/${job._id}`}>
             <Button
               variant="contained"
               color="primary"

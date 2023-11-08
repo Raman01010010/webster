@@ -15,6 +15,11 @@ const create=async(req,res)=>{
     }
 
 }
+// const jobapply=async(req,res)=>{
+//     try{
+//         const 
+//     }    
+// }
 const showjob=async(req,res)=>{
     //const pro =new job(req.body)
     try{
