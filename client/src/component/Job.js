@@ -15,6 +15,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import axios from "../api/axios";
+import { useParams } from 'react-router-dom';
+
 const steps = [
   "Select campaign settings",
   "Create an ad group",
@@ -22,39 +24,49 @@ const steps = [
   "Additional Questions", // Add an additional step
 ];
 
-  
-  
-
 
 export default function Job() {
+  const { jobId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
   const [responses, setResponses] = useState({
     name: "",
     email: "",
     phone: "",
-    place:"",
+    place: "",
     resume: "",
     additionalQuestions: ["", "", ""],
     location: "",
+    jobid:jobId
   });
-   const [isFormComplete, setIsFormComplete] = useState(false);
-    
-   const checkFormCompletion = () => {
-    // Replace these conditions with your actual form validation logic
-    const isStep1Complete = activeStep==0 && responses.name !="" && responses.email != "" && responses.phone != "" && responses.place != "";
-    const isStep2Complete = activeStep==1 && (responses.resume != ""||true);
-    const isStep3Complete = activeStep==2 && responses.additionalQuestions[0]!="" && responses.additionalQuestions[1]!="" && responses.additionalQuestions[2]!="" ; // Add your validation logic for step 3
-    const isStep4Complete = activeStep==3 && (responses.location != "");
+  const [isFormComplete, setIsFormComplete] = useState(false);
+  // console.log(jobId)
 
-    const isFormValid = isStep1Complete || isStep2Complete || isStep3Complete || isStep4Complete;
-  
+  const checkFormCompletion = () => {
+    // Replace these conditions with your actual form validation logic
+    const isStep1Complete =
+      activeStep == 0 &&
+      responses.name != "" &&
+      responses.email != "" &&
+      responses.phone != "" &&
+      responses.place != "";
+    const isStep2Complete = activeStep == 1 && (responses.resume != "" || true);
+    const isStep3Complete =
+      activeStep == 2 &&
+      responses.additionalQuestions[0] != "" &&
+      responses.additionalQuestions[1] != "" &&
+      responses.additionalQuestions[2] != ""; // Add your validation logic for step 3
+    const isStep4Complete = activeStep == 3 && responses.location != "";
+    const isFormValid =
+      isStep1Complete ||
+      isStep2Complete ||
+      isStep3Complete ||
+      isStep4Complete ||
+      true;
     setIsFormComplete(isFormValid);
   };
-
   useEffect(() => {
     checkFormCompletion();
   }, [responses]);
-
 
   const additionalQuestions = [
     "What is your level of proficiency in English?",
@@ -64,6 +76,8 @@ export default function Job() {
   ];
   const handleResponseChange = (field, value, questionIndex) => {
     if (field === "additionalQuestions") {
+      // console.log("handleResponseChange called with field:", field);
+
       // If the field is additionalQuestions, create a copy of the array and set the new value at the specified index
       const updatedAdditionalQuestions = [...responses.additionalQuestions];
       updatedAdditionalQuestions[questionIndex] = value;
@@ -71,6 +85,21 @@ export default function Job() {
         ...prevResponses,
         additionalQuestions: updatedAdditionalQuestions,
       }));
+    } else if (field === "resume") {
+      const selectedFile = value[0];
+      if (selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const fileData = e.target.result;
+  
+          setResponses((prevResponses) => ({
+            ...prevResponses,
+            resume: fileData, // Store the selected resume in responses.resume
+          }));
+          // console.log(responses.resume)
+        };
+        reader.readAsDataURL(selectedFile);
+      }
     } else {
       // If the field is not additionalQuestions, update it normally
       setResponses((prevResponses) => ({
@@ -92,12 +121,13 @@ export default function Job() {
     setActiveStep(0);
   };
 
-  const Submit = async() => {
-    try{
-const res=await axios.post('/profile',responses)
-console.log(res)}catch(error){
-    console.log(error)
-}
+  const Submit = async () => {
+    try {
+      const res = await axios.post("/profile", responses);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -163,7 +193,11 @@ console.log(res)}catch(error){
                               name="name"
                               value={responses.name}
                               onChange={(e) =>
-                                setResponses({...responses,name:e.target.value})
+                                setResponses({
+                                  ...responses,
+                                  name: e.target.value
+                                  // jobid:jobId
+                                })
                               }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
@@ -174,7 +208,7 @@ console.log(res)}catch(error){
                             <label
                               htmlFor="email"
                               className="leading-7 text-sm text-gray-600"
-                             >
+                            >
                               Email
                             </label>
                             <input
@@ -183,7 +217,10 @@ console.log(res)}catch(error){
                               name="email"
                               value={responses.email}
                               onChange={(e) =>
-                                setResponses({...responses,email:e.target.value})
+                                setResponses({
+                                  ...responses,
+                                  email: e.target.value,
+                                })
                               }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
@@ -203,7 +240,10 @@ console.log(res)}catch(error){
                               name="phone" // Change the name to something like "phone"
                               value={responses.phone}
                               onChange={(e) =>
-                                setResponses({...responses,phone:e.target.value})
+                                setResponses({
+                                  ...responses,
+                                  phone: e.target.value,
+                                })
                               }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
@@ -223,7 +263,10 @@ console.log(res)}catch(error){
                               name="place" // Change the name to something like "phone"
                               value={responses.place}
                               onChange={(e) =>
-                                setResponses({...responses,place:e.target.value})
+                                setResponses({
+                                  ...responses,
+                                  place: e.target.value,
+                                })
                               }
                               className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
@@ -244,13 +287,12 @@ console.log(res)}catch(error){
               startIcon={<CloudUploadIcon />}
             >
               Upload Resume
-              <VisuallyHiddenInput type="file" />
-              <input
+              <VisuallyHiddenInput
                 type="file"
-                style={{ display: "none" }}
-                onChange={(e) =>
-                  handleResponseChange("resume", e.target.files[0])
-                }
+                accept=".pdf, .png, .jpg, .jpeg"
+                onChange={(e) => {
+                  handleResponseChange("resume", e.target.files, 0);
+                }}
               />
             </Button>
           </div>
@@ -268,7 +310,11 @@ console.log(res)}catch(error){
                   name="radio-buttons-group"
                   value={responses.additionalQuestions[0]}
                   onChange={(e) =>
-                    handleResponseChange("additionalQuestions", e.target.value, 0)
+                    handleResponseChange(
+                      "additionalQuestions",
+                      e.target.value,
+                      0
+                    )
                   }
                 >
                   <FormControlLabel
@@ -302,7 +348,11 @@ console.log(res)}catch(error){
                   name="radio-buttons-group"
                   value={responses.additionalQuestions[1]}
                   onChange={(e) =>
-                    handleResponseChange("additionalQuestions", e.target.value, 1)
+                    handleResponseChange(
+                      "additionalQuestions",
+                      e.target.value,
+                      1
+                    )
                   }
                 >
                   <FormControlLabel
@@ -325,7 +375,11 @@ console.log(res)}catch(error){
                   name="radio-buttons-group"
                   value={responses.additionalQuestions[2]}
                   onChange={(e) =>
-                    handleResponseChange("additionalQuestions", e.target.value, 2)
+                    handleResponseChange(
+                      "additionalQuestions",
+                      e.target.value,
+                      2
+                    )
                   }
                 >
                   <FormControlLabel
@@ -346,17 +400,16 @@ console.log(res)}catch(error){
               <div>
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">
-                  We must fill this position urgently. Can you start immediately?                  </FormLabel>
+                    We must fill this position urgently. Can you start
+                    immediately?{" "}
+                  </FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="None of the above"
                     name="radio-buttons-group"
                     value={responses.location}
                     onChange={(e) =>
-                      handleResponseChange(
-                        "location",
-                        e.target.value
-                      )
+                      handleResponseChange("location", e.target.value)
                     }
                   >
                     <FormControlLabel
@@ -386,9 +439,8 @@ console.log(res)}catch(error){
             )}
             <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleNext} disabled={!isFormComplete}>
-  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-</Button>
-
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            </Button>
           </Box>
         </>
       )}
@@ -400,9 +452,9 @@ console.log(res)}catch(error){
             email={responses.email}
             phone={responses.phone}
             place={responses.place}
+            resume={responses.resume}
             additionalQuestions={responses.additionalQuestions}
             location={responses.location}
-            
           />{" "}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             {activeStep > 0 && ( // Show "Back" button when activeStep is greater than 0

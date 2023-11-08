@@ -30,6 +30,10 @@ const profileSchema = new Schema({
       ],
       location:{
         type:String
+      },
+      jobid:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'job'
       }
 });
 module.exports = mongoose.model('profile', profileSchema);
