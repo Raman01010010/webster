@@ -11,7 +11,7 @@ const create=async(req,res)=>{
        res.status(200).send("success")  
     }catch(error){
         console.log(error)
-        res.status(400).send("failed")
+        res.status(400).send("22222")
     }
 
 }
@@ -26,12 +26,23 @@ const showjob=async(req,res)=>{
        const re=await job.find()
        console.log(re)
        res.status(200).send(re)
-
-       
     }catch(error){
         console.log(error)
-        res.status(400).send("failed")
+        res.status(400).send("11111")
     }
-   // res.status(200).send(res)
 }
-module.exports={create,showjob}
+
+
+const myjob = async (req, res) => {
+    try {
+      const jobberId = req.body.jobberid; // Access jobberid from the request body
+      console.log(jobberId); 
+      const jobs = await job.find({ jobberid: jobberId }); // Search for jobs with the given jobberid
+      console.log(jobs);
+      res.status(200).json(jobs);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Failed to retrieve job data");
+    }
+  };
+module.exports={create,showjob,myjob}

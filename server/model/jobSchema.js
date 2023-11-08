@@ -41,6 +41,9 @@ const jobSchema = new Schema({
     ],
         applylink:{
             type:String
+        },
+        jobberid:{
+            type:String
         }
     
 });

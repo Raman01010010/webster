@@ -12,7 +12,7 @@ exports.connection = async (req,res) =>{
     const otheruser = data.otheruser;
 
     const a = await Connection.find({senderEmail:newUser,receiverEmail:otheruser})
-
+     
     
    
    if(a.length==0){ 

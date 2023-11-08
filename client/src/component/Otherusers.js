@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 const Otherusers = () => {
   const { newUser } = useContext(User);
-  console.log(newUser);
+  // console.log(newUser);
 
   const [otheruser, setOtheruser] = useState([]);
 

@@ -6,6 +6,7 @@ import Job  from './Job'
 import Otp from "./Otp";
 import  Createjob from "./Createjob"
 import Showjob from "./Showjob"
+import Managejob from "./Managejob"
 
 
 import Otherusers from "./Otherusers";
@@ -22,6 +23,8 @@ export default function Container1(){
           <Route path="/otp" element={<><Otp/></>} />
           <Route path="/createjob" element={<><Createjob/></>}/>
           <Route path="/showjob" element={<><Showjob/></>}/>
+          <Route path="/myjob" element={<><Managejob/></>} />
+
     </Routes>
 
     </>)

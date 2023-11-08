@@ -11,6 +11,8 @@ import Test from "./Test";
 import Showjob from "./Showjob";
 import  Createjob from "./Createjob"
 import Job from "./Job";
+import Managejob from "./Managejob"
+import Application from "./Application";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -27,7 +29,10 @@ export default function Container1(){
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/showjob" element={<><Showjob/></>}/>
           <Route path="/createjob" element={<><Createjob/></>}/>
-          <Route path="/job" element={<><Job/></>} />
+          <Route path="/job/:jobId" element={<><Job/></>} />
+          <Route path="/myjob" element={<><Managejob/></>} />
+          <Route path="/app/:jobId" element={<><Application/></>} />
+
     </Routes>
 
     </>)

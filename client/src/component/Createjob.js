@@ -40,7 +40,7 @@ export default function Checkout() {
 
   const { comp, setComp } = useContext(User);
   const [isFormComplete, setIsFormComplete] = useState(false);
-  // console.log(comp);
+  console.log("vivek"+comp.jobberid);
 
   const checkFormCompletion = () => {
 
@@ -74,7 +74,7 @@ export default function Checkout() {
 
   const PostJob = async () => {
     try {
-      const res = await axios.post("/job", comp);
+      const res = await axios.post("/job/create", comp);
       console.log("posting")
       console.log(comp);
     } catch (error) {
