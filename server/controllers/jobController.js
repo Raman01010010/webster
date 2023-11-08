@@ -1,4 +1,5 @@
 const job = require('../model/jobSchema');
+const profile = require('../model/profileSchema');
 
 
 
@@ -45,4 +46,16 @@ const myjob = async (req, res) => {
       res.status(400).send("Failed to retrieve job data");
     }
   };
-module.exports={create,showjob,myjob}
+  const     Application = async (req, res) => {
+    try {
+      const jobId = req.body.jobid; // Access jobid from the request body
+      console.log(jobId); 
+      const jobs = await profile.find({ jobid: jobId }); 
+      console.log(jobs);
+      res.status(200).json(jobs);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Failed to retrieve job data");
+    }
+  };
+module.exports={create,showjob,myjob,Application}

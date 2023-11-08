@@ -24,7 +24,6 @@ export default function Container1(){
           <Route path="/createjob" element={<><Createjob/></>}/>
           <Route path="/showjob" element={<><Showjob/></>}/>
           <Route path="/myjob" element={<><Managejob/></>} />
-
     </Routes>
 
     </>)

@@ -11,6 +11,8 @@ router.post('/create', jobController.create); // Use a different path for create
 router.get('/showjob', jobController.showjob); // Use a different path for showjob
 router.post('/myjob', jobController.myjob);
 router.post('/profile',profileController.naukari)
+router.post('/app',jobController.Application)
+
 module.exports = router;
 
 
