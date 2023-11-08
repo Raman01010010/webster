@@ -6,11 +6,12 @@ const handleLogin = async (req, res) => {
     const { email, pwd } = req.body;
     user=email;
     if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
-console.log(user)
+    console.log(user)
     const foundUser = await User.findOne({ email: user }).exec();
     if (!foundUser) return res.sendStatus(401); //Unauthorized 
     // evaluate password 
     const match = await bcrypt.compare(pwd, foundUser.pwd);
+    
     if (match) {
         const roles = Object.values(foundUser.roles).filter(Boolean);
         // create JWTs
@@ -40,6 +41,7 @@ console.log(user)
         } catch (error) {
             console.error("Error saving user:", error);
         }
+
         
         console.log("njj")
         //console.log(result);

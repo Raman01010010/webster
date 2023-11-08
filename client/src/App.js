@@ -9,14 +9,25 @@ import Navbar2 from './component/Navbar2';
 import Post1 from './component/Post';
 import AllPost from './component/AllPost';
 import Reactions from './component/Reactions';
+import Job from './component/Job';
+
 import { useEffect } from 'react';
 import { getR } from './api/api';
 function App() {
   const [newUser, setNewUser] = React.useState({ "email": "dummy@gmail.com", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
-
+  const [comp,setComp]=React.useState({
+      titles: "",
+      company: "",
+      locationonsite: "",
+      lastdate: "",
+      jobtype: "",
+      details: "",
+      contact: ["","",""],
+      applylink: "",    
+      skill:[] })//
   return (
     <>
-    <User.Provider value={{newUser,setNewUser}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}

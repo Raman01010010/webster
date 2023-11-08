@@ -8,7 +8,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     username: {
@@ -35,7 +36,7 @@ const userSchema = new Schema({
     refreshToken: String,
     location:String,
     status:[{org:String,role:String,desc:String}],
-    education:[{org:String,degree:String,time:String}],
+     education:[{org:String,degree:String,time:String}],
     skills:{type:Array},
     projects:[{name:String,tech:Array,colab:Array}],
     connection:[String]
