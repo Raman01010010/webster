@@ -39,6 +39,8 @@ app.use('/api/sendconnect',require('./routes/connection'))
 app.use('/getpending',require('./routes/pending'))
 app.use('/acceptrequest',require('./routes/acceptrequest'))
 app.use('/connections',require('./routes/connections'))
+app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
+app.use('/api/senddelete',require('./routes/deleteConnection'))
 app.use(verifyJWT)
 
 
