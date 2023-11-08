@@ -8,6 +8,9 @@ import Post1 from "./Post";
 import AllPost from "./AllPost";
 import DefaultComponent from "./Comment";
 import Test from "./Test";
+import Showjob from "./Showjob";
+import  Createjob from "./Createjob"
+import Job from "./Job";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -22,6 +25,9 @@ export default function Container1(){
           <Route path="/post" element={<>            
      <AllPost/></>} />
           <Route path="/signin" element={<><Signin/></>} />
+          <Route path="/showjob" element={<><Showjob/></>}/>
+          <Route path="/createjob" element={<><Createjob/></>}/>
+          <Route path="/job" element={<><Job/></>} />
     </Routes>
 
     </>)
