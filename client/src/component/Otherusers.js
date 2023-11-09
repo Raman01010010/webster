@@ -18,10 +18,11 @@ const Otherusers = () => {
       };
 
       const res = await axios.post("/api/sendconnect", data);
-      // console.log("Connection request sent successfully:", res.data);
+      toast.success("Connection request sent successfully");
     } catch (error) {
       // Handle errors
       console.error("Error sending connection request:", error);
+      toast.error("Error sending connection request");
     }
   };
 
@@ -33,10 +34,11 @@ const Otherusers = () => {
       };
 
       const res = await axios.post("/api/senddelete", data);
-      console.log("DeleteConnection request sent successfully:", res.data);
+      toast.success("Delete Connection request sent successfully");
     } catch (error) {
       // Handle errors
       console.error("Error sending connection request:", error);
+      toast.error("Error sending delete connection request");
     }
   };
 
@@ -48,19 +50,23 @@ const Otherusers = () => {
       };
 
       const res = await axios.post("/api/sendMessageRequest", data);
-
-      // Handle the response here
-      console.log("Message request sent successfully:", res.data);
+      toast.success("Message request sent successfully");
     } catch (error) {
       // Handle errors
       console.error("Error sending Message request:", error);
+      toast.error("Error sending message request");
     }
   };
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get("/getuser");
-      setOtheruser(res.data);
+      try {
+        const res = await axios.get("/getuser");
+        setOtheruser(res.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        toast.error("Error fetching users");
+      }
     };
     fetchUser();
   }, []);
@@ -126,6 +132,7 @@ const Otherusers = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </>
   );
 };
