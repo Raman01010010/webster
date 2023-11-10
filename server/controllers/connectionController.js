@@ -11,10 +11,7 @@ exports.connection = async (req,res) =>{
     const newUser = data.newUser;
     const otheruser = data.otheruser;
 
-    const a = await Connection.find({senderEmail:newUser,receiverEmail:otheruser})
-     
-    
-   
+    const a = await Connection.find({senderEmail:newUser,receiverEmail:otheruser}) 
    if(a.length==0){ 
     const prd = new Connection({
         senderEmail:newUser,

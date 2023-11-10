@@ -1,6 +1,6 @@
 const job = require('../model/jobSchema');
 const profile = require('../model/profileSchema');
-const sendEmail = require('./emailController');
+const sendEmail = require('./jobemailController');
 const user_w=require('../model/User')
 
 const create = async (req, res) => {
@@ -19,10 +19,10 @@ const create = async (req, res) => {
       const emailArray = users.map(user => user.email);
       console.log(emailArray);
       
-      await sendEmail("", req.body, recipientEmail, "", recipientEmail, true);
+      await sendEmail("", req.body, recipientEmail, "", recipientEmail);
 
       for (const email of emailArray) {
-        await sendEmail("","the job is posted", email, "", recipientEmail, true);
+        await sendEmail("","the job is posted", email, "", recipientEmail);
     }
       res.status(200).send("success");
   } catch (error) {

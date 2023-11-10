@@ -43,9 +43,6 @@ app.use('/api/sendconnect',require('./routes/connection'))
 app.use('/getpending',require('./routes/pending'))
 app.use(verifyJWT)
 
-
-
-
 app.all('/*',(req,res)=>{
     res.status(404)
     if(req.accepts('html')){

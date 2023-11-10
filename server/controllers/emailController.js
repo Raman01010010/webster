@@ -1,4 +1,4 @@
-/*const nodemailer=require("nodemailer")
+const nodemailer=require("nodemailer")
 require("dotenv").config();
 const sendEmail=async(subjects,message,send_to,send_from,reply_to)=>{
 
@@ -13,7 +13,6 @@ const sendEmail=async(subjects,message,send_to,send_from,reply_to)=>{
         tls:{
             rejectUnauthorized:false,
         }
-
     })
     const options={
         from:"collegeconnect121@gmail.com",
@@ -43,7 +42,7 @@ module.exports=sendEmail
 
 
 
-*/
+/*
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
@@ -93,3 +92,4 @@ const sendEmail = async (subject, message, send_to, send_from, reply_to, isJob =
 };
 
 module.exports = sendEmail;
+*/
