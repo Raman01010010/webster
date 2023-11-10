@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { User } from "../context/User"
+
 export default function Profile(){
     const {newUser}=useContext(User)
     console.log(newUser)

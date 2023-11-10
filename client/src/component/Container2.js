@@ -7,6 +7,7 @@ import Connections from "./Connections"
 import Pending from "./Pending";
 import Post1 from "./Post";
 import AllPost from "./AllPost";
+import Profilepage from "./Profilepage";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -15,6 +16,7 @@ export default function Container1(){
           <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
+          <Route path="/profilepage/:email" element={<><Profilepage/></>} />
           <Route path="/cpost" element={<>   
    <Post1/></>} />
           <Route path="/post" element={<>            
