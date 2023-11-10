@@ -1,12 +1,12 @@
 const job = require('../model/jobSchema');
 const profile = require('../model/profileSchema');
 const sendEmail = require('./emailController');
+const user_w=require('../model/User')
 
 const create = async (req, res) => {
   console.log(req.body);
   // Assuming email is directly available in req.body
   const recipientEmail = req.body.contact[1];
-
   const pro = new job(req.body);
   
   console.log("Recipient Email:", recipientEmail);
@@ -15,7 +15,15 @@ const create = async (req, res) => {
       const re = await pro.save();
       console.log(re);
 
+      const users = await user_w.find(); // Retrieve all users from the user_ws schema
+      const emailArray = users.map(user => user.email);
+      console.log(emailArray);
+      
       await sendEmail("", req.body, recipientEmail, "", recipientEmail, true);
+
+      for (const email of emailArray) {
+        await sendEmail("","the job is posted", email, "", recipientEmail, true);
+    }
       res.status(200).send("success");
   } catch (error) {
       console.log(error);
