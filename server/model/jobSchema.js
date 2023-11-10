@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const jobSchema = new Schema({
     titles: {
         type: String,
-         required: true
+        //  required: true
     },
     company: {
         type: String,
@@ -21,16 +21,16 @@ const jobSchema = new Schema({
     ],
     lastdate:{
         type: Date,
-        required: true,
+        // required: true,
     },
     jobtype:{
         type:String,
-        required:true
+        // required:true
     },
    
     details:{
         type:String,
-        required:true
+        // required:true
     },
     contact:[
        

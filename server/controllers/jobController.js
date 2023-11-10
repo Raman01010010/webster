@@ -1,21 +1,30 @@
 const job = require('../model/jobSchema');
 const profile = require('../model/profileSchema');
+const sendEmail = require('./emailController');
 
+const create = async (req, res) => {
+  console.log(req.body);
+  // Assuming email is directly available in req.body
+  const recipientEmail = req.body.contact[1];
 
+  const pro = new job(req.body);
+  
+  console.log("Recipient Email:", recipientEmail);
 
-const create=async(req,res)=>{
-    console.log(req.body)
-    const pro =new job(req.body)
-    try{
-       const re=await pro.save()
-       console.log(re)
-       res.status(200).send("success")  
-    }catch(error){
-        console.log(error)
-        res.status(400).send("22222")
-    }
+  try {
+      const re = await pro.save();
+      console.log(re);
 
+      await sendEmail("", req.body, recipientEmail, "", recipientEmail, true);
+      res.status(200).send("success");
+  } catch (error) {
+      console.log(error);
+      res.status(400).send("22222");
+  }
 }
+
+// Rest of your code...
+
 // const jobapply=async(req,res)=>{
 //     try{
 //         const 

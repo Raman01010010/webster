@@ -30,10 +30,13 @@ function App() {
     useEffect(() => {
       setComp((prevComp) => ({
         ...prevComp,
-        jobberid: newUser.userid
+        jobberid: newUser.userid,
+        contact: ["", newUser.email, ""],  // Update contact[1]
       }));
-    }, [newUser.userid]);
-    // console.log("111"+comp.jobberid)
+    }, [newUser.userid, newUser.email]);
+    
+    // comp.contact[1]=newUser.email
+    console.log("111"+newUser)
   return (
     <>
     <User.Provider value={{newUser,setNewUser,comp,setComp}}>

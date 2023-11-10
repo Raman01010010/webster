@@ -18,7 +18,8 @@ import Vreview from "./Vreview.js";
 import { useContext } from "react";
 import { User } from "../context/User";
 import axios from "../api/axios";
-
+// import { post } from "../../../server/routes/jobRoutes.js";
+    
 function Createjob() {
   
   return (
@@ -36,11 +37,14 @@ function Createjob() {
 const steps = ["Company profile", "Skills required", "Review "];
 
 export default function Checkout() {
+  const {newUser}=useContext(User)
+  console.log(newUser)
   const [activeStep, setActiveStep] = useState(0);
+
 
   const { comp, setComp } = useContext(User);
   const [isFormComplete, setIsFormComplete] = useState(false);
-  console.log("vivek"+comp.jobberid);
+  // console.log("vivek"+comp.jobberid);
 
   const checkFormCompletion = () => {
 
@@ -62,7 +66,7 @@ export default function Checkout() {
     
      
     const isFormValid =
-      isStep1Complete || isStep2Complete ;
+      isStep1Complete || isStep2Complete || true;
 
     setIsFormComplete(isFormValid);
   };
@@ -73,6 +77,7 @@ export default function Checkout() {
 
 
   const PostJob = async () => {
+
     try {
       const res = await axios.post("/job/create", comp);
       console.log("posting")
@@ -104,17 +109,42 @@ export default function Checkout() {
 
   // console.log(data)
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 2) {
-      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-      PostJob();
+      try {
+        await PostJob(); // Wait for the job to be posted
+  
+        // Once the job is successfully posted, send an email
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to post job or send email. Please try again.');
+      }
     }
     setActiveStep(activeStep + 1);
   };
+  
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+//   const handleSendEmail = async () => {
+//     try {
+//         const response = await axios.post('/job/mail', {
+//             recipientEmail,
+//             messageContent,
+//         });
+
+//         if (response.status === 200) {
+//             alert('Email sent successfully!');
+//         } else {
+//             alert('Failed to send email. Please try again.');
+//         }
+//     } catch (error) {
+//         console.error('Error:', error);
+//         alert('An error occurred. Please try again later.');
+//     }
+// };
 
   return (
     <React.Fragment>

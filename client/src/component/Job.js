@@ -127,6 +127,7 @@ export default function Job() {
       console.log(res);
     } catch (error) {
       console.log(error);
+      console.log("yaha")
     }
   };
 
