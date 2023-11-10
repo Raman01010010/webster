@@ -50,17 +50,10 @@ export default function Companydetails() {
   };
 
   const [email, setEmail] = useState("");
-  const [isVali, setIsVali] = useState(false);
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
     setEmail(newEmail);
-
-    // Regular expression for email validation
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/;
-
-    // Check if the entered email matches the regex pattern
-    setIsVali(emailRegex.test(newEmail));
   };
   const Workplace = [
     "On-Site",
@@ -69,6 +62,9 @@ export default function Companydetails() {
 
     // Add more skills here
   ];
+
+  const {newUser}=useContext(User)
+  console.log(newUser)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -82,6 +78,7 @@ export default function Companydetails() {
             name="Job title"
             label="Job title"
             value={comp.titles}
+
             onChange={(e) => {
               //setJobpage({ ...jobpage, titles: e.target.value })
 
@@ -155,24 +152,24 @@ export default function Companydetails() {
           </p>
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            required
-            id="email"
-            name="email"
-            label="Email"
-            value={comp.contact[1]}
-            onChange={(e) => {
-              handleResponseChange("contact", e.target.value, 1);
-              handleEmailChange(e);
-            }}
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-          <p style={{ color: isVali ? "green" : "red", fontSize: "14px" }}>
-            {isVali ? "Valid Email" : "Invalid Email"}
-          </p>
-        </Grid>
+  <TextField
+    required
+    id="email"
+    name="email"
+    label="Email"
+    value={newUser.email}
+    // onChange={(e) => {
+              // handleResponseChange("contact", e.target.value, 1);
+            // }}
+    fullWidth
+    autoComplete="shipping address-line2"
+    variant="standard"
+  />
+  <p style={{ color: "green", fontSize: "14px" }}>
+    {newUser.email ? "Valid Email" : "Invalid Email"}
+  </p>
+</Grid>
+
         <Grid item xs={12}>
           <TextField
             required

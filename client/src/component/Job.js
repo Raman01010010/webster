@@ -123,10 +123,11 @@ export default function Job() {
 
   const Submit = async () => {
     try {
-      const res = await axios.post("/profile", responses);
+      const res = await axios.post("/job/profile", responses);
       console.log(res);
     } catch (error) {
       console.log(error);
+      console.log("yaha")
     }
   };
 

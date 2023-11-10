@@ -6,6 +6,7 @@ import Job  from './Job'
 import Otp from "./Otp";
 import  Createjob from "./Createjob"
 import Showjob from "./Showjob"
+import Managejob from "./Managejob"
 
 
 import Otherusers from "./Otherusers";
@@ -15,13 +16,14 @@ export default function Container1(){
     return(<>
     <Persist/>
           <Routes>
-          <Route path="/job/:jobId" element={<><Job/></>} />
+          {/* <Route path="/job/:jobId" element={<><Job/></>} /> */}
           <Route path="/" element={<><Home/></>} />
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/signup" element={<><Signup/></>} />
           <Route path="/otp" element={<><Otp/></>} />
-          <Route path="/createjob" element={<><Createjob/></>}/>
-          <Route path="/showjob" element={<><Showjob/></>}/>
+          {/* <Route path="/createjob" element={<><Createjob/></>}/> */}
+          {/* <Route path="/showjob" element={<><Showjob/></>}/> */}
+          {/* <Route path="/myjob" element={<><Managejob/></>} /> */}
     </Routes>
 
     </>)

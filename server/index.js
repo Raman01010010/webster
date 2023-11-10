@@ -31,8 +31,12 @@ app.use('/auth',require('./routes/auth'))
 app.use('/refresh',require('./routes/refresh'))
 app.use('/upload',require('./routes/uploadPost'))
 app.use('/post',require('./routes/post'))
-app.use('/job', require('./routes/job'));
-app.use('/profile',require('./routes/profile'))
+app.use('/job', require('./routes/jobRoutes'));
+
+// app.use('/profile', require('./routes/profile'));
+
+// app.use('/myjob',require('./routes/myjob'));
+
 app.use('/user1',require('./routes/userUpdate'))
 app.use('/getuser',require('./routes/user1'))
 app.use('/api/sendconnect',require('./routes/connection'))
@@ -40,9 +44,7 @@ app.use('/getpending',require('./routes/pending'))
 app.use('/acceptrequest',require('./routes/acceptrequest'))
 app.use('/connections',require('./routes/connections'))
 app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
-app.use('/api/senddelete',require('./routes/deleteConnection'))
-app.use(verifyJWT)
-
+app.use('/api/senddelete',require('./routes/deleteConnection')) 
 app.use(verifyJWT)
 
 

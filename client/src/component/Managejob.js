@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import { User } from "../context/User";
 import { Card, CardContent, Typography, Button, Box, Chip, Divider, Paper } from '@mui/material';
 import axios from "../api/axios";
 import {Link } from 'react-router-dom';
 
-const Showjob = () => {
-  const [jobData, setJobData] = useState([]);
+const Managejob = () => {
+  const [Myjob, setMyjob] = useState([]);
+  const { newUser } = useContext(User);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/job/showjob');
-        setJobData(response.data);
+        const data={
+            jobberid: newUser.userid
+        }
+        const response = await axios.post('/job/myjob',data);
+        setMyjob(response.data);
       } catch (error) {
         console.error('Error fetching job data: ', error);
       }
@@ -20,7 +25,7 @@ const Showjob = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      {jobData.map((job, index) => (
+      {Myjob.map((job, index) => (
         <Card key={index} sx={{
           maxWidth: 400,
           margin: '16px',
@@ -71,7 +76,7 @@ const Showjob = () => {
             <Typography variant="body1" sx={{ color: '#555', marginBottom: '8px' }}>
               <strong>Application Deadline:</strong> {job.lastdate}
             </Typography>
-            <Link to={`/job/${job._id}`}>
+            <Link to={`/app/${job._id}`}>
             <Button
               variant="contained"
               color="primary"
@@ -81,7 +86,7 @@ const Showjob = () => {
               sx={{ mt: 2, backgroundColor: '#1976D2', color: 'white', fontWeight: 'bold' }}
               
             >
-              Apply Now
+              Application
             </Button>
             </Link>
           </CardContent>
@@ -91,4 +96,4 @@ const Showjob = () => {
   );
 };
 
-export default Showjob;
+export default Managejob;

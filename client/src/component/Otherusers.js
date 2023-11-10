@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Otherusers = () => {
   const { newUser } = useContext(User);
-  console.log(newUser);
+  // console.log(newUser);
 
   const [otheruser, setOtheruser] = useState([]);
 

@@ -24,7 +24,19 @@ function App() {
       details: "",
       contact: ["","",""],
       applylink: "",    
-      skill:[] })//
+      skill:[],
+      jobberid: newUser.userid // Jobber id aur user id same hai dhyan dena koi antar nii hai
+    })//
+    useEffect(() => {
+      setComp((prevComp) => ({
+        ...prevComp,
+        jobberid: newUser.userid,
+        contact: ["", newUser.email, ""],  // Update contact[1]
+      }));
+    }, [newUser.userid, newUser.email]);
+    
+    // comp.contact[1]=newUser.email
+    console.log("111"+newUser)
   return (
     <>
     <User.Provider value={{newUser,setNewUser,comp,setComp}}>
