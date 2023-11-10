@@ -4,13 +4,11 @@ const Schema = mongoose.Schema;
 const connectionSchema = new Schema({
     senderEmail: {
         type: String,
-        required: true,
-        // unique: true, // Add unique constraint to senderEmail
+        required: true
     },
     receiverEmail: {
         type: String,
-        required: true,
-        // unique: true, // Add unique constraint to receiverEmail
+        required: true
     },
     isConnected: {
         type: Boolean,
