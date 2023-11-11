@@ -8,7 +8,7 @@ import Pending from "./Pending";
 import Post1 from "./Post";
 import AllPost from "./AllPost";
 import DefaultComponent from "./Comment";
-import Test from "./Test";
+import Test from "../test/Test";
 import Showjob from "./Showjob";
 import  Createjob from "./Createjob"
 import Job from "./Job";
@@ -18,7 +18,7 @@ import Chat from "./Chat";
 export default function Container1(){
     return(<>
     <Dashboard/>
-
+<Test/>
 
 
           <Routes>

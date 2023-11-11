@@ -11,6 +11,15 @@ const credentials = require('./middleware/credential')
 const {initSocket}=require('./Socs')
 
 
+
+
+
+
+
+
+
+
+
 const PORT=3500
 const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
@@ -46,7 +55,8 @@ app.use('/acceptrequest',require('./routes/acceptrequest'))
 app.use('/connections',require('./routes/connections'))
 app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
 app.use('/api/senddelete',require('./routes/deleteConnection')) 
-app.use('/chat',require('./routes/chat')) 
+app.use('/chat',require('./routes/chat'))  
+
 app.use(verifyJWT)
 
 
