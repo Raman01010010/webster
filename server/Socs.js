@@ -35,7 +35,7 @@ socket.on('enterRoom', ({ name, room }) => {
     // To user who joined 
    
     // To everyone else 
-    socket.broadcast.to(room).emit('message',{"name":"Raman","text":"3424helllo4323"})
+   // socket.broadcast.to(room).emit('message',{"name":"Raman","text":"3424helllo4323"})
 
     // Update user list for room 
     
@@ -50,9 +50,9 @@ socket.on('enterRoom', ({ name, room }) => {
         socket.on('message',async ({ name,room,sender,receiver, text }) => {
             console.log("sent")
 const chat=new chatSchema({"room":room,"sender":sender,"receiver":receiver,"content":text})
-const r=await chat.save()
-console.log(r)
-            socket.broadcast.emit("message",{"name":"Raman","text":"helllo4323"})
+//const r=await chat.save()
+//console.log(r)
+            socket.broadcast.to(room).emit('message',{"room":room,"sender":sender,"receiver":receiver,"text":text})
             // ... Handle messages ...
         });
 

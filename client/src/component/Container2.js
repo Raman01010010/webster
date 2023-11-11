@@ -14,6 +14,7 @@ import  Createjob from "./Createjob"
 import Job from "./Job";
 import Managejob from "./Managejob"
 import Application from "./Application";
+import Chat from "./Chat";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -21,6 +22,7 @@ export default function Container1(){
 
 
           <Routes>
+          <Route path="/" element={<><Chat/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
