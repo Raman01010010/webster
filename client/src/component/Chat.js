@@ -10,7 +10,7 @@ export default function Chat() {
 
     const [message, setMessage] = useState({ "sender": newUser.userid, "receiver": "6548fae8ee9562f6a060844e", "content": "", "room": "" })
     const [messages, setMessages] = useState([[{ "name": "Raman", "content": "helllo" }]])
-    const [user2Id,setUser2id]= useState("6548fae8ee9562f6a060844e")
+    const [user2Id,setUser2id]= useState("")
     const [conn,setConn]=useState([])
 
 
