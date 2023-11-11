@@ -46,6 +46,7 @@ app.use('/acceptrequest',require('./routes/acceptrequest'))
 app.use('/connections',require('./routes/connections'))
 app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
 app.use('/api/senddelete',require('./routes/deleteConnection')) 
+app.use('/chat',require('./routes/chat')) 
 app.use(verifyJWT)
 
 

@@ -47,14 +47,45 @@ socket.on('enterRoom', ({ name, room }) => {
 
 
 //Messsage
-        socket.on('message',async ({ name,room,sender,receiver, text }) => {
-            console.log("sent")
-const chat=new chatSchema({"room":room,"sender":sender,"receiver":receiver,"content":text})
-//const r=await chat.save()
-//console.log(r)
-            socket.broadcast.to(room).emit('message',{"room":room,"sender":sender,"receiver":receiver,"text":text})
-            // ... Handle messages ...
+socket.on('message', async ({ name, room, sender, receiver, content }) => {
+    console.log("sent");
+
+    try {
+        // Create a new chat document
+        const chat = new chatSchema({
+            "room": room,
+            "sender": sender,
+            "receiver": receiver,
+            "content": content
         });
+
+        // Save the chat document to the database
+        await chat.save();
+
+        // Broadcast the message to everyone in the room except the sender
+        socket.to(room).emit('message', {
+            "room": room,
+            "sender": sender,
+            "receiver": receiver,
+            "content": content
+        });
+
+        // Optionally, you can also emit the message to the sender if needed
+        socket.emit('message', {
+            "room": room,
+            "sender": sender,
+            "receiver": receiver,
+            "content": content
+        });
+
+        // ... Handle messages ...
+
+    } catch (error) {
+        console.error("Error handling the message:", error);
+        // Handle the error in an appropriate way, e.g., send an error response.
+    }
+});
+
 
         socket.on('activity', (name) => {
             console.log("acc")

@@ -2,56 +2,61 @@
 import io from 'socket.io-client';
 import { useState, useEffect, useContext } from "react";
 import { User } from '../context/User';
-
+import axios from '../api/axios';
+const socket = io('ws://localhost:3500/');
 export default function Chat() {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
     const { newUser } = useContext(User)
-    const socket = io('ws://localhost:3500/');
-    const [message, setMessage] = useState({ "sender": newUser.userid, "receiver": "6548fae8ee9562f6a060844e", "text": "", "room": "" })
-    const [messages,setMessages]=useState([[{"name":"Raman","text":"helllo"}]])
-    const user2Id = "6548fae8ee9562f6a060844e"
+
+    const [message, setMessage] = useState({ "sender": newUser.userid, "receiver": "6548fae8ee9562f6a060844e", "content": "", "room": "" })
+    const [messages, setMessages] = useState([[{ "name": "Raman", "content": "helllo" }]])
+    const [user2Id,setUser2id]= useState("6548fae8ee9562f6a060844e")
+    const [conn,setConn]=useState([])
+
+
+
     console.log(newUser)
-    
+
     useEffect(() => {
         socket.on('message', (data) => {
             console.log("Raman")
-            setMessages(old=>{
-                return([...old,data])
+            setMessages(old => {
+                return ([...old, data])
             })
             console.log(messages)
-          // Handle incoming messages
-          // Update the 'messages' state with the new message
+            // Handle incoming messages
+            // Update the 'messages' state with the new message
         });
-    
+
         socket.on('activity', (name) => {
-          // Handle typing activity
-        //  setActivity(`${name} is typing...`);
-    
-          // Clear after 3 seconds
-         // clearTimeout(activityTimer);
-          const newActivityTimer = setTimeout(() => {
-            //setActivity('');
-          }, 3000);
-        //  setActivityTimer(newActivityTimer); // Update the activityTimer state
+            // Handle typing activity
+            //  setActivity(`${name} is typing...`);
+
+            // Clear after 3 seconds
+            // clearTimeout(activityTimer);
+            const newActivityTimer = setTimeout(() => {
+                //setActivity('');
+            }, 3000);
+            //  setActivityTimer(newActivityTimer); // Update the activityTimer state
         });
-    
+
         socket.on('userList', ({ users }) => {
-         // setUsers(users);
+            // setUsers(users);
         });
-    
+
         socket.on('roomList', ({ rooms }) => {
-         // setRooms(rooms);
+            // setRooms(rooms);
         });
-      }, []);
-   
+    }, []);
+
     useEffect(() => {
         // Ensure the room ID is consistent for both users by sorting their IDs
         const sortedUserIds = [newUser.userid, user2Id].sort();
-        const uniqueRoomID = "677"//sortedUserIds.join('_'); // You can add a timestamp if needed
+        const uniqueRoomID = sortedUserIds.join('_'); // You can add a timestamp if needed
         socket.emit('enterRoom', {
-            name:"raman",
+            name: "raman",
             room: uniqueRoomID,
-          });
+        });
         setMessage(old => {
             return ({
                 ...old,
@@ -59,9 +64,27 @@ export default function Chat() {
             })
         }
         )
-
-
     }, [newUser.userid, user2Id]);
+
+
+    useEffect(()=>{
+const fetch=async()=>{
+    const sortedUserIds = [newUser.userid, user2Id].sort();
+    const uniqueRoomID = sortedUserIds.join('_');
+    try{
+        const res1 = await axios.post('/chat', { "room": uniqueRoomID });
+        console.log(res1);
+        setMessages(old=>{
+            return(
+                [...res1?.data]
+            )
+        })
+    }catch(error){
+        console.log(error)
+    }
+}
+fetch()
+    },[user2Id])
     useEffect(() => {
         // Update isDesktop state when the window is resized
         const handleResize = () => {
@@ -74,6 +97,26 @@ export default function Chat() {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const sortedUserIds = [newUser.userid, user2Id].sort();
+            const uniqueRoomID = sortedUserIds.join('_'); 
+            try {
+                const res = await axios.post('/connections', { "newUser": newUser.email });
+                console.log(res);
+                setConn(res?.data);
+            } catch (error) {
+                console.log(error);
+            }
+
+
+           
+        };
+    
+        fetchData();
+    }, [newUser.email]);
+    
     function handleChange(event) {
 
         setMessage(old => {
@@ -91,16 +134,21 @@ export default function Chat() {
 
 
 
-    function handleSend() {
-// if (name && msgInput && chatRoom) {
-    socket.emit('message', message);
-    setMessage(old => {
-        return ({
-            ...old,
-          //  "text":""
+    function handleSend(e) {
+        e.preventDefault();
+        // if (name && msgInput && chatRoom) {
+        socket.emit('message', message);
+        setMessage(old => {
+            return ({
+                ...old,
+                //  "text":""
+            })
         })
-    })
-  //  }
+        //  }
+    }
+
+    function setO(id){
+        setUser2id(id)
     }
     return (<>
         <section style={{ backgroundColor: "#CDC4F9" }}>
@@ -138,8 +186,13 @@ export default function Chat() {
                                                 style={{ position: "relative", height: 400 }}
                                             >
                                                 <ul className="list-unstyled mb-0">
-                                                    <li className="p-2 border-b">
-                                                        <a href="#!" className="flex justify-between">
+
+                                                    
+                                                   
+                                                    {conn.map(item=>{
+                                                        return(<>
+                                                         <li className="p-2 border-b">
+                                                        <a onClick={()=>setO(item._id)} className="flex justify-between">
                                                             <div className="flex flex-row">
                                                                 <div>
                                                                     <img
@@ -151,7 +204,7 @@ export default function Chat() {
                                                                     <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 badge-dot" />
                                                                 </div>
                                                                 <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Marie Horwitz</p>
+                                                                    <p className="fw-bold mb-0">{item.username}</p>
                                                                     <p className="text-xs text-gray-700">
                                                                         Hello, Are you there?
                                                                     </p>
@@ -166,140 +219,8 @@ export default function Chat() {
                                                                 </span>
                                                             </div>
                                                         </a>
-                                                    </li>
-                                                    <li className="p-2 border-b">
-                                                        <a href="#!" className="flex justify-between">
-                                                            <div className="flex flex-row">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                                                                        alt="avatar"
-                                                                        className="flex self-center me-3"
-                                                                        width={60}
-                                                                    />
-                                                                    <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-yellow-500 badge-dot" />
-                                                                </div>
-                                                                <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Alexa Chung</p>
-                                                                    <p className="text-xs text-gray-700">
-                                                                        Lorem ipsum dolor sit.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="pt-1">
-                                                                <p className="text-xs text-gray-700 mb-1">
-                                                                    5 mins ago
-                                                                </p>
-                                                                <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 rounded-full py-2 px-4 float-end">
-                                                                    2
-                                                                </span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li className="p-2 border-b">
-                                                        <a href="#!" className="flex justify-between">
-                                                            <div className="flex flex-row">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                                                        alt="avatar"
-                                                                        className="flex self-center me-3"
-                                                                        width={60}
-                                                                    />
-                                                                    <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 badge-dot" />
-                                                                </div>
-                                                                <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Danny McChain</p>
-                                                                    <p className="text-xs text-gray-700">
-                                                                        Lorem ipsum dolor sit.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="pt-1">
-                                                                <p className="text-xs text-gray-700 mb-1">
-                                                                    Yesterday
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li className="p-2 border-b">
-                                                        <a href="#!" className="flex justify-between">
-                                                            <div className="flex flex-row">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                                                        alt="avatar"
-                                                                        className="flex self-center me-3"
-                                                                        width={60}
-                                                                    />
-                                                                    <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 badge-dot" />
-                                                                </div>
-                                                                <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Ashley Olsen</p>
-                                                                    <p className="text-xs text-gray-700">
-                                                                        Lorem ipsum dolor sit.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="pt-1">
-                                                                <p className="text-xs text-gray-700 mb-1">
-                                                                    Yesterday
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li className="p-2 border-b">
-                                                        <a href="#!" className="flex justify-between">
-                                                            <div className="flex flex-row">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
-                                                                        alt="avatar"
-                                                                        className="flex self-center me-3"
-                                                                        width={60}
-                                                                    />
-                                                                    <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-yellow-500 badge-dot" />
-                                                                </div>
-                                                                <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Kate Moss</p>
-                                                                    <p className="text-xs text-gray-700">
-                                                                        Lorem ipsum dolor sit.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="pt-1">
-                                                                <p className="text-xs text-gray-700 mb-1">
-                                                                    Yesterday
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li className="p-2">
-                                                        <a href="#!" className="flex justify-between">
-                                                            <div className="flex flex-row">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                                                        alt="avatar"
-                                                                        className="flex self-center me-3"
-                                                                        width={60}
-                                                                    />
-                                                                    <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 badge-dot" />
-                                                                </div>
-                                                                <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">Ben Smith</p>
-                                                                    <p className="text-xs text-gray-700">
-                                                                        Lorem ipsum dolor sit.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="pt-1">
-                                                                <p className="text-xs text-gray-700 mb-1">
-                                                                    Yesterday
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
+                                                    </li></>)
+                                                    })}
                                                 </ul>
                                             </div>
                                         </div>
@@ -316,46 +237,46 @@ export default function Chat() {
                                             style={{ position: "relative", height: 350 }}
                                         >
                                             <div className="h-5/6 overflow-scroll">
-                                            {messages.map(item=>{
-                                                console.log(item)
-    return(<>
-     {item.sender!==newUser.userid? <div className="flex flex-row justify-start">
-                                                    <img
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                                        alt="avatar 1"
-                                                        style={{ width: 45, height: "100%" }}
-                                                    />
-                                                    <div>
-                                                        <p
-                                                            className="text-xs p-2 ms-3 mb-1 rounded-3"
-                                                            style={{ backgroundColor: "#f5f6f7" }}
-                                                        >
-                                                           {item.text}
-                                                        </p>
-                                                        <p className="text-xs ms-3 mb-3 rounded-3 text-gray-700 float-end">
-                                                            12:00 PM | Aug 13
-                                                        </p>
-                                                    </div>
-                                                </div>:   <div className="flex flex-row justify-end">
-                                                    <div>
-                                                        <p className="text-xs p-2 me-3 mb-1 text-white rounded-3 bg-blue-600">
-                                                            {item.text}
-                                                        </p>
-                                                        <p className="text-xs me-3 mb-3 rounded-3 text-gray-700">
-                                                            12:00 PM | Aug 13
-                                                        </p>
-                                                    </div>
-                                                    <img
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                                        alt="avatar 1"
-                                                        style={{ width: 45, height: "100%" }}
-                                                    />
-                                                </div>} </>)
-})}
+                                                {messages.map(item => {
+                                                    console.log(item)
+                                                    return (<>
+                                                        {item.sender !== newUser.userid ? <div className="flex flex-row justify-start">
+                                                            <img
+                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                                                alt="avatar 1"
+                                                                style={{ width: 45, height: "100%" }}
+                                                            />
+                                                            <div>
+                                                                <p
+                                                                    className="text-xs p-2 ms-3 mb-1 rounded-3"
+                                                                    style={{ backgroundColor: "#f5f6f7" }}
+                                                                >
+                                                                    {item.content}
+                                                                </p>
+                                                                <p className="text-xs ms-3 mb-3 rounded-3 text-gray-700 float-end">
+                                                                    12:00 PM | Aug 13
+                                                                </p>
+                                                            </div>
+                                                        </div> : <div className="flex flex-row justify-end">
+                                                            <div>
+                                                                <p className="text-xs p-2 me-3 mb-1 text-white rounded-3 bg-blue-600">
+                                                                    {item.content}
+                                                                </p>
+                                                                <p className="text-xs me-3 mb-3 rounded-3 text-gray-700">
+                                                                    12:00 PM | Aug 13
+                                                                </p>
+                                                            </div>
+                                                            <img
+                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                alt="avatar 1"
+                                                                style={{ width: 45, height: "100%" }}
+                                                            />
+                                                        </div>} </>)
+                                                })}
 
 
 
-                                             
+
 
 
 
@@ -367,12 +288,12 @@ export default function Chat() {
                                             <label htmlFor="email" className="leading-7 text-sm text-gray-400">
                                                 Message
                                             </label>
-    
+
                                             <input
                                                 onChange={handleChange}
                                                 type="text"
                                                 id="text"
-                                                name="text"
+                                                name="content"
                                                 className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-green-900 rounded border border-gray-600 focus:border-green-500 text-base outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                             />
                                         </div>
