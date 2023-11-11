@@ -75,4 +75,36 @@ const myjob = async (req, res) => {
       res.status(400).send("Failed to retrieve job data");
     }
   };
-module.exports={create,showjob,myjob,Application}
+
+
+
+  const location = async (req, res) => {
+    try {
+        const result = await job.find();
+
+        // Extract unique locationonsite values
+        const uniqueLocations = Array.from(new Set(result.map(item => item.locationonsite)));
+
+        console.log(uniqueLocations);
+        res.status(200).send(uniqueLocations);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send("11111");
+    }
+};
+const company = async (req, res) => {
+  try {
+      const result = await job.find();
+
+      // Extract unique locationonsite values
+      const uniqueCompany = Array.from(new Set(result.map(item => item.company)));
+
+      console.log(uniqueCompany);
+      res.status(200).send(uniqueCompany);
+  } catch (error) {
+      console.log(error);
+      res.status(400).send("11111");
+  }
+};
+// locationonsite
+module.exports={create,showjob,myjob,Application,location,company}

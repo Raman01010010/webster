@@ -20,6 +20,7 @@ export default function Container1(){
 
 
           <Routes>
+
           <Route path="/pending" element={<><Pending/></>} />
         <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/cpost" element={<>   

@@ -112,7 +112,7 @@ export default function MiniDrawer() {
         navigate('/ram')
     }
 
-    return (
+    return (/*
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
@@ -190,9 +190,9 @@ export default function MiniDrawer() {
                         </ListItem>
                     ))}
                 </List>
-            </Drawer>
+            </Drawer>*/
             <Box component="main" sx={{ flexGrow: 1, }}>
                 <Container1 /> </Box>
-        </Box>
+        // </Box>
     );
 }
