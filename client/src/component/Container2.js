@@ -17,8 +17,7 @@ export default function Container1(){
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
-          <Route path="/cpost" element={<>   
-   <Post1/></>} />
+          <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />
           <Route path="/signin" element={<><Signin/></>} />

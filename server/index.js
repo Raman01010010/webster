@@ -43,6 +43,7 @@ app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
 app.use('/api/senddelete',require('./routes/deleteConnection'))
 app.use('/fetchingdata',require('./routes/fetchingdata'))
 app.use('/addskill',require('./routes/addskill'))
+app.use('/deleteskill',require('./routes/deleteskill'))
 app.use(verifyJWT)
 
 
