@@ -44,6 +44,8 @@ app.use('/api/senddelete',require('./routes/deleteConnection'))
 app.use('/fetchingdata',require('./routes/fetchingdata'))
 app.use('/addskill',require('./routes/addskill'))
 app.use('/deleteskill',require('./routes/deleteskill'))
+app.use('/endorseskill',require('./routes/endorseSkills'))
+app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use(verifyJWT)
 
 

@@ -4,22 +4,6 @@ import { User } from "../context/User";
 import axios from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import * as React from 'react';
-// import Box from '@mui/joy/Box';
-// import Button from '@mui/joy/Button';
-// import Modal from '@mui/joy/Modal';
-// import ModalDialog from '@mui/joy/ModalDialog';
-// import Typography from '@mui/joy/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import { ThemeProvider } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
-
-
-
 
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
@@ -28,10 +12,6 @@ const Profilepage = () => {
   const [editSkills, setEditSkills] = useState();
   const { newUser } = useContext(User);
   const navigate = useNavigate();
-
-  const [open, setOpen] = React.useState(false);
-  
-
 
 
   useEffect(() => {
@@ -65,6 +45,21 @@ const Profilepage = () => {
     }
   };
 
+  const Endorse = async (skill, newUseremail,otheruser) => {
+    const d = {
+      skill: skill,
+      userEmail: newUseremail,
+      otheruserEmail: otheruser
+    };
+    try {
+      const res = await axios.post("/endorseskill", d);
+      toast.success("Skill Endorsed Successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Can't Endorse Skill Due to Some Err");
+    }
+  };
+
   const handleRemoveSkill = async (index, newUseremail) => {
     const d = {
       index: index,
@@ -79,6 +74,24 @@ const Profilepage = () => {
       toast.error("Can't Delete Skill Due to Some Err");
     }
   };
+
+
+  
+  const fetchingEndorse = async (email, skill) => {
+    const d = {
+      email: email,
+      skill: skill,
+    };
+    try {
+      const res = await axios.post("/fetchendorse", d);
+      console.log("Endorsement data:", res.data);
+      // Ensure this log statement is printed in the console
+      navigate('/endorsepage', { state: { param1: res.data } });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -121,7 +134,7 @@ const Profilepage = () => {
               >
                  {newUser.email !== email && (
                   <button
-                    onClick={() => handleRemoveSkill(index, newUser.email)}
+                    onClick={() => Endorse(element, newUser.email,email)}
                     className="absolute top-0 right-0 p-1  bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 z-10 "
                   >
                     Endorse
@@ -137,64 +150,11 @@ const Profilepage = () => {
                     X
                   </button>
                 )}
-
-
-                  
-
-<React.Fragment>
-      <Button variant="outlined" color="neutral" onClick={() => setOpen(true)}>
-        Open modal
-      </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <Dialog
-          aria-labelledby="nested-modal-title"
-          aria-describedby="nested-modal-description"
-          sx={(theme) => ({
-            [theme.breakpoints.only('xs')]: {
-              top: 'unset',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              borderRadius: 0,
-              transform: 'none',
-              maxWidth: 'unset',
-            },
-          })}
-        >
-          <Typography id="nested-modal-title" level="h2">
-            Are you absolutely sure?
-          </Typography>
-          <Typography id="nested-modal-description" textColor="text.tertiary">
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
-          </Typography>
-          <Box
-            sx={{
-              mt: 1,
-              display: 'flex',
-              gap: 1,
-              flexDirection: { xs: 'column', sm: 'row-reverse' },
-            }}
-          >
-            <Button variant="solid" color="primary" onClick={() => setOpen(false)}>
-              Continue
-            </Button>
-            <Button
-              variant="outlined"
-              color="neutral"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Dialog>
-      </Modal>
-    </React.Fragment>
-
-
-
-
-
+                  <button
+                    className="absolute bottom-0 bg-sky-950 text-neutral-50	border-4 rounded-lg border-red-400"
+                    onClick={() => fetchingEndorse(email,element)}
+                  >Endorsed By...
+                  </button>
               </div>
             ))}
             {newUser.email === email && (
