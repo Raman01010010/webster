@@ -36,20 +36,23 @@ const employmentTypes = [
   "Full-time",
   "Part-time",
   "Contract",
+  "Freelance",
   "Internship",
   "Temporary",
 ];
+
 const Showjob = () => {
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [compa, setCompa] = useState([]);
+  const [data, setData] = useState({
+    jobtype: [],
+    locationtypes: [],
+    locationonsite: [],
+    company: [],
+  });
+  const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
     // Fetch data from the backend using axios or your preferred method
     const fetchData = async () => {
@@ -66,10 +69,49 @@ const Showjob = () => {
     // Call the fetchData function
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Fetch data from the backend using axios or your preferred method
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/job/getcompa");
+        // Assuming the array is present in the 'data' property of the response
+        setCompa(response.data);
+        console.log(compa);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error);
+      }
+    };
+
+    // Call the fetchData function
+    fetchData();
+  }, []);
+  const handleFilterDialogOpen = () => {
+    setOpenFilterDialog(true);
+  };
+  const PostJob = async () => {
+    try {
+      const res = await axios.post("/job/showjob", data); // Send data as the request body
+      console.log("posting");
+      setJobData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleFilterDialogClose = async () => {
+    setOpenFilterDialog(false);
+    try {
+      await PostJob(); // Wait for the job to be posted
+
+      // Once the job is successfully posted, send an email
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to post job or send email. Please try again.");
+    }
+  };
+  console.log("showjob");
   const Navbar = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [openFilterDialog, setOpenFilterDialog] = useState(false);
     const [openJobAlertsDialog, setOpenJobAlertsDialog] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -78,22 +120,6 @@ const Showjob = () => {
 
     const handleDrawerClose = () => {
       setOpenDrawer(false);
-    };
-
-    const handleClickOpen = () => {
-      setOpenDialog(true);
-    };
-
-    const handleClose = () => {
-      setOpenDialog(false);
-    };
-
-    const handleFilterDialogOpen = () => {
-      setOpenFilterDialog(true);
-    };
-
-    const handleFilterDialogClose = () => {
-      setOpenFilterDialog(false);
     };
 
     const handleJobAlertsDialogOpen = () => {
@@ -111,8 +137,7 @@ const Showjob = () => {
       { text: "Manage Job Posted", link: "/myjob" },
       { text: "Resume Builder", link: "/resumebuilder" },
     ];
-    console.log(loca);
-
+    console.log("problem" + openFilterDialog);
     return (
       <Hidden mdUp>
         <AppBar position="fixed" sx={{ marginBottom: "16px", height: "70px" }}>
@@ -152,8 +177,16 @@ const Showjob = () => {
                 multiple
                 id="tags-standard"
                 options={employmentTypes}
-                getOptionLabel={(option) => option}
-                defaultValue={[employmentTypes[0]]} // Set a default value if needed
+                value={data.jobtype}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      jobtype: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -163,12 +196,22 @@ const Showjob = () => {
                   />
                 )}
               />
+
               <Autocomplete
                 multiple
                 id="location-types"
                 options={locationTypes}
+                value={data.locationtypes}
                 getOptionLabel={(option) => option}
-                defaultValue={[locationTypes[0]]} // Set a default value if needed
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      locationtypes: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -178,19 +221,49 @@ const Showjob = () => {
                   />
                 )}
               />
-              
               <Autocomplete
                 multiple
                 id="location"
                 options={loca}
-                getOptionLabel={(option) => option}
-                defaultValue={[loca[0]]} // Set a default value if needed
+                value={data.locationonsite}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      locationonsite: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="standard"
                     label="Location"
                     placeholder="Select Location"
+                  />
+                )}
+              />
+              <Autocomplete
+                multiple
+                id="company"
+                options={compa}
+                value={data.company}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      company: [...newValue],
+                    };
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Company"
+                    placeholder="Select Company"
                   />
                 )}
               />
@@ -268,70 +341,24 @@ const Showjob = () => {
             ))}
           </List>
         </Drawer>
-        <Dialog open={openDialog} onClose={handleClose}>
-          <DialogTitle>Preferences</DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <DialogContent dividers>
-            <Typography gutterBottom>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </Typography>
-            <Typography gutterBottom>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur
-              et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-              auctor.
-            </Typography>
-            <Typography gutterBottom>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-              cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-              dui. Donec ullamcorper nulla non metus auctor fringilla.
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Save changes
-            </Button>
-          </DialogActions>
-        </Dialog>
       </Hidden>
     );
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/job/showjob");
+        // Send data as the request body
+        const response = await axios.post("/job/showjob", data);
         setJobData(response.data);
       } catch (error) {
         console.error("Error fetching job data: ", error);
       }
     };
     fetchData();
-  }, []);
+  }, [data]);
 
   const Sidebar = () => {
-    const [openDialog, setOpenDialog] = useState(false);
-    const [openFilterDialog, setOpenFilterDialog] = useState(false);
     const [openJobAlertsDialog, setOpenJobAlertsDialog] = useState(false);
-
-    const handleFilterDialogOpen = () => {
-      setOpenFilterDialog(true);
-    };
-
-    const handleFilterDialogClose = () => {
-      setOpenFilterDialog(false);
-    };
 
     const handleJobAlertsDialogOpen = () => {
       setOpenJobAlertsDialog(true);
@@ -441,8 +468,16 @@ const Showjob = () => {
                 multiple
                 id="tags-standard"
                 options={employmentTypes}
-                getOptionLabel={(option) => option}
-                defaultValue={[employmentTypes[0]]} // Set a default value if needed
+                value={data.jobtype}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      jobtype: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -452,12 +487,22 @@ const Showjob = () => {
                   />
                 )}
               />
+
               <Autocomplete
                 multiple
                 id="location-types"
                 options={locationTypes}
+                value={data.locationtypes}
                 getOptionLabel={(option) => option}
-                defaultValue={[locationTypes[0]]} // Set a default value if needed
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      locationtypes: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -467,18 +512,52 @@ const Showjob = () => {
                   />
                 )}
               />
-               <Autocomplete
+
+              <Autocomplete
                 multiple
                 id="location"
                 options={loca}
-                getOptionLabel={(option) => option}
-                defaultValue={[loca[0]]} // Set a default value if needed
+                value={data.locationonsite}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  event.preventDefault();
+                  setData((old) => {
+                    return {
+                      ...old,
+                      locationonsite: [...newValue],
+                    };
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="standard"
                     label="Location"
                     placeholder="Select Location"
+                  />
+                )}
+              />
+
+              <Autocomplete
+                multiple
+                id="company"
+                options={compa}
+                value={data.company}
+                onChange={(event, newValue) => {
+                  // setSelectedSkills(newValue);
+                  setData((old) => {
+                    return {
+                      ...old,
+                      company: [...newValue],
+                    };
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Company"
+                    placeholder="Select Company"
                   />
                 )}
               />

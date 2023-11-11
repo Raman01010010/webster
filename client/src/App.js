@@ -23,6 +23,7 @@ function App() {
       jobtype: "",
       details: "",
       contact: ["","",""],
+      locationtypes:"",
       applylink: "",    
       skill:[],
       jobberid: newUser.userid // Jobber id aur user id same hai dhyan dena koi antar nii hai

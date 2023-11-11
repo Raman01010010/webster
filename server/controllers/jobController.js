@@ -38,17 +38,37 @@ const create = async (req, res) => {
 //         const 
 //     }    
 // }
-const showjob=async(req,res)=>{
-    //const pro =new job(req.body)
-    try{
-       const re=await job.find()
-       console.log(re)
-       res.status(200).send(re)
-    }catch(error){
-        console.log(error)
-        res.status(400).send("11111")
-    }
-}
+const showjob = async (req, res) => {
+  try {
+    console.log(req.body)
+      const aType = req.body.jobtype;
+      const bType = req.body.locationtypes;
+      const cType = req.body.locationonsite;
+      const dType = req.body.company;
+      
+      let filter = {};
+      // console.log(bType.length);
+      // Check if any of the arrays have a size greater than 0
+      if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
+          filter = {
+              $or: [
+                  { jobtype: { $in: aType } },
+                  { locationtypes: { $in: bType } },
+                  { locationonsite: { $in: cType } },
+                  { company: { $in: dType } },
+              ],
+          };
+      }
+
+      const jobs = await job.find(filter);
+       console.log(jobs)
+      res.status(200).send(jobs);
+  } catch (error) {
+      console.log(error);
+      res.status(400).send("Error fetching jobs");
+  }
+};
+
 
 
 const myjob = async (req, res) => {

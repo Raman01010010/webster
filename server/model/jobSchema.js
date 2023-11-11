@@ -39,6 +39,9 @@ const jobSchema = new Schema({
             
             }
     ],
+    locationtypes:{
+        type:String
+    },
         applylink:{
             type:String
         },
