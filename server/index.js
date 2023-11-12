@@ -8,6 +8,16 @@ const corsOption=require('./config/corsOptions')
 const verifyJWT=require('./middleware/verifyJWT')
 const cookieParser=require('cookie-parser')
 const credentials = require('./middleware/credential')
+const {initSocket}=require('./Socs')
+
+
+
+
+
+
+
+
+
 
 
 const PORT=3500
@@ -45,6 +55,8 @@ app.use('/acceptrequest',require('./routes/acceptrequest'))
 app.use('/connections',require('./routes/connections'))
 app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
 app.use('/api/senddelete',require('./routes/deleteConnection')) 
+app.use('/chat',require('./routes/chat'))  
+
 app.use(verifyJWT)
 
 
@@ -65,7 +77,12 @@ app.all('/*',(req,res)=>{
 
 app.use(errorHandler)
 //Route Handlers
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  const  server=app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    initSocket(server)
 });
+
+
+
