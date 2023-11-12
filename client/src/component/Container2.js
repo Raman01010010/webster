@@ -15,10 +15,12 @@ import Job from "./Job";
 import Managejob from "./Managejob"
 import Application from "./Application";
 import Chat from "./Chat";
+import ControlledOpenSpeedDial from "./Speed";
 export default function Container1(){
     return(<>
     <Dashboard/>
 <Test/>
+<ControlledOpenSpeedDial/>
 
 
           <Routes>
