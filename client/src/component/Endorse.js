@@ -37,7 +37,6 @@ const Endorse = () => {
                         )
                     })
                  }
-
             </div>
           </div>
         </section>
