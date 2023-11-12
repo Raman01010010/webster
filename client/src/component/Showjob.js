@@ -648,7 +648,7 @@ const Showjob = () => {
                 variant="body1"
                 sx={{ color: "#555", marginBottom: "8px" }}
               >
-                <strong>Expired:</strong> {job.isExpired ? "Yes" : "No"}
+                <strong>Workplace</strong> {job.locationtypes}
               </Typography>
               <Box
                 sx={{ display: "flex", flexWrap: "wrap", marginBottom: "16px" }}
