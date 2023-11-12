@@ -20,6 +20,16 @@ const chatSchema = new Schema({
         type: String,
         required: true,
       },
+      other: {
+        des: {
+          type: String,
+          
+        },
+        link: {
+          type: String,
+          
+        }
+      },
       timestamp: {
         type: Date,
         default: Date.now,

@@ -35,7 +35,7 @@ export default function Chat() {
       const handleUpload = async () => {
         const formData = new FormData();
         formData.append("file", file);
-    
+        formData.append('json',JSON.stringify(message))
         try {
           const response = await axios.post("/chat/img", formData, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -91,7 +91,9 @@ export default function Chat() {
         setMessage(old => {
             return ({
                 ...old,
-                "room": uniqueRoomID
+                "room": uniqueRoomID,
+                "sender": newUser.userid,
+                "receiver":user2Id
             })
         }
         )
@@ -102,6 +104,13 @@ export default function Chat() {
 const fetch=async()=>{
     const sortedUserIds = [newUser.userid, user2Id].sort();
     const uniqueRoomID = sortedUserIds.join('_');
+    setMessage(old=>{
+        return({
+            ...old,
+            "sender": newUser.userid,
+            "receiver":user2Id
+        })
+    })
     try{
         const res1 = await axios.post('/chat', { "room": uniqueRoomID });
         console.log(res1);
@@ -269,7 +278,7 @@ fetch()
                                         >
                                             <div className="h-5/6 overflow-scroll">
                                                 {messages.map(item => {
-                                                    console.log(item)
+                                                  //  console.log(item)
                                                     return (<>
                                                         {item.sender !== newUser.userid ? <div className="flex flex-row justify-start">
                                                             <img

@@ -33,6 +33,7 @@ const get = async (req, res) => {
 
 const up=async (req, res) => {
     console.log(req.file)
+    console.log(req.body.json)
     try {
         if (!req.file) {
           return res.status(400).json({ error: "No file uploaded" });
