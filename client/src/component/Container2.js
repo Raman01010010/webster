@@ -16,6 +16,8 @@ import Managejob from "./Managejob"
 import Application from "./Application";
 import Chat from "./Chat";
 import ControlledOpenSpeedDial from "./Speed";
+import Profilepage from "./Profilepage";
+import Endorse from "./Endorse";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -28,8 +30,9 @@ export default function Container1(){
           <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
-          <Route path="/cpost" element={<>   
-   <Post1/></>} />
+          <Route path="/profilepage/:email" element={<><Profilepage/></>} />
+          <Route path="/endorsepage" element={<><Endorse/></>} />
+          <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />
           <Route path="/signin" element={<><Signin/></>} />

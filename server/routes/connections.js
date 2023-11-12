@@ -1,7 +1,9 @@
-const express=require('express')
-const router=express()
+const express = require('express');
+const router = express.Router();
 
-const fetchingConnection = require('../controllers/fetchingConnection')
-router.post('/',fetchingConnection.myconnection)
+const fetchingConnection = require('../controllers/fetchingConnection');
 
-module.exports=router
+// Define your post route with the callback function
+router.post('/', fetchingConnection.myconnection);
+
+module.exports = router;

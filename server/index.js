@@ -57,6 +57,11 @@ app.use('/api/sendMessageRequest',require('./routes/messageRequest'))
 app.use('/api/senddelete',require('./routes/deleteConnection')) 
 app.use('/chat',require('./routes/chat'))  
 
+app.use('/fetchingdata',require('./routes/fetchingdata'))
+app.use('/addskill',require('./routes/addskill'))
+app.use('/deleteskill',require('./routes/deleteskill'))
+app.use('/endorseskill',require('./routes/endorseSkills'))
+app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use(verifyJWT)
 
 
