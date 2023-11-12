@@ -3,7 +3,17 @@ import io from 'socket.io-client';
 import { useState, useEffect, useContext } from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
+
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import ImageIcon from '@mui/icons-material/Image';
+import Dropzone from "react-dropzone";
+
+
+
 const socket = io('ws://localhost:3500/');
+
 export default function Chat() {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
     const { newUser } = useContext(User)
@@ -12,11 +22,32 @@ export default function Chat() {
     const [messages, setMessages] = useState([[{ "name": "Raman", "content": "helllo" }]])
     const [user2Id,setUser2id]= useState("")
     const [conn,setConn]=useState([])
-
+    const [file, setFile] = useState(null);
 
 
     console.log(newUser)
 
+    ///FILE UPLOAD
+    const handleDrop = (acceptedFiles) => {
+        setFile(acceptedFiles[0]);
+        console.log(file)
+      };
+      const handleUpload = async () => {
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        try {
+          const response = await axios.post("/chat/img", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+    
+          console.log("File uploaded:", response.data);
+          // Handle the response as needed (e.g., store the URL in your database).
+        } catch (error) {
+          console.error("Upload failed:", error);
+        }
+      };
+//////Sockets
     useEffect(() => {
         socket.on('message', (data) => {
             console.log("Raman")
@@ -285,6 +316,29 @@ fetch()
                                             </div>
                                         </div>
                                         <div className="relative mb-4">
+
+                                        <Dropzone onDrop={handleDrop}>
+        {({ getRootProps, getInputProps }) => (
+          <div {...getRootProps()} className="dropzone">
+            <input {...getInputProps()} />
+            <p></p>
+            <Box sx={{ '& > :not(style)': { m: 1 } }}>
+      <Fab color="primary" aria-label="add">
+        <ImageIcon />
+      </Fab>
+     
+    </Box>
+   
+          </div>
+        )}
+      </Dropzone>
+      {file && (
+        <div>
+          <p>Selected file: {file.name}</p>
+          <button onClick={handleUpload}>Upload</button>
+        </div>
+      )}
+                                    
                                             <label htmlFor="email" className="leading-7 text-sm text-gray-400">
                                                 Message
                                             </label>
