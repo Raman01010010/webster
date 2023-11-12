@@ -1,3 +1,4 @@
+const chatSchema = require('../model/chatSchema');
 const chat = require('../model/chatSchema');
 
 
@@ -34,6 +35,8 @@ const get = async (req, res) => {
 const up=async (req, res) => {
     console.log(req.file)
     console.log(req.body.json)
+
+ 
     try {
         if (!req.file) {
           return res.status(400).json({ error: "No file uploaded" });
@@ -45,17 +48,25 @@ const up=async (req, res) => {
         const uploadOptions = {
           resource_type: "auto", // Automatically detect the resource type (image, video, etc.).
         };
-    
+   // let ch;
         cloudinary.uploader
           .upload_stream(uploadOptions, (error, result) => {
             if (error) {
               console.error("Upload failed:", error);
               res.status(400).json({ error: "Upload failed" });
             } else {
+            const   ch={...JSON.parse(req.body.json),other:{des:"vbvb",link:result.secure_url}}
+               console.log(ch)
+
+               const ch1=new chatSchema(ch)
+           const res7=   ch1.save()
               res.json({ public_id: result.public_id, url: result.secure_url });
+
+
             }
           })
           .end(req.file.buffer);
+         
       } catch (error) {
         console.error("Upload failed:", error);
         res.status(400).json({ error: "Upload failed" });
