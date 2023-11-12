@@ -21,6 +21,8 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
+import moment from "moment"; // Import the moment library for date formatting
+
 import MenuIcon from "@mui/icons-material/Menu";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -86,6 +88,7 @@ const Showjob = () => {
     // Call the fetchData function
     fetchData();
   }, []);
+  console.log("ye hai" + jobData.isExpired);
   const handleFilterDialogOpen = () => {
     setOpenFilterDialog(true);
   };
@@ -367,7 +370,6 @@ const Showjob = () => {
     const handleJobAlertsDialogClose = () => {
       setOpenJobAlertsDialog(false);
     };
-
     return (
       <React.Fragment>
         <Hidden mdDown>
@@ -389,6 +391,7 @@ const Showjob = () => {
             </Typography>
             <Typography variant="subtitle1" style={{ marginBottom: "8px" }}>
               <Link to="/createjob">Post Job</Link>
+              {console.log("ana" + jobData.isExpired)}
             </Typography>
             <Typography variant="subtitle1" style={{ marginBottom: "8px" }}>
               <Button
@@ -633,6 +636,20 @@ const Showjob = () => {
               >
                 <strong>Job Type:</strong> {job.jobtype}
               </Typography>
+              <Typography
+                variant="body1"
+                sx={{ color: "#555", marginBottom: "8px" }}
+              >
+                <strong>Application Deadline:</strong>{" "}
+                {moment(job.lastdate).format("MMMM D, YYYY")}
+              </Typography>
+
+              <Typography
+                variant="body1"
+                sx={{ color: "#555", marginBottom: "8px" }}
+              >
+                <strong>Expired:</strong> {job.isExpired ? "Yes" : "No"}
+              </Typography>
               <Box
                 sx={{ display: "flex", flexWrap: "wrap", marginBottom: "16px" }}
               >
@@ -665,28 +682,29 @@ const Showjob = () => {
                 Website: {job.contact[2]}
               </Typography>
               <Divider sx={{ margin: "16px 0" }} />
-              <Typography
-                variant="body1"
-                sx={{ color: "#555", marginBottom: "8px" }}
-              >
-                <strong>Application Deadline:</strong> {job.lastdate}
-              </Typography>
-              <Link to={`/job/${job._id}`}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href={job.applylink}
-                  target="_blank"
-                  sx={{
-                    mt: 2,
-                    backgroundColor: "#1976D2",
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Apply Now
-                </Button>
-              </Link>
+
+              {!job.isExpired ? (
+                <Link to={`/job/${job._id}`}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    href={job.applylink}
+                    target="_blank"
+                    sx={{
+                      mt: 2,
+                      backgroundColor: "#1976D2",
+                      color: "white",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Apply Now
+                  </Button>
+                </Link>
+              ) : (
+                <span style={{ fontWeight: "bold", color: "red" }}>
+                  Expired
+                </span>
+              )}
             </CardContent>
           </Card>
         ))}

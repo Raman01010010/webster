@@ -56,14 +56,19 @@ const showjob = async (req, res) => {
                   { locationtypes: { $in: bType } },
                   { locationonsite: { $in: cType } },
                   { company: { $in: dType } },
-              ],
+               ],
           };
       }
 
       const jobs = await job.find(filter);
-       console.log(jobs)
-      res.status(200).send(jobs);
-  } catch (error) {
+      const jobsWithExpirationStatus = jobs.map(job => {
+        return {
+          ...job.toObject(),  // Convert Mongoose document to plain JavaScript object
+          isExpired: job.isExpired,  // Add isExpired property
+        };
+      });
+       res.status(200).send(jobsWithExpirationStatus);
+      } catch (error) {
       console.log(error);
       res.status(400).send("Error fetching jobs");
   }
@@ -104,7 +109,7 @@ const myjob = async (req, res) => {
 
         // Extract unique locationonsite values
         const uniqueLocations = Array.from(new Set(result.map(item => item.locationonsite)));
-
+         
         console.log(uniqueLocations);
         res.status(200).send(uniqueLocations);
     } catch (error) {
