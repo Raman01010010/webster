@@ -20,13 +20,14 @@ import Profilepage from "./Profilepage";
 import Endorse from "./Endorse";
 export default function Container1(){
     return(<>
-    <Dashboard/>
-<Test/>
-<ControlledOpenSpeedDial/>
+    
+
+
 
 
           <Routes>
-          <Route path="/" element={<><Chat/></>} />
+          <Route path="/" element={<><Dashboard/></>} />
+          <Route path="/chat" element={<><Chat/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
