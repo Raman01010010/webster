@@ -11,8 +11,7 @@ const jobSchema = new Schema({
         
     },
     locationonsite:{
-        type:String,
-       
+        type:String,   
     },
     skill:[
         {

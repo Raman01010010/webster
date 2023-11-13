@@ -15,6 +15,7 @@ const Application = () => {
         };
         const response = await axios.post('/job/app', data);
         setMyapp(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching application data: ', error);
       }
@@ -25,8 +26,19 @@ const Application = () => {
   const nextCard = () => {
     setCurrentCard((prevCard) => (prevCard + 1) % myapp.length);
   };
+  const [showResume, setShowResume] = useState(false);
 
+  const handleShowResume = () => {
+    if(showResume===true){
+      setShowResume(false);
+    }
+    else{
+      setShowResume(true);
+
+    }
+  };
   return (
+    <>
     <div className="flex overflow-hidden">
       {myapp.map((applicant, index) => (
         <div
@@ -43,14 +55,16 @@ const Application = () => {
             <p>Location: {applicant.location}</p>
             <p>
               Resume:{' '}
-              <a
-                href={applicant.resume}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                View Resume
-              </a>
+              <button onClick={handleShowResume} style={{ color: '#1EB9E5' }}>View Resume</button>
+
+{showResume && (
+  <iframe
+    src={applicant.resume}
+    title="Resume"
+    style={{ width: '100%', height: '500px', border: 'none' }}
+  />
+)}
+
             </p>
             <p>Professional Experience: {applicant.additionalQuestions[0]}</p>
             <p>Additional Question 1: {applicant.additionalQuestions[1]}</p>
@@ -63,13 +77,15 @@ const Application = () => {
           </div>
         </div>
       ))}
-      <button
+      
+    </div>
+    <button
         className="next-button ml-2 p-2 bg-blue-500 text-white rounded cursor-pointer"
         onClick={nextCard}
       >
         Next
       </button>
-    </div>
+      </>
   );
 };
 

@@ -14,9 +14,10 @@ router.post('/app',jobController.Application)
 router.get('/getloc', jobController.location); // Use a different path for showjob
 router.get('/getcompa', jobController.company); // Use a different path for showjob
 router.post('/showjob',jobController.showjob)
+router.post('/jobapplication',jobController.myjobapplication)
+router.post('/form',jobController.FormSubmitted)
 
 // router.post('/mail',emailController.sendEmail)
 module.exports = router;
 
 
-router.post('/',profileController.naukari)

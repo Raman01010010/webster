@@ -100,7 +100,7 @@ const myjob = async (req, res) => {
       res.status(400).send("Failed to retrieve job data");
     }
   };
-
+   
 
 
   const location = async (req, res) => {
@@ -131,5 +131,52 @@ const company = async (req, res) => {
       res.status(400).send("11111");
   }
 };
+const myjobapplication = async (req, res) => {
+  try {
+    const userId = req.body.userID;
+    console.log(userId); 
+
+    // Find all job applications made by the user
+    const jobApplications = await profile.find({ userID: userId });
+
+    // Extract job IDs from the job applications
+    const jobIds = jobApplications.map(application => application.jobid);
+    
+    // Retrieve details of the jobs using the extracted job IDs
+    const jobs = await job.find({ _id: { $in: jobIds } });
+
+    console.log(jobs);
+    res.status(200).send(jobs);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Failed to retrieve job data");
+  }
+};
+
+const FormSubmitted = async (req, res) => {
+  try {
+    const  jobId = req.body.jobid; // Access jobid and userid from the request body
+    const   userId = req.body.userid; 
+
+    const jobs = await profile.find({ jobid: jobId, userID: userId }); 
+    console.log(jobs);
+    res.status(200).send(jobs);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Failed to retrieve job data");
+  } 
+  // try {
+  //   const jobId = req.body.jobid; // Access jobid from the request body
+  //   console.log(jobId); 
+  //   const jobs = await profile.find({ jobid: jobId }); 
+  //   console.log(jobs);
+  //   res.status(200).json(jobs);
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(400).send("Failed to retrieve job data");
+  // }
+};
+
+
 // locationonsite
-module.exports={create,showjob,myjob,Application,location,company}
+module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted}

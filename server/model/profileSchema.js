@@ -34,6 +34,9 @@ const profileSchema = new Schema({
       jobid:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'job'
+      },
+      userID:{
+        type:String
       }
 });
 module.exports = mongoose.model('profile', profileSchema);
