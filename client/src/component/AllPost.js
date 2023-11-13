@@ -132,11 +132,12 @@ async function handle1(){
                     <span className="text-gray-700"> - </span>
                     <span className="text-gray-500">{item.time}</span>
                     <SlackCounter counters={item.react}/>
-                  
+                    <>Reactions</>
+                    <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
+             
                   </div>
               
-                  <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
-             
+                 
                 </footer>
                 
               </div>
