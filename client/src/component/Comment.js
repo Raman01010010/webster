@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import axios from '../api/axios';
 import { useContext } from 'react';
 import { User } from '../context/User';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 const CommentSection = (props) => {
+  const axiosPrivate=useAxiosPrivate()
   const {newUser}=useContext(User)
     console.log(props)
   const [comment, setComment] = useState('');
@@ -19,7 +22,7 @@ const CommentSection = (props) => {
       setComments([...comments, comment]);
       setComment('');
 try{
-      const res=await axios.post('/post/com',comment)
+      const res=await axiosPrivate.post('/post/com',comment)
       console.log(res)
     }catch(error){
       console.log(error)
@@ -31,7 +34,7 @@ try{
   React.useEffect(()=>{
     const get=async()=>{
 try{
-const res=await axios.post('/post/get',{"postId":props.id})
+const res=await axiosPrivate.post('/post/get',{"postId":props.id})
 setComments(res?.data)
 console.log(res)
 }catch(error){
