@@ -62,6 +62,7 @@ app.use('/addskill',require('./routes/addskill'))
 app.use('/deleteskill',require('./routes/deleteskill'))
 app.use('/endorseskill',require('./routes/endorseSkills'))
 app.use('/fetchendorse',require('./routes/fetchingEndorse'))
+app.use('/getpost',require('./routes/getpost'))
 app.use(verifyJWT)
 app.use('/post',require('./routes/post'))
 
