@@ -40,7 +40,7 @@ app.use('/user',require('./routes/user'))
 app.use('/auth',require('./routes/auth'))
 app.use('/refresh',require('./routes/refresh'))
 app.use('/upload',require('./routes/uploadPost'))
-app.use('/post',require('./routes/post'))
+
 app.use('/job', require('./routes/jobRoutes'));
 
 // app.use('/profile', require('./routes/profile'));
@@ -63,7 +63,7 @@ app.use('/deleteskill',require('./routes/deleteskill'))
 app.use('/endorseskill',require('./routes/endorseSkills'))
 app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use(verifyJWT)
-
+app.use('/post',require('./routes/post'))
 
 
 

@@ -1,6 +1,7 @@
 import axios from "../api/axios";
 import React, { useState, useEffect ,useContext} from "react";
 import {Reactions,Counter} from "./Reactions";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 //const url="http://localhost:3500/"
 import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
@@ -10,6 +11,7 @@ const url="http://localhost:3500/"
 //const url="http://172.29.50.69:3500/"
 
 export default function AllPost() {
+  const axiosPrivate=useAxiosPrivate()
   const [re,setRe]=useState("")
   const [posts, setPosts] = useState([]);
  const [show,setShow]=useState(1)
@@ -34,7 +36,7 @@ async function handle1(){
 //  console.log(re)
 
 
-  const res=await axios.post('/post/react',like)
+  const res=await axiosPrivate.post('/post/react',like)
   console.log(res)
   console.log(like)
   // setShow(old=>{
@@ -49,7 +51,7 @@ async function handle1(){
     const fetchData = async () => {
       try {
         const a=newUser.email
-        const response = await axios.post('/post/all',newUser);
+        const response = await axiosPrivate.post('/post/all',newUser);
         setPosts(response.data);
         console.log(response.data)
         // Assuming the response is an array of post objects
@@ -77,7 +79,7 @@ async function handle1(){
   
     console.log(updatedLike);
   
-    const res = await axios.post('/post/react', updatedLike);
+    const res = await axiosPrivate.post('/post/react', updatedLike);
     console.log(res);
   }
   
