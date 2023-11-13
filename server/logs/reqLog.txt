@@ -9792,3 +9792,5 @@ Mon Nov 13 2023 14:52:18 GMT+0530 (India Standard Time)	5ebaa29d-238e-46b2-ac9d-
 Mon Nov 13 2023 14:52:18 GMT+0530 (India Standard Time)	7ff09dd9-3e90-4b26-adfc-6c574225a30e	POST	http://localhost:3000	/connections
 Mon Nov 13 2023 14:52:19 GMT+0530 (India Standard Time)	1c7c9577-0b4d-4079-886d-0fc3d593ca4d	POST	http://localhost:3000	/connections
 Mon Nov 13 2023 14:52:20 GMT+0530 (India Standard Time)	4ae6705e-f583-4d36-adb5-2b8465ce3ab7	POST	http://localhost:3000	/chat
+Mon Nov 13 2023 14:54:33 GMT+0530 (India Standard Time)	c30026fd-eae1-4646-91d3-3ad86cdbf3e9	GET	http://localhost:3000	/refresh
+Mon Nov 13 2023 14:54:33 GMT+0530 (India Standard Time)	9a9e71fd-af02-4b26-9b12-fcfe643d28ab	GET	http://localhost:3000	/refresh
