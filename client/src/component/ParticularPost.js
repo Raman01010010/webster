@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import {Reactions,Counter} from "./Reactions";
 import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
-const url="http://172.29.50.69:3500/"
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+const url="http://localhost:3500/"
+
 
 
 const ParticularPost = () => {
-
+  const axiosPrivate=useAxiosPrivate()
     const {email} = useParams()
   
 
@@ -34,7 +36,7 @@ console.log(re)
 async function handle1(){
   console.log("hidfj")
  
-  const res=await axios.post('/post/react',like)
+  const res=await axiosPrivate.post('/post/react',like)
   console.log(res)
   console.log(like)
 }
@@ -45,7 +47,7 @@ async function handle1(){
         const d = {
             email:email
         }
-        const response = await axios.post('/getpost',d);
+        const response = await axiosPrivate.post('/getpost',d);
         setPosts(response.data);
         console.log(response.data)
       } catch (error) {
@@ -71,7 +73,7 @@ async function handle1(){
   
     console.log(updatedLike);
   
-    const res = await axios.post('/post/react', updatedLike);
+    const res = await axiosPrivate.post('/post/react', updatedLike);
     console.log(res);
   }
   
