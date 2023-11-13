@@ -1,11 +1,13 @@
 import axios from "../api/axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import {Reactions,Counter} from "./Reactions";
 //const url="http://localhost:3500/"
 import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
 import Test from "./Test";
-const url="http://172.29.50.69:3500/"
+import { User } from "../context/User";
+const url="http://localhost:3500/"
+//const url="http://172.29.50.69:3500/"
 
 export default function AllPost() {
   const [re,setRe]=useState("")
@@ -13,7 +15,7 @@ export default function AllPost() {
  const [show,setShow]=useState(1)
 //console.log(extractedHashtags)
 const [like,setLike]=useState({"id":"","react":{"emoji":"","by":""}})
-
+const {newUser}=useContext(User)
 async function handle(item){
     console.log("hidfj")
     //console.log(show)
@@ -46,7 +48,8 @@ async function handle1(){
     // Use an async function within the effect
     const fetchData = async () => {
       try {
-        const response = await axios.get('/post/all');
+        const a=newUser.email
+        const response = await axios.post('/post/all',newUser);
         setPosts(response.data);
         console.log(response.data)
         // Assuming the response is an array of post objects
