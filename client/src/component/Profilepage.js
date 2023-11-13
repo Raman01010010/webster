@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { User } from "../context/User";
 import axios from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AllPost from "./AllPost";
 
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
@@ -13,6 +14,9 @@ const Profilepage = () => {
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
+  // const dataToSend = {
+  //   key1: "email",
+  // };
 
   useEffect(() => {
     const fetchingData = async () => {
@@ -45,11 +49,11 @@ const Profilepage = () => {
     }
   };
 
-  const Endorse = async (skill, newUseremail,otheruser) => {
+  const Endorse = async (skill, newUseremail, otheruser) => {
     const d = {
       skill: skill,
       userEmail: newUseremail,
-      otheruserEmail: otheruser
+      otheruserEmail: otheruser,
     };
     try {
       const res = await axios.post("/endorseskill", d);
@@ -75,8 +79,6 @@ const Profilepage = () => {
     }
   };
 
-
-  
   const fetchingEndorse = async (email, skill) => {
     const d = {
       email: email,
@@ -86,12 +88,11 @@ const Profilepage = () => {
       const res = await axios.post("/fetchendorse", d);
       console.log("Endorsement data:", res.data);
       // Ensure this log statement is printed in the console
-      navigate('/endorsepage', { state: { param1: res.data } });
+      navigate("/endorsepage", { state: { param1: res.data } });
     } catch (err) {
       console.log(err);
     }
   };
-  
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -132,9 +133,9 @@ const Profilepage = () => {
                 key={index}
                 className="relative group flex-grow w-32 h-32 flex items-center justify-center rounded-full bg-green-300 text-black m-2"
               >
-                 {newUser.email !== email && (
+                {newUser.email !== email && (
                   <button
-                    onClick={() => Endorse(element, newUser.email,email)}
+                    onClick={() => Endorse(element, newUser.email, email)}
                     className="absolute top-0 right-0 p-1  bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 z-10 "
                   >
                     Endorse
@@ -150,11 +151,12 @@ const Profilepage = () => {
                     X
                   </button>
                 )}
-                  <button
-                    className="absolute bottom-0 bg-sky-950 text-neutral-50	border-4 rounded-lg border-red-400"
-                    onClick={() => fetchingEndorse(email,element)}
-                  >Endorsed By...
-                  </button>
+                <button
+                  className="absolute bottom-0 bg-sky-950 text-neutral-50	border-4 rounded-lg border-red-400"
+                  onClick={() => fetchingEndorse(email, element)}
+                >
+                  Endorsed By...
+                </button>
               </div>
             ))}
             {newUser.email === email && (
@@ -180,11 +182,16 @@ const Profilepage = () => {
       default:
         return (
           <div>
-            <h2>Description</h2>
+
             {/* Your existing description content */}
-            <p className="leading-relaxed mb-4">
-              Fam locavore kickstarter distillery...
-            </p>
+          
+              <Link to={`/particularpost/${email}`}>
+                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center">
+                  Go to My Posts
+                </div>
+              </Link>
+            
+            
           </div>
         );
     }

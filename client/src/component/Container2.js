@@ -9,6 +9,7 @@ import Post1 from "./Post";
 import AllPost from "./AllPost";
 import Profilepage from "./Profilepage";
 import Endorse from "./Endorse";
+import ParticularPost from "./ParticularPost";
 export default function Container1(){
     return(<>
     <Dashboard/>
@@ -19,6 +20,7 @@ export default function Container1(){
           <Route path="/connections" element={<><Connections/></>} />
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
           <Route path="/endorsepage" element={<><Endorse/></>} />
+          <Route path="/particularpost/:email" element={<><ParticularPost/></>} />
           <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />

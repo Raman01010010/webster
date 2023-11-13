@@ -42,7 +42,7 @@ const Endorse = () => {
         </section>
         
       ) : (
-        <div>No endorsements available.</div>
+        <h1 className='text-7xl'>No endorsements available.</h1>
       )}
     </div>
   );
