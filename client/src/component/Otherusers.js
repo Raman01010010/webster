@@ -140,4 +140,4 @@ const Otherusers = () => {
   );
 };
 
-export default Otherusers;
+export default Otherusers
