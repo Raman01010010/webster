@@ -359,7 +359,7 @@ const Showjob = () => {
     };
     fetchData();
   }, [data]);
-
+  
   const Sidebar = () => {
     const [openJobAlertsDialog, setOpenJobAlertsDialog] = useState(false);
 
@@ -581,7 +581,6 @@ const Showjob = () => {
       <Sidebar />
 
       <div className="flex-grow flex flex-col items-center justify-center">
-        <Navbar />
         {jobData.map((job, index) => (
           <Card
             key={index}
@@ -708,6 +707,7 @@ const Showjob = () => {
             </CardContent>
           </Card>
         ))}
+       
       </div>
     </div>
   );
