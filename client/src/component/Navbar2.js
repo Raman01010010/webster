@@ -170,7 +170,7 @@ export default function MiniDrawer() {
                 <Divider />
            
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, }}>
+            <Box style={{marginTop:"12vh"}}component="main" sx={{ flexGrow: 1, }}>
                 <Container1 /> </Box>
         </Box>
     );
