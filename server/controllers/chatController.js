@@ -55,12 +55,12 @@ const up=async (req, res) => {
               console.error("Upload failed:", error);
               res.status(400).json({ error: "Upload failed" });
             } else {
-            const   ch={...JSON.parse(req.body.json),other:{des:"vbvb",link:result.secure_url}}
+            const   ch={...JSON.parse(req.body.json),content:("_"+JSON.parse(req.body.json).content),other:{des:"jpg",link:result.secure_url}}
                console.log(ch)
 
                const ch1=new chatSchema(ch)
            const res7=   ch1.save()
-              res.json({ public_id: result.public_id, url: result.secure_url });
+              res.json(ch);
 
 
             }
