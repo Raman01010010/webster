@@ -8,7 +8,7 @@ const users=require('../model/User')
 
 const getAll=async(req,res)=>{
     console.log("dcnmdnvxv")
-    console.log(req.body)
+    console.log(req.user)
    const {email}=req.body;
    console.log(email)
    const u1=await users.find({email:email})
@@ -86,7 +86,7 @@ const react1 = async (req, res) => {
     console.log("react1");
     // res.status(201).send("react1");
     const emoji=req.body?.react?.emoji
-    const by=req.body?.react?.by
+    const by=req.user//req.body?.react?.by
     console.log(req.body);
     try {
         const { id } = req.body; // Assuming you pass the _id in the request body
