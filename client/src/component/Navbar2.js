@@ -21,7 +21,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Home from './Home';
 import Container1 from './Container2';
-const link=['/post', '/chat', '/cpost', '/connections','/otherusers']
+const link=['/post', '/chat', '/cpost', '/connections','/otherusers','/showjob','createjob','/myjob']
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -142,7 +142,7 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Posts', 'Messages', 'Create Post', 'Connections','Add Connections'].map((text, index) => (
+                    {['Posts', 'Messages', 'Create Post', 'Connections','Add Connections','Show Job','Create Job','My Job'].map((text, index) => (
                         <ListItem onClick={handleNav} key={text} disablePadding sx={{ display: 'block' }}>
                             <a href={link[index]}>
                             <ListItemButton
