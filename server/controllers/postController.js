@@ -2,18 +2,26 @@ const post = require('../model/postSchema');
 
 const Comment=require('../model/commentSchema')
 
-
+const users=require('../model/User')
 
 
 
 const getAll=async(req,res)=>{
     console.log("dcnmdnvxv")
     console.log(req.body)
-   // const {email}=req.body;
-    const f1=await post.find({
+   const {email}=req.body;
+   console.log(email)
+   const u1=await users.find({email:email})
+   console.log(u1)
+   const cn=u1[0]?.connection
+   console.log(cn)
+    const f1=await post.find(
+      {
+      $or:[ { email:{ $in: cn} },{email:email}]
      
-    })
-    console.log(f1)
+    }
+    )
+ //   console.log(f1)
     if(f1)
     res.status(201).send(f1)
 else{

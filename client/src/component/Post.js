@@ -1,9 +1,12 @@
 import axios from '../api/axios';
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
+import { User } from '../context/User';
 export default function Post1() {
+    const {newUser}=useContext(User)
     const [image, setImage] = useState('https://preview.cruip.com/open-pro/images/blog-post-01.jpg');
-    const [postData, setPostdata] = useState({ "head": "Heading", "content": "Content of the post", "hashtag": "" })
+    const [postData, setPostdata] = useState({ "email":newUser.email,"head": "Heading", "content": "Content of the post", "hashtag": "" })
     const hashtagRegex = /#[a-zA-Z0-9_]+/g; 
+ 
 //    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
  //     const extractedHashtags = text.match(hashtagRegex);
     const [selectedFile, setSelectedFile] = useState(null);

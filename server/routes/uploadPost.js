@@ -16,7 +16,7 @@ router.post('/', uploadController.upload.single('file'),async function (req, res
     const j=JSON.parse(req.body.json)
     console.log(j)
     const newPost=new post({
-        email:"rmnprj@outlook.com",
+        email:j.email,
         head:j.head,
         content:j.content,
         time:Date.now(),
