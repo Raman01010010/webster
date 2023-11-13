@@ -47,7 +47,7 @@ socket.on('enterRoom', ({ name, room }) => {
 
 
 //Messsage
-socket.on('message', async ({ name, room, sender, receiver, content }) => {
+socket.on('message', async ({ name, room, sender, receiver, content,other }) => {
     console.log("sent");
 
     try {
@@ -67,7 +67,8 @@ socket.on('message', async ({ name, room, sender, receiver, content }) => {
             "room": room,
             "sender": sender,
             "receiver": receiver,
-            "content": content
+            "content": content,
+            "other":other
         });
 
         // Optionally, you can also emit the message to the sender if needed
@@ -75,7 +76,8 @@ socket.on('message', async ({ name, room, sender, receiver, content }) => {
             "room": room,
             "sender": sender,
             "receiver": receiver,
-            "content": content
+            "content": content,
+            "other":other
         });
 
         // ... Handle messages ...

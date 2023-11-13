@@ -42,6 +42,7 @@ export default function Chat() {
           });
     
           console.log("File uploaded:", response.data);
+          socket.emit('message', response?.data);
           // Handle the response as needed (e.g., store the URL in your database).
         } catch (error) {
           console.error("Upload failed:", error);
@@ -277,10 +278,14 @@ fetch()
                                             style={{ position: "relative", height: 350 }}
                                         >
                                             <div className="h-5/6 overflow-scroll">
+
                                                 {messages.map(item => {
+                                                    //console.log(messages)
                                                   //  console.log(item)
                                                     return (<>
-                                                        {item.sender !== newUser.userid ? <div className="flex flex-row justify-start">
+                                                        {item.sender !== newUser.userid ?
+                                                        <>
+                                                        <div className="flex flex-row justify-start">
                                                             <img
                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
                                                                 alt="avatar 1"
@@ -294,16 +299,41 @@ fetch()
                                                                     {item.content}
                                                                 </p>
                                                                 <p className="text-xs ms-3 mb-3 rounded-3 text-gray-700 float-end">
-                                                                    12:00 PM | Aug 13
+                                                                {item.timestamp}
                                                                 </p>
                                                             </div>
-                                                        </div> : <div className="flex flex-row justify-end">
+                                                        </div>
+                                                    { item?.other?.link&&item?.other?.des=='jpg'&&   <div className="flex flex-row justify-start">
+
+                                                            <img
+                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                                                alt="avatar 1"
+                                                                style={{ width: 45, height: "100%" }}
+                                                            />
+                                                            <div>
+                                                        
+                                                                <p
+                                                                    className="text-xs p-2 ms-3 mb-1 rounded-3"
+                                                                    style={{ backgroundColor: "#f5f6f7" }}
+                                                                >
+                                                                        <img style={{height:"50%"}} src={item?.other?.link}/>
+                                                                    {item.content}
+                                                                </p>
+                                                                <p className="text-xs ms-3 mb-3 rounded-3 text-gray-700 float-end">
+                                                                    {item.timestamp}
+                                                                </p>
+                                                            </div>
+                                                        </div>}
+                                                        </>
+                                                         : 
+                                                         <>
+                                                         <div className="flex flex-row justify-end">
                                                             <div>
                                                                 <p className="text-xs p-2 me-3 mb-1 text-white rounded-3 bg-blue-600">
                                                                     {item.content}
                                                                 </p>
                                                                 <p className="text-xs me-3 mb-3 rounded-3 text-gray-700">
-                                                                    12:00 PM | Aug 13
+                                                                {item.timestamp}
                                                                 </p>
                                                             </div>
                                                             <img
@@ -311,7 +341,26 @@ fetch()
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
-                                                        </div>} </>)
+                                                        </div>
+                                                        {item?.other?.link&&item?.other?.des=='jpg'&&<div className="flex flex-row justify-end">
+                                                            <div>
+                                                              
+                                                                <p className="text-xs p-2 me-3 mb-1 text-white rounded-3 bg-blue-600">
+                                                                <img style={{height:"50%"}} src={item?.other?.link}/>
+                                                                </p>
+                                                                <p className="text-xs me-3 mb-3 rounded-3 text-gray-700">
+                                                                {item.timestamp}
+                                                                </p>
+                                                            </div>
+                                                            <img
+                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                alt="avatar 1"
+                                                                style={{ width: 45, height: "100%" }}
+                                                            />
+                                                        </div>
+                                                        
+                                                        }
+                                                        </>} </>)
                                                 })}
 
 
