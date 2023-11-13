@@ -66,7 +66,7 @@ export default function Checkout() {
     
      
     const isFormValid =
-      isStep1Complete || isStep2Complete || true;
+      isStep1Complete || isStep2Complete ;
 
     setIsFormComplete(isFormValid);
   };

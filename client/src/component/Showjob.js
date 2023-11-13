@@ -133,7 +133,7 @@ const Showjob = () => {
       setOpenJobAlertsDialog(false);
     };
     const sidebarItems = [
-      { text: "My Jobs", link: "/myjobs" },
+      { text: "My Jobs", link: "/jobsapplied" },
       { text: "Post Job", link: "/createjob" },
       { text: "Filter", onClick: handleFilterDialogOpen },
       { text: "Job Alerts", onClick: handleJobAlertsDialogOpen },
@@ -387,7 +387,7 @@ const Showjob = () => {
               Options
             </Typography>
             <Typography variant="subtitle1" style={{ marginBottom: "8px" }}>
-              <Link to="/myjobs">My Jobs</Link>
+              <Link to="/jobsapplied">My Jobs</Link>
             </Typography>
             <Typography variant="subtitle1" style={{ marginBottom: "8px" }}>
               <Link to="/createjob">Post Job</Link>

@@ -20,9 +20,9 @@ const Jobsapplied = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("/job/jobapplication", 
-           newUser.userid
-        );
+        const useriD = newUser.userid;
+const response = await axios.post("/job/jobapplication", { userid: useriD });
+
         setData(response.data); // Assuming the response is an array of jobs
         
       } catch (error) {
