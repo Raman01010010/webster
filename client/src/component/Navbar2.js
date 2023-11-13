@@ -143,7 +143,7 @@ export default function MiniDrawer() {
                 <Divider />
                 <List>
                     {['Posts', 'Messages', 'Create Post', 'Connections','Add Connections','Show Job','Create Job','My Job'].map((text, index) => (
-                        <ListItem onClick={handleNav} key={text} disablePadding sx={{ display: 'block' }}>
+                        <ListItem  key={text} disablePadding sx={{ display: 'block' }}>
                             <a href={link[index]}>
                             <ListItemButton
                                 sx={{
