@@ -112,7 +112,7 @@ export default function MiniDrawer() {
         navigate('/ram')
     }
 
-    return (/*
+    return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
@@ -167,7 +167,7 @@ export default function MiniDrawer() {
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                    {['All mail','Trash','Spam','job'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
@@ -190,7 +190,7 @@ export default function MiniDrawer() {
                         </ListItem>
                     ))}
                 </List>
-            </Drawer>*/
+            </Drawer>
             <Box component="main" sx={{ flexGrow: 1, }}>
                 <Container1 /> </Box>
         // </Box>
