@@ -21,7 +21,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Home from './Home';
 import Container1 from './Container2';
-
+const link=['/post', '/chat', '/cpost', '/connections','/otherusers']
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -142,8 +142,9 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    {['Posts', 'Messages', 'Create Post', 'Connections','Add Connections'].map((text, index) => (
                         <ListItem onClick={handleNav} key={text} disablePadding sx={{ display: 'block' }}>
+                            <a href={link[index]}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -162,34 +163,12 @@ export default function MiniDrawer() {
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
+                            </a>
                         </ListItem>
                     ))}
                 </List>
                 <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+           
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, }}>
                 <Container1 /> </Box>
