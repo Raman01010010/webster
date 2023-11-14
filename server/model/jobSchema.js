@@ -11,8 +11,7 @@ const jobSchema = new Schema({
         
     },
     locationonsite:{
-        type:String,
-       
+        type:String,   
     },
     skill:[
         {
@@ -39,13 +38,25 @@ const jobSchema = new Schema({
             
             }
     ],
+    locationtypes:{
+        type:String
+    },
         applylink:{
             type:String
         },
         jobberid:{
             type:String
-        }
+        },
+    },
+     {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
     
+// Create a virtual property 'isExpired' to check if the job has expired
+jobSchema.virtual('isExpired').get(function () {
+    const currentDate = new Date();
+    return this.lastdate < currentDate;
 });
 
 module.exports = mongoose.model('job', jobSchema);

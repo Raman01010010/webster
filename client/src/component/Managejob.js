@@ -25,6 +25,12 @@ const Managejob = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
+   <Link to="/showjob">
+  <Button variant="contained" sx={{ mt: 3, ml: 1, width: '100%' }}>
+    Return Back
+  </Button>
+</Link>
+
       {Myjob.map((job, index) => (
         <Card key={index} sx={{
           maxWidth: 400,

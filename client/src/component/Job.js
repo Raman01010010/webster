@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import Review from "./Review";
+import { User } from "../context/User";
 
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -26,7 +27,10 @@ const steps = [
 
 
 export default function Job() {
+
   const { jobId } = useParams();
+  const { newUser } = useContext(User);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [responses, setResponses] = useState({
     name: "",
@@ -36,11 +40,12 @@ export default function Job() {
     resume: "",
     additionalQuestions: ["", "", ""],
     location: "",
-    jobid:jobId
+    jobid:jobId,
+    userID:newUser.userid
   });
   const [isFormComplete, setIsFormComplete] = useState(false);
   // console.log(jobId)
-
+   
   const checkFormCompletion = () => {
     // Replace these conditions with your actual form validation logic
     const isStep1Complete =

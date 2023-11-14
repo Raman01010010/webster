@@ -21,6 +21,9 @@ import Endorse from "./Endorse";
 import ParticularPost from "./ParticularPost";
 import FileUpload from "./Uploadtest";
 import YourMainComponent from "./AllPost2";
+import Company from "./Company";
+import Jobsapplied from "./Jobsapplied";
+import Formsubmit from "./Formsubmit";
 export default function Container1(){
     return(<>
     
@@ -32,6 +35,7 @@ export default function Container1(){
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat" element={<><Chat/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
+
           <Route path="/pending" element={<><Pending/></>} />
           <Route path="/connections" element={<><Connections/></>} />
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
@@ -46,6 +50,9 @@ export default function Container1(){
           <Route path="/job/:jobId" element={<><Job/></>} />
           <Route path="/myjob" element={<><Managejob/></>} />
           <Route path="/app/:jobId" element={<><Application/></>} />
+          <Route path="/company" element={<><Company/></>} />
+          <Route path="/jobsapplied" element={<><Jobsapplied/></>} />
+          <Route path="/formsubmitted/:jobId" element={<><Formsubmit/></>} />
 
     </Routes>
 

@@ -21,9 +21,7 @@ const Review = (props) => {
     props;
   const [isResumeDialogOpen, setResumeDialogOpen] = useState(false);
 
-  const user = {
-    resume: "Webster 2k23 Abstract Format-1.pdf",
-  };
+  
   const openResumeDialog = () => {
     setResumeDialogOpen(true);
   };
