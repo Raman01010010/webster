@@ -123,7 +123,7 @@ async function handle1(){
     {posts.map(item=>{
       return(<>
   
-<div className=" bg-gray-900 p-4 md:w-full  w-full">
+<div data-aos="fade-right" className=" bg-gray-900 p-4 md:w-full  w-full">
     <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
     <div className=" p-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">

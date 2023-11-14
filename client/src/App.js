@@ -16,7 +16,12 @@ import { getR } from './api/api';
 import PostForm from './component/Post2';
 import YourMainComponent from './component/AllPost2';
 import Test1 from './component/Test1';
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 function App() {
+  useEffect(()=>{
+    Aos.init()
+  })
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
   const [comp,setComp]=React.useState({
       titles: "",
