@@ -24,13 +24,12 @@ const steps = [
   "Create an ad",
   "Additional Questions", // Add an additional step
 ];
-
-
 export default function Job() {
 
   const { jobId } = useParams();
   const { newUser } = useContext(User);
-
+  const userid=newUser.userid;
+  console.log("vi"+newUser.userid)
   const [activeStep, setActiveStep] = React.useState(0);
   const [responses, setResponses] = useState({
     name: "",
@@ -41,7 +40,7 @@ export default function Job() {
     additionalQuestions: ["", "", ""],
     location: "",
     jobid:jobId,
-    userID:newUser.userid
+    userID: userid, // Set the userID directly here
   });
   const [isFormComplete, setIsFormComplete] = useState(false);
   // console.log(jobId)
@@ -128,6 +127,7 @@ export default function Job() {
 
   const Submit = async () => {
     try {
+
       const res = await axios.post("/job/profile", responses);
       console.log(res);
     } catch (error) {

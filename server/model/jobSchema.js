@@ -47,6 +47,12 @@ const jobSchema = new Schema({
         jobberid:{
             type:String
         },
+         applicants: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User' // Assuming you have a User model
+        }
+    ],
     },
      {
     toJSON: { virtuals: true },

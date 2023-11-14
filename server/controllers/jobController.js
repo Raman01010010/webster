@@ -40,37 +40,49 @@ const create = async (req, res) => {
 // }
 const showjob = async (req, res) => {
   try {
-    console.log(req.body)
-      const aType = req.body.jobtype;
-      const bType = req.body.locationtypes;
-      const cType = req.body.locationonsite;
-      const dType = req.body.company;
-      
-      let filter = {};
-      // console.log(bType.length);
-      // Check if any of the arrays have a size greater than 0
-      if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
-          filter = {
-              $or: [
-                  { jobtype: { $in: aType } },
-                  { locationtypes: { $in: bType } },
-                  { locationonsite: { $in: cType } },
-                  { company: { $in: dType } },
-               ],
-          };
-      }
+    const aType = req.body.jobtype;
+    const bType = req.body.locationtypes;
+    const cType = req.body.locationonsite;
+    const dType = req.body.company;
 
-      const jobs = await job.find(filter);
-      const jobsWithExpirationStatus = jobs.map(job => {
-        return {
-          ...job.toObject(),  // Convert Mongoose document to plain JavaScript object
-          isExpired: job.isExpired,  // Add isExpired property
+    let filter = {};
+    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
+      filter = {
+        $or: [
+          { jobtype: { $in: aType } },
+          { locationtypes: { $in: bType } },
+          { locationonsite: { $in: cType } },
+          { company: { $in: dType } },
+        ],
+      };
+    }
+
+    const jobs = await job.find(filter);
+    const userId = req.body && req.body.userID;
+
+    const jobsWithExpirationStatus = await Promise.all(
+      jobs.map(async (job) => {
+        const jobObject = job.toObject();
+        const hasApplied = job.applicants.includes(userId);
+
+        // Add the hasApplied property to the job object
+        const jobWithStatus = {
+          ...jobObject,
+          isExpired: job.isExpired,
+          hasApplied: hasApplied,
         };
-      });
-       res.status(200).send(jobsWithExpirationStatus);
-      } catch (error) {
-      console.log(error);
-      res.status(400).send("Error fetching jobs");
+
+        return jobWithStatus;
+      })
+    );
+
+    res.status(200).send({
+      data: jobsWithExpirationStatus,
+      message: "Job data retrieved successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: "Error fetching jobs." });
   }
 };
 
