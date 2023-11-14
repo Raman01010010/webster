@@ -13,8 +13,11 @@ import Job from './component/Job';
 
 import { useEffect } from 'react';
 import { getR } from './api/api';
+import PostForm from './component/Post2';
+import YourMainComponent from './component/AllPost2';
+import Test1 from './component/Test1';
 function App() {
-  const [newUser, setNewUser] = React.useState({ "email": "dummy@gmail.com", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
+  const [newUser, setNewUser] = React.useState({ "email": "", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
   const [comp,setComp]=React.useState({
       titles: "",
       company: "",
@@ -43,8 +46,11 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-      
+   
+ 
+   
       </Router>
+
     </User.Provider>
     </>
   );

@@ -12,11 +12,11 @@ export default function Post1() {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleImageUpload= (e) => {
-      setSelectedFile(e.target.files[0]);
+      setSelectedFile(e.target.files);
       const file = e.target.files[0];
       console.log(file)
       if (file) {
-          const imageUrl = URL.createObjectURL(file);
+          const imageUrl = URL.createObjectURL(file[0]);
           setImage(imageUrl);
       }
     };
@@ -57,11 +57,14 @@ setPostdata(old=>{
         const text=postData.content// Regular expression to match hashtags
       
         const formData = new FormData();
-        formData.append('file', selectedFile);
+        for (const file of selectedFile) {
+          formData.append('files', file);
+        }
+    
         formData.append('json',JSON.stringify(postData))
     console.log(formData)
         axios
-          .post('/upload', formData,postData, {
+          .post('/upload/multiple', formData,postData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -95,6 +98,7 @@ setPostdata(old=>{
                             id="image-upload"
                             accept="image/*"
                             className="hidden"
+                            multiple
                             onChange={handleImageUpload}
                         />
                         <div>

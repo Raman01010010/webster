@@ -51,6 +51,9 @@ const postSchema = new Schema({
       },
       react:[{emoji:String,by:String}],
     comments:[{content:String,time:String,user:String}],
+    file:[{
+      type:String
+    }]
    
 });
 
