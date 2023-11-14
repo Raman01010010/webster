@@ -1,177 +1,319 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import { useNavigate } from 'react-router-dom';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Home from './Home';
-import Container1 from './Container2';
-const link=['/post', '/chat', '/cpost', '/connections','/otherusers','/showjob','createjob','/myjob']
-const drawerWidth = 240;
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Container2 from "./Container2";
 
-const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
-});
+import MenuIcon from "@mui/icons-material/Menu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faUserFriends,
+  faEnvelope,
+  faMoneyCheckAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 
-const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
-});
+const Navbar2 = () => {
+  const isLargeScreen = useMediaQuery("(min-width:600px)");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isJobMenuOpen, setIsJobMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
+  const location = useLocation();
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
-        ...(open && {
-            ...openedMixin(theme),
-            '& .MuiDrawer-paper': openedMixin(theme),
-        }),
-        ...(!open && {
-            ...closedMixin(theme),
-            '& .MuiDrawer-paper': closedMixin(theme),
-        }),
-    }),
-);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-export default function MiniDrawer() {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+  const handleDropdownClose = () => {
+    setIsDropdownOpen(false);
+  };
+  
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
+  function handleNavAndClose() {
+    
+    handleMenuClose();
+  }
+
+  const handleJobMenuToggle = () => {
+    setIsJobMenuOpen(!isJobMenuOpen);
+  };
+
+  useEffect(() => {
+    // Cleanup function to set isJobMenuOpen to false when component unmounts
+    return () => {
+      setIsJobMenuOpen(false);
     };
+  }, []);
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  useEffect(() => {
+    // Set isJobMenuOpen to true when the location changes to "/showjob"
+    setIsJobMenuOpen(location.pathname === "/showjob");
+  }, [location.pathname]);
 
-
-
-
-    const navigate = useNavigate();
-
-
-    function handleNav(){
-        console.log("hifnb")
-        navigate('/ram')
-    }
-
-    return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{
-                            marginRight: 5,
-                            ...(open && { display: 'none' }),
+  return (
+    <>
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Navbar
+          </Typography>
+          {isLargeScreen ? (
+            <>
+              <Button
+                color="inherit"
+                
+                component={Link}
+                to="/post"
+              >
+                <FontAwesomeIcon icon={faHome} style={{ marginRight: "5px" }} />
+                Home
+              </Button>
+              <Button color="inherit" onClick={handleMenuOpen}>
+                <FontAwesomeIcon
+                  icon={faUserFriends}
+                  style={{ marginRight: "5px" }}
+                />
+                Connection
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/connections"
+                >
+                  Connection
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/otherusers"
+                >
+                  Add friend
+                </MenuItem>
+              </Menu>
+              <Button
+                color="inherit"
+               
+                component={Link}
+                to="/chat"
+              >
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  style={{ marginRight: "5px" }}
+                />
+                Messages
+              </Button>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Button
+                  color="inherit"
+                  onClick={handleJobMenuToggle}
+                  component={Link}
+                  to="/showjob"
+                >
+                  <FontAwesomeIcon
+                    icon={faMoneyCheckAlt}
+                    style={{ marginRight: "5px" }}
+                  />
+                  Job
+                </Button>
+                {location.pathname === "/showjob" && (
+                  <>
+                {isJobMenuOpen && (
+                  <>
+                    <i
+                      className="fas fa-chevron-down fa-xs"
+                      style={{ marginLeft: "5px" }}
+                      onClick={handleDropdownToggle}
+                    ></i>
+                    {isDropdownOpen && (
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={isDropdownOpen}
+                        onClose={handleDropdownClose}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
                         }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        DASHBOARD
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider />
-                <List>
-                    {['Posts', 'Messages', 'Create Post', 'Connections','Add Connections','Job'].map((text, index) => (
-                        <ListItem onClick={handleNav} key={text} disablePadding sx={{ display: 'block' }}>
-                            <a href={link[index]}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                      >
+                        {/* Add your dropdown menu items here */}
+                        <MenuItem component={Link} to="/jobsapplied">
+                          My job
+                        </MenuItem>
+                        <MenuItem
+                          onClick={handleNavAndClose}
+                          component={Link}
+                          to="/createjob"
+                        >
+                          Post Job
+                        </MenuItem>
+                        <MenuItem
+                          onClick={handleNavAndClose}
+                          component={Link}
+                          to="/myjob"
+                        >
+                          Managae Job Posted
+                        </MenuItem>
+                        <MenuItem
+                              component={Link}
+                              to="/bnaniihai"
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                            </a>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-           
-            </Drawer>
-            <Box style={{marginTop:"12vh"}}component="main" sx={{ flexGrow: 1, }}>
-                <Container1 /> </Box>
-        </Box>
-    );
-}
+                              Resume Builder
+                        </MenuItem>
+
+                      </Menu>
+                      
+                    )}
+                  </>
+                )}
+                </>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* ... (unchanged code) */}
+              <IconButton
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+                to="/post"
+              >
+                <FontAwesomeIcon icon={faHome} />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                onClick={handleMenuOpen}
+                style={{ marginRight: "20px" }}
+              >
+                <FontAwesomeIcon icon={faUserFriends} />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem
+                  onClick={handleMenuClose}
+                  component={Link}
+                  to="/connections"
+                >
+                  Connection
+                </MenuItem>
+                <MenuItem
+                  onClick={handleMenuClose}
+                  component={Link}
+                  to="/otherusers"
+                >
+                  Add friend
+                </MenuItem>
+              </Menu>
+              <IconButton
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+                to="/chat"
+              >
+                <FontAwesomeIcon icon={faEnvelope} />
+              </IconButton>
+              <div style={{ display: "flex", alignItems: "center" }}>
+               
+                    <IconButton
+                      color="inherit"
+                      onClick={handleJobMenuToggle}
+                      style={{ marginRight: "4px" }}
+                      component={Link}
+                      to="/showjob"
+                    >
+                      <FontAwesomeIcon icon={faMoneyCheckAlt} />
+                    </IconButton>
+                    {location.pathname === "/showjob" && (
+                  <>
+                    {isJobMenuOpen && (
+                      <>
+                        <i
+                          className="fas fa-chevron-down fa-xs"
+                          style={{ marginLeft: "0px" }}
+                          onClick={handleDropdownToggle}
+                        ></i>
+                        {isDropdownOpen && (
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={isDropdownOpen}
+                            onClose={handleDropdownClose}
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            transformOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                          >
+                            {/* Add your dropdown menu items here */}
+                            <MenuItem component={Link} to="/jobsapplied">
+                              My job
+                            </MenuItem>
+                            <MenuItem
+                              
+                              component={Link}
+                              to="/createjob"
+                            >
+                              Post Job
+                            </MenuItem>
+                            <MenuItem
+                              component={Link}
+                              to="/myjob"
+                            >
+                              Manage Job Posted
+                            </MenuItem>
+                            <MenuItem
+                              component={Link}
+                              to="/bnaniihai"
+                            >
+                              Resume Builder
+                            </MenuItem>
+                          </Menu>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
+      <Container2 />
+    </>
+  );
+};
+
+export default Navbar2;

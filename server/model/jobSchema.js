@@ -46,7 +46,7 @@ const jobSchema = new Schema({
         },
         jobberid:{
             type:String
-        }
+        },
     },
      {
     toJSON: { virtuals: true },
