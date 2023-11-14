@@ -10,7 +10,36 @@ import Test from "./Test";
 import { User } from "../context/User";
 const url="http://localhost:3500/"
 //const url="http://172.29.50.69:3500/"
+const FilePreview = ({ fileList }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {fileList.map((file, index) => (
+        <div key={index} className="relative group">
+          {file.match(/\.(jpeg|jpg|gif|png)$/) ? (
+            <img src={file} alt={`Preview ${index + 1}`} className="w-full h-full object-cover rounded-md" />
+          ) : file.match(/\.(mp4|webm|ogg)$/) ? (
+            <video controls className="w-full h-full object-cover rounded-md">
+              <source src={file} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+           
+            <div className="flex items-center justify-center w-full h-full bg-gray-300 rounded-md">
+                         <p className="text-gray-600">File Preview {index + 1}</p>
 
+            </div>
+          )}
+           <a href={file}> 
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <p className="text-white">Preview {index + 1}</p>
+          </div>
+          </a>
+        </div>
+       
+      ))}
+    </div>
+  );
+};
 export default function AllPost() {
   const axiosPrivate=useAxiosPrivate()
   const [re,setRe]=useState("")
@@ -86,28 +115,27 @@ async function handle1(){
   
   return (
     <>
-    <div style={{height:"12vh"}}></div>
-      <div>
-     
-        <div>
+ 
+    <section className="text-gray-400 bg-gray-900 body-font">
+            <div className="container px-5 py-24 mx-auto">
+            <div className="flex flex-wrap  -m-4">
 
-{posts.map(item=>{
-    const sr=`${url}${item.picture}`
-    return(<>
-     <section className="flex flex-col justify-center antialiased bg-gray-900 text-gray-200 ">
-          <div className="max-w-6xl mx-auto p-4 sm:px-6 h-full">
-            {/* Blog post */}
-            <article className="max-w-sm mx-auto md:max-w-none grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
-              <a className="relative block group" href="#0">
-                <div className="absolute inset-0 bg-gray-800 hidden md:block transform md:translate-y-2 md:translate-x-4 xl:translate-y-4 xl:translate-x-8 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out pointer-events-none" aria-hidden="true" />
-                <figure className="relative h-0 pb-[56.25%] md:pb-[75%] lg:pb-[56.25%] overflow-hidden transform md:-translate-y-2 xl:-translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out">
-                  <img className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out" src={sr} width={540} height={303} alt="Blog post" />
-                </figure>
-              </a>
-              <div>
-                <header>
-                  <div className="">
-                    <ul className="flex flex-wrap text-xs font-medium -m-1">
+    {posts.map(item=>{
+      return(<>
+  
+<div className=" bg-gray-900 p-4 md:w-1/2 w-full">
+    <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
+    <div className="p-6">
+            <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
+              {item.email}
+            </h2>
+            <h1 className="title-font text-lg font-medium text-white mb-3">
+                {item.head}
+            </h1>
+            <p className="leading-relaxed mb-3">
+                {item.content}
+            </p>
+            <ul className="flex flex-wrap text-xs font-medium -m-1">
                       {item.hashtag?.map(it=>{
                         return(<><li className="m-1">
                         <a className="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out" href="#0">{it}</a>
@@ -116,43 +144,27 @@ async function handle1(){
                       
                      
                     </ul>
-                  </div>
-                  <h3 className="text-2xl lg:text-3xl font-bold leading-tight ">
-                    <a className="hover:text-gray-100 transition duration-150 ease-in-out" href="#0">{item.head}</a>
-                  </h3>
-                </header>
-                <p className="text-lg text-gray-400 flex-grow">{item.content}</p>
-                <Test id={item._id}/>
-                <footer className="flex items-center mt-4">
-                  <a href="#0">
-                    <img className="rounded-full flex-shrink-0 mr-4" src="https://preview.cruip.com/open-pro/images/news-author-04.jpg" width={40} height={40} alt="Author 04" />
-                  </a>
-                  <div>
-                    <a className="font-medium text-gray-200 hover:text-gray-100 transition duration-150 ease-in-out" href="#0">{item.email}</a>
-                    <span className="text-gray-700"> - </span>
-                    <span className="text-gray-500">{item.time}</span>
-                    <SlackCounter counters={item.react}/>
+                  
+        </div>
+        <FilePreview fileList={item.file}/>
+        <div className="p-6">
                     <>Reactions</>
-                    <ReactionBarSelector  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
+                    <SlackCounter counters={item.react}/>
+               <br/>
+                    <ReactionBarSelector iconSize={15}  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
              
                   </div>
-              
-                 
-                </footer>
-                
-              </div>
-            </article>
-          </div>
-        </section></>)
-})}
+                  <br/>
+                  <Test id={item._id}/>
+    </div>
+</div>
 
 
+</>)})}
+</div></div>
+</section>
 
-       
-        {/* More components */}
-       
-      </div>
-      </div>
+   
     </>
   );
 }

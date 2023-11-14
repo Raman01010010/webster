@@ -5,7 +5,7 @@ import Dashboard from "./Dashboard";
 import Otherusers from "./Otherusers";
 import Connections from "./Connections"
 import Pending from "./Pending";
-import Post1 from "./Post";
+import Post1 from "./Post2";
 import AllPost from "./AllPost";
 import DefaultComponent from "./Comment";
 import Test from "../test/Test";
@@ -19,6 +19,8 @@ import ControlledOpenSpeedDial from "./Speed";
 import Profilepage from "./Profilepage";
 import Endorse from "./Endorse";
 import ParticularPost from "./ParticularPost";
+import FileUpload from "./Uploadtest";
+import YourMainComponent from "./AllPost2";
 export default function Container1(){
     return(<>
     
