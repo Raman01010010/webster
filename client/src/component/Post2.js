@@ -14,6 +14,7 @@ const PostForm = () => {
     const [heading, setHeading] = useState('');
     const [content, setContent] = useState('');
     const [files, setFiles] = useState([]);
+    console.log(postData)
 //    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
  //     const extractedHashtags = text.match(hashtagRegex);
     const [selectedFile, setSelectedFile] = useState(null);
