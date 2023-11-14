@@ -8720,6 +8720,7 @@ Tue Nov 14 2023 01:56:33 GMT+0530 (India Standard Time)	c281d51c-b105-4069-b517-
 Tue Nov 14 2023 01:56:33 GMT+0530 (India Standard Time)	475a835f-18f3-441d-8fc3-973f37967cb5	OPTIONS	http://localhost:3000	/job/jobapplication
 Tue Nov 14 2023 01:56:33 GMT+0530 (India Standard Time)	66a443c1-2b16-438e-a2b0-4877cea8a57f	POST	http://localhost:3000	/job/jobapplication
 Tue Nov 14 2023 01:56:33 GMT+0530 (India Standard Time)	df877575-af68-4750-aa66-3fc8942b64a1	POST	http://localhost:3000	/job/jobapplication
+<<<<<<< HEAD
 =======
 Mon Nov 13 2023 20:12:20 GMT+0530 (India Standard Time)	a13ccb99-df09-49da-9679-04d4e7a67e42	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=Ol98YRR
 Mon Nov 13 2023 20:13:52 GMT+0530 (India Standard Time)	c898021f-97a2-41e0-8941-f1a5522df306	GET	http://localhost:3000	/refresh
@@ -9957,3 +9958,16 @@ Tue Nov 14 2023 17:19:49 GMT+0530 (India Standard Time)	1a53f00c-6a18-4043-ba73-
 Tue Nov 14 2023 17:19:49 GMT+0530 (India Standard Time)	29c91e44-5eb6-4843-88af-bdc10dea0c7d	OPTIONS	http://localhost:3000	/job/jobapplication
 Tue Nov 14 2023 17:19:49 GMT+0530 (India Standard Time)	e53aca41-f96c-4dd6-aa6d-f85cb24b2ea9	POST	http://localhost:3000	/job/jobapplication
 Tue Nov 14 2023 17:19:49 GMT+0530 (India Standard Time)	b623c1a1-608a-4e21-87ce-0aac73de6615	POST	http://localhost:3000	/job/jobapplication
+=======
+Tue Nov 14 2023 17:27:30 GMT+0530 (India Standard Time)	3573590a-287e-4cb5-ba38-ff093f9e80d3	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiPj2
+Tue Nov 14 2023 17:27:31 GMT+0530 (India Standard Time)	0a109258-caf5-41a6-b78c-a0079e5b7ca6	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiPqd
+Tue Nov 14 2023 17:27:32 GMT+0530 (India Standard Time)	71a09750-54c9-4d51-b437-fa6d7411aca7	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiQ4Q
+Tue Nov 14 2023 17:27:35 GMT+0530 (India Standard Time)	3500a7a5-ea36-4ecb-9a4b-e76dea4ce12a	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiQnL
+Tue Nov 14 2023 17:27:37 GMT+0530 (India Standard Time)	49b916a2-6004-44b0-a55e-44218699790f	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiRIN
+Tue Nov 14 2023 17:27:37 GMT+0530 (India Standard Time)	a617351d-0e61-412d-a1ad-2f7c3e7439ec	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiRIN
+Tue Nov 14 2023 17:27:40 GMT+0530 (India Standard Time)	ed475a23-3a55-4879-9eea-23e666788131	GET	http://localhost:3000	/socket.io/?EIO=4&transport=polling&t=OlDiR_p
+Tue Nov 14 2023 17:29:06 GMT+0530 (India Standard Time)	0214271c-e791-411b-9141-b722ccb4ef3f	GET	http://localhost:3000	/refresh
+Tue Nov 14 2023 17:29:07 GMT+0530 (India Standard Time)	e13596a1-4bf3-4427-a7b5-172c3d57533c	GET	http://localhost:3000	/refresh
+Tue Nov 14 2023 17:29:59 GMT+0530 (India Standard Time)	4fbbb753-98b1-4a2c-b9c2-32386777616a	GET	http://localhost:3000	/getuser
+Tue Nov 14 2023 17:29:59 GMT+0530 (India Standard Time)	c8008c54-2f30-4110-9470-abd249a04ec2	GET	http://localhost:3000	/getuser
+>>>>>>> ca842ba0d12da3c6172f6602f8227d0cb9fefa59
