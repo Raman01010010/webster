@@ -111,14 +111,14 @@ async function handle1(){
    
    <section className="text-gray-400 bg-gray-900 body-font">
             <div className="container px-5 py-24 mx-auto">
-            <div className="flex flex-wrap  -m-4">
+            <div style={{width:"100vh"}} className="flex flex-wrap mr-auto ml-auto  -m-4">
 
     {posts.map(item=>{
       return(<>
   
-<div className=" bg-gray-900 p-4 md:w-1/2 w-full">
+<div className=" bg-gray-900 p-4 md:w-full  w-full">
     <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
-    <div className="p-6">
+    <div className=" p-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
               {item.email}
             </h2>
@@ -140,15 +140,15 @@ async function handle1(){
                   
         </div>
         <FilePreview fileList={item.file}/>
-        <div className="p-6">
-                    <>Reactions</>
+        <div className="flex justify-center p-6">
+                    
                     <SlackCounter counters={item.react}/>
                <br/>
                     <ReactionBarSelector iconSize={15}  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
              
                   </div>
                   <br/>
-                  <Test id={item._id}/>
+                 <div className="flex justify-center"> <Test id={item._id}/></div>
     </div>
 </div>
 
