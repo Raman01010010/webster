@@ -8,7 +8,7 @@ const upload = multer({ storage })
 const chatController=require('../controllers/chatController')
 const loginLimiter=require('../middleware/loginLimiter')
 router.post("/img", upload.single("file"), chatController.up);
-  
+router.post("/last", chatController.getLast);  
  
 router.post('/',chatController.get)
 

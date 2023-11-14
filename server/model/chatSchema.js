@@ -33,7 +33,11 @@ const chatSchema = new Schema({
       timestamp: {
         type: Date,
         default: Date.now,
-      }
+      },
+      seen:{
+type:String
+      },
+      current:[String]
    
 });
 
