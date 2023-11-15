@@ -81,6 +81,18 @@ export default function Checkout() {
     try {
       const res = await axios.post("/job/create", comp);
       console.log("posting")
+      setComp({
+        titles: "",
+        company: "",
+        locationonsite: "",
+        lastdate: "",
+        jobtype: "",
+        details: "",
+        contact: ["","",""],
+        locationtypes:"",
+        applylink: "",    
+        skill:[],
+      })
       console.log(comp);
     } catch (error) {
       console.log(error);

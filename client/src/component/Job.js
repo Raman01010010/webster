@@ -1,8 +1,9 @@
 import React, { useState, useEffect ,useContext} from "react";
 import Review from "./Review";
 import { User } from "../context/User";
-
 import Box from "@mui/material/Box";
+import swal from 'sweetalert';
+
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -17,7 +18,19 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import axios from "../api/axios";
 import { useParams } from 'react-router-dom';
-
+import Grid from '@mui/material/Grid';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
+const skillsList = [
+  'HTML',
+  'CSS',
+  'JavaScript',
+  'Java',
+  'C++',
+  'Kotlin',
+  // Add more skills here
+];
 const steps = [
   "Select campaign settings",
   "Create an ad group",
@@ -25,6 +38,7 @@ const steps = [
   "Additional Questions", // Add an additional step
 ];
 export default function Job() {
+  const [loading, setLoading] = useState(false);
 
   const { jobId } = useParams();
   const { newUser } = useContext(User);
@@ -37,7 +51,9 @@ export default function Job() {
     phone: "",
     place: "",
     resume: "",
+    skill:[],
     additionalQuestions: ["", "", ""],
+    
     location: "",
     jobid:jobId,
     userID: userid, // Set the userID directly here
@@ -126,15 +142,23 @@ export default function Job() {
   };
 
   const Submit = async () => {
-    try {
+  try {
+    setLoading(true);
+    const res = await axios.post("/job/profile", responses);
+    console.log(res);
+    swal({
+      title: "Successfully added",
+      icon: "success",
+      button: false,
+      timer: 3000
+    });
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+    console.log("yaha")
+  }
+};
 
-      const res = await axios.post("/job/profile", responses);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-      console.log("yaha")
-    }
-  };
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -286,22 +310,69 @@ export default function Job() {
             </section>
           </div>
         ) : activeStep === 1 ? (
-          <div>
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-            >
-              Upload Resume
-              <VisuallyHiddenInput
-                type="file"
-                accept=".pdf, .png, .jpg, .jpeg"
-                onChange={(e) => {
-                  handleResponseChange("resume", e.target.files, 0);
-                }}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <h1 style={{ marginBottom: '20px' }}>Upload Your Resume</h1>
+
+      <div style={{ marginBottom: '20px' }}>
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload Resume
+          <input
+            type="file"
+            accept=".pdf, .png, .jpg, .jpeg"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              handleResponseChange('resume', e.target.files, 0);
+            }}
+          />
+        </Button>
+      </div>
+
+      <div>
+      <React.Fragment>
+      <Typography variant="h6" gutterBottom></Typography>
+      <Grid container spacing={3}>
+        <Autocomplete
+          multiple
+          id="size-small-standard-multi"
+          size="small"
+          options={skillsList}
+          value={responses.skill}
+          onChange={(event, newValue) => {
+           // setSelectedSkills(newValue);
+           setResponses(old=>{
+              return({
+                ...old,
+                "skill":[...newValue]
+              })
+            })
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Skills "
+              placeholder="Add more Skills"
+            />
+          )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip
+                label={option}
+                size="small"
+                color="primary"
+                {...getTagProps({ index })}
               />
-            </Button>
-          </div>
+            ))
+          }
+        />
+      </Grid>
+    </React.Fragment>
+      </div>
+    </div>
         ) : activeStep === 2 ? (
           <div>
             <h1>Additional Questions</h1>

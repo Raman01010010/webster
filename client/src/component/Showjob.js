@@ -126,7 +126,7 @@ const Showjob = () => {
       alert("Failed to post job or send email. Please try again.");
     }
   };
-  console.log("showjob");
+  console.log("showjob"+newUser.userid);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -145,7 +145,7 @@ const Showjob = () => {
         console.error("Error fetching job data: ", error);
       }
     };
-
+    
     fetchData();
   }, [data]);
 
@@ -312,7 +312,6 @@ const Showjob = () => {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
