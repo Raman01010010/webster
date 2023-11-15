@@ -144,7 +144,7 @@ fetch()
             const sortedUserIds = [newUser.userid, user2Id].sort();
             const uniqueRoomID = sortedUserIds.join('_'); 
             try {
-                const res = await axios.post('/connections', { "newUser": newUser.email });
+                const res = await axios.post('/chat/last', { "email": newUser.email,'userid':newUser.userid });
                 console.log(res);
                 setConn(res?.data);
             } catch (error) {
@@ -233,7 +233,7 @@ fetch()
                                                     {conn.map(item=>{
                                                         return(<>
                                                          <li className="p-2 border-b">
-                                                        <a onClick={()=>setO(item._id)} className="flex justify-between">
+                                                        <a onClick={()=>setO(item?.sender)} className="flex justify-between">
                                                             <div className="flex flex-row">
                                                                 <div>
                                                                     <img
@@ -247,18 +247,18 @@ fetch()
                                                                 <div className="pt-1">
                                                                     <p className="fw-bold mb-0">{item.username}</p>
                                                                     <p className="text-xs text-gray-700">
-                                                                        Hello, Are you there?
+                                                                       {item?.message?.content}
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <div className="pt-1">
+                                                            {/* <div className="pt-1">
                                                                 <p className="text-xs text-gray-700 mb-1">
                                                                     Just now
                                                                 </p>
                                                                 <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 rounded-full py-2 px-4 float-end">
                                                                     3
                                                                 </span>
-                                                            </div>
+                                                            </div> */}
                                                         </a>
                                                     </li></>)
                                                     })}
