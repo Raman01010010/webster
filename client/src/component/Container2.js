@@ -26,6 +26,8 @@ import Formsubmit from "./Formsubmit";
 import ParticularJob from "./ParticularJob";
 import Education from "./Education";
 import AddEducation from "./AddEducation";
+import Projects from "./Projects";
+import Addproject from "./Addproject";
 export default function Container1(){
     return(<>
     
@@ -46,6 +48,8 @@ export default function Container1(){
           <Route path="/particularjob/:email" element={<><ParticularJob/></>} />
           <Route path="/education/:email" element={<><Education/></>} />
           <Route path="/addeducation/:email" element={<><AddEducation/></>} />
+          <Route path="/projects/:email" element={<><Projects/></>} />
+          <Route path="/addproject/:email" element={<><Addproject/></>} />
           <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />

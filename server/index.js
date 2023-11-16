@@ -67,6 +67,8 @@ app.use('/post',require('./routes/post'))
 app.use('/getparticularjob',require('./routes/particularjob'))
 app.use('/geteducation',require('./routes/geteducation'))
 app.use('/addeducation',require('./routes/addeducation'))
+app.use('/getproject',require('./routes/getproject'))
+app.use('/addproject',require('./routes/addproject'))
 app.use(verifyJWT)
 
 

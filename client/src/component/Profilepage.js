@@ -197,10 +197,17 @@ const Profilepage = () => {
                 </div>
               </Link>
               
+             
               <Link to={`/education/${email}`}>
-                <span className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
                   Education
-                </span>
+                </div>
+              </Link>
+
+              <Link to={`/projects/${email}`}>
+                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                My Projects
+                </div>
               </Link>
 
           </div>

@@ -38,7 +38,7 @@ const userSchema = new Schema({
     status:[{org:String,role:String,desc:String}],
     education:[{org:String,degree:String,time:String}],
     skills:{type:Array},
-    projects:[{name:String,tech:Array,colab:Array}],
+    projects:[{name:String,tech:Array,colab:Array,link:String}],
     connection:[String]
 });
 
