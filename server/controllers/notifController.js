@@ -44,5 +44,25 @@ const send=async (req, res) => {
     }
   }
 
+
+
+
+
+  const sendNotification = async (userId, message, link, cat, res) => {
+    try {
+        const newNotification = new notif({ 'user': userId, 'message': message, 'category': cat, 'link': link });
+        console.log(newNotification);
+        await newNotification.save();
+
+        // Broadcast the new notification to the target user
+        io.to(userId).emit('newNotification', newNotification);
+
+        console.log(newNotification);
+       // res.status(200).json({ success: true, message: 'Notification sent successfully' });
+    } catch (error) {
+        console.error('Error saving notification:', error.message);
+       // res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+}
   
-module.exports={getnotif,send}
+module.exports={getnotif,send,sendNotification}

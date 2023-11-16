@@ -36,21 +36,7 @@ function Notification() {
   };
 
   return (
-    <div>
-      <h1>Notification App</h1>
-     
-      <button onClick={() => sendNotification('wowowow!')}>Send Notification</button>
-      <ul>
-        {notifications.map((notification) => (
-            <>
-        
-          <Alert  severity="success" sx={{ width: '100%' }}>
-          {notification.message}
-        </Alert>
-        </>
-        ))}
-      </ul>
-    </div>
+   <></>
   );
 }
 

@@ -2,7 +2,7 @@ import { useEffect,useState,useContext } from "react"
 import { User } from "../context/User"
 import axios from '../api/axios'
 export default function NotifiButton() {
-const {newUser,notifications, setNotifications}=useContext(User)
+const {newUser,notifications, setNotifications,sh,setSh}=useContext(User)
 
 const [loading, setLoading] = useState(true);
 

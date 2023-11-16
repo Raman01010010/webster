@@ -36,6 +36,7 @@ function App() {
       skill:[],
       jobberid: newUser.userid // Jobber id aur user id same hai dhyan dena koi antar nii hai
     })
+    const[sh,setSh]=React.useState(0)
     const [notifications, setNotifications] = React.useState([]);
     useEffect(() => {
       setComp((prevComp) => ({
@@ -49,7 +50,7 @@ function App() {
     console.log("111"+newUser)
   return (
     <>
-    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}

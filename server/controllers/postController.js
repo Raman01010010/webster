@@ -3,7 +3,7 @@ const post = require('../model/postSchema');
 const Comment=require('../model/commentSchema')
 
 const users=require('../model/User')
-
+const notifController=require('../controllers/notifController')
 
 
 const getAll=async(req,res)=>{
@@ -131,6 +131,18 @@ if(res1.length){
                     react: { by: by, emoji:emoji} // Pull the entry with the specified email
                 }
             })
+
+
+            const p1=await post.find({_id:id})
+            console.log(p1[0]?.email)
+            const em=p1[0]?.email
+            const u=await users.find({email:em})
+            console.log(u)
+            const uid=u[0]?._id
+
+            const r5=await notifController.sendNotification(uid,`This Post is liked by ${by}`
+            ,'/link','general',res)
+            console.log(r5)
 
 
 }

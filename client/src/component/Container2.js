@@ -25,16 +25,20 @@ import Jobsapplied from "./Jobsapplied";
 import Formsubmit from "./Formsubmit";
 import Notification from "./Notification";
 import NotifiButton from "./NotifiButton";
+import { useContext } from "react";
+import { User } from "../context/User";
+
 export default function Container1(){
+    const {sh,setSh}=useContext(User)
     return(<>
     
 
 
-
+   { sh&&<NotifiButton/>}
 
           <Routes>
      
-          <Route path="/not" element={<><NotifiButton/></>} />
+        
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat" element={<><Chat/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
