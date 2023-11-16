@@ -140,7 +140,7 @@ if(res1.length){
             console.log(u)
             const uid=u[0]?._id
 
-            const r5=await notifController.sendNotification(uid,`This Post is liked by ${by}`
+            const r5=await notifController.sendNotification(uid,`This Posnvcncncccncbvt is liked by ${by}`
             ,'/link','general',res)
             console.log(r5)
 

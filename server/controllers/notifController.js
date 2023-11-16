@@ -55,9 +55,10 @@ const send=async (req, res) => {
         await newNotification.save();
 
         // Broadcast the new notification to the target user
-        io.to(userId).emit('newNotification', newNotification);
-
-        console.log(newNotification);
+        io.to(userId.toString()).emit('newNotification', newNotification);
+        console.log('hh')
+console.log(userId)
+       // console.log(newNotification);
        // res.status(200).json({ success: true, message: 'Notification sent successfully' });
     } catch (error) {
         console.error('Error saving notification:', error.message);
