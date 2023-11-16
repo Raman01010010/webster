@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from "react";
 import { useParams ,Link} from "react-router-dom";
+import {useContext } from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import axios from "../api/axios";
+import { User } from "../context/User";
 
 const Education = () => {
   const [educationData, setEducationData] = useState([]);
 
   const { email } = useParams();
-
+  const { newUser } = useContext(User);
 
  useEffect(()=>{
          
@@ -57,7 +59,7 @@ const Education = () => {
             })
          }
              
-
+           { newUser.email === email ? ( 
             <div className="w-1/3 md:w-1/2 p-4">
               {/* AddIcon styling */}
             <Link to={`/addeducation/${email}`}>             
@@ -67,6 +69,8 @@ const Education = () => {
               </div>
               </Link>
             </div>
+           ) : null
+          }
           </div>
         </div>
       </section>

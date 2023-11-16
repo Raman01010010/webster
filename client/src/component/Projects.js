@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import {useContext } from 'react';
 import { useParams, Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "../api/axios";
+import { User } from "../context/User";
 
 const Projects = () => {
   const { email } = useParams();
   const [projectData, setProjectData] = useState([]);
+ 
+  const { newUser } = useContext(User);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +56,8 @@ const Projects = () => {
                   </div>
                 );
               })}
+
+              { newUser.email === email ? (
               <div className="w-1/3 md:w-1/2 p-4">
                 {/* AddIcon styling */}
                 <Link to={`/addproject/${email}`}>
@@ -63,6 +69,8 @@ const Projects = () => {
                   </div>
                 </Link>
               </div>
+              ) : null
+            }
             </div>
           </div>
         </section>
