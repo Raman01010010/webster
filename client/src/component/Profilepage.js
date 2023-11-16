@@ -5,6 +5,8 @@ import axios from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllPost from "./AllPost";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
@@ -14,9 +16,7 @@ const Profilepage = () => {
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
-  // const dataToSend = {
-  //   key1: "email",
-  // };
+  const axiosPrivate=useAxiosPrivate()
 
   useEffect(() => {
     const fetchingData = async () => {
@@ -24,7 +24,7 @@ const Profilepage = () => {
         const d = {
           email: email,
         };
-        const res = await axios.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/fetchingdata", d);
         setData(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -40,7 +40,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axios.post("/addskill", d);
+      const res = await axiosPrivate.post("/addskill", d);
 
       toast.success("Added Skill Successfully");
     } catch (err) {
@@ -56,7 +56,7 @@ const Profilepage = () => {
       otheruserEmail: otheruser,
     };
     try {
-      const res = await axios.post("/endorseskill", d);
+      const res = await axiosPrivate.post("/endorseskill", d);
       toast.success("Skill Endorsed Successfully");
     } catch (err) {
       console.log(err);
@@ -70,7 +70,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axios.post("/deleteskill", d);
+      const res = await axiosPrivate.post("/deleteskill", d);
 
       toast.success("Skill Deleted Successfully");
     } catch (err) {
@@ -85,7 +85,7 @@ const Profilepage = () => {
       skill: skill,
     };
     try {
-      const res = await axios.post("/fetchendorse", d);
+      const res = await axiosPrivate.post("/fetchendorse", d);
       console.log("Endorsement data:", res.data);
       // Ensure this log statement is printed in the console
       navigate("/endorsepage", { state: { param1: res.data } });
@@ -152,7 +152,7 @@ const Profilepage = () => {
                   </button>
                 )}
                 <button
-                  className="absolute bottom-0 bg-sky-950 text-neutral-50	border-4 rounded-lg border-red-400"
+                  className="absolute bottom-0 bg-sky-950 text-neutral-50 border-4 rounded-lg border-red-400"
                   onClick={() => fetchingEndorse(email, element)}
                 >
                   Endorsed By...
@@ -190,7 +190,12 @@ const Profilepage = () => {
                   Go to My Posts
                 </div>
               </Link>
-            
+              
+              <Link to={`/particularjob/${email}`}>
+                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                  Go to My Jobs
+                </div>
+              </Link>
             
           </div>
         );
@@ -253,3 +258,4 @@ const Profilepage = () => {
 };
 
 export default Profilepage;
+

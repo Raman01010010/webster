@@ -64,6 +64,7 @@ app.use('/endorseskill',require('./routes/endorseSkills'))
 app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use('/getpost',require('./routes/getpost'))
 app.use('/post',require('./routes/post'))
+app.use('/getparticularjob',require('./routes/particularjob'))
 app.use(verifyJWT)
 
 
