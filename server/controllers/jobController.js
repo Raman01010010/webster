@@ -31,46 +31,51 @@ const create = async (req, res) => {
   }
 }
 
-// Rest of your code...
-
-// const jobapply=async(req,res)=>{
-//     try{
-//         const 
-//     }    
-// }
 const showjob = async (req, res) => {
   try {
-    console.log(req.body)
-      const aType = req.body.jobtype;
-      const bType = req.body.locationtypes;
-      const cType = req.body.locationonsite;
-      const dType = req.body.company;
-      
-      let filter = {};
-      // console.log(bType.length);
-      // Check if any of the arrays have a size greater than 0
-      if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
-          filter = {
-              $or: [
-                  { jobtype: { $in: aType } },
-                  { locationtypes: { $in: bType } },
-                  { locationonsite: { $in: cType } },
-                  { company: { $in: dType } },
-               ],
-          };
-      }
+    const aType = req.body.jobtype;
+    const bType = req.body.locationtypes;
+    const cType = req.body.locationonsite;
+    const dType = req.body.company;
 
-      const jobs = await job.find(filter);
-      const jobsWithExpirationStatus = jobs.map(job => {
-        return {
-          ...job.toObject(),  // Convert Mongoose document to plain JavaScript object
-          isExpired: job.isExpired,  // Add isExpired property
+    let filter = {};
+    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
+      filter = {
+        $or: [
+          { jobtype: { $in: aType } },
+          { locationtypes: { $in: bType } },
+          { locationonsite: { $in: cType } },
+          { company: { $in: dType } },
+        ],
+      };
+    }
+
+    const jobs = await job.find(filter);
+    const userId = req.body && req.body.userID;
+
+    const jobsWithExpirationStatus = await Promise.all(
+      jobs.map(async (job) => {
+        const jobObject = job.toObject();
+        const hasApplied = job.applicants.includes(userId);
+
+        // Add the hasApplied property to the job object
+        const jobWithStatus = {
+          ...jobObject,
+          isExpired: job.isExpired,
+          hasApplied: hasApplied,
         };
-      });
-       res.status(200).send(jobsWithExpirationStatus);
-      } catch (error) {
-      console.log(error);
-      res.status(400).send("Error fetching jobs");
+
+        return jobWithStatus;
+      })
+    );
+    // console.log("vivek2"+jobWithStatus);
+    res.status(200).send({
+      data: jobsWithExpirationStatus,
+      message: "Job data retrieved successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: "Error fetching jobs." });
   }
 };
 
@@ -79,6 +84,8 @@ const showjob = async (req, res) => {
 const myjob = async (req, res) => {
     try {
       const jobberId = req.body.jobberid; // Access jobberid from the request body
+      // console.log("vivekdmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm5");
+    
       console.log(jobberId); 
       const jobs = await job.find({ jobberid: jobberId }); // Search for jobs with the given jobberid
       console.log(jobs);
@@ -88,18 +95,48 @@ const myjob = async (req, res) => {
       res.status(400).send("Failed to retrieve job data");
     }
   };
-  const     Application = async (req, res) => {
+  const Application = async (req, res) => {
     try {
-      const jobId = req.body.jobid; // Access jobid from the request body
-      console.log(jobId); 
-      const jobs = await profile.find({ jobid: jobId }); 
-      console.log(jobs);
-      res.status(200).json(jobs);
+      // Access jobid from the request body
+      const aType = req.body.skill;
+      const jobId = req.body.jobid;
+      const bType = req.body.english;
+  
+      console.log(aType);
+  
+      let filter = {};
+  
+      if (aType.length > 0 || bType.length > 0) {
+        filter = {
+          $or: [
+            { skill: { $in: aType } },
+            { additionalQuestions: { $in: bType } },
+          ],
+        };
+      }
+  
+      console.log(jobId);
+  
+      // Find profiles based on jobid
+      const profiles = await profile.find({ jobid: jobId });
+  
+      // Filter profiles based on additional conditions
+      const filteredProfiles = profiles.filter((profile) => {
+        // Implement your filtering logic here
+        return (
+          (aType.length === 0 || profile.skill.some((skill) => aType.includes(skill))) &&
+          (bType.length === 0 || profile.additionalQuestions.some((question) => bType.includes(question)))
+        );
+      });
+  
+      console.log(filteredProfiles);
+      res.status(200).json(filteredProfiles);
     } catch (error) {
       console.log(error);
       res.status(400).send("Failed to retrieve job data");
     }
   };
+  
   const location = async (req, res) => {
     try {
         const result = await job.find();

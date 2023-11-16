@@ -23,6 +23,11 @@ const profileSchema = new Schema({
     resume:{
         type:String,
     },
+    skill:[
+      {
+          type:String
+      }
+  ],
     additionalQuestions: [
         {
           type: String
