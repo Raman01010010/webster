@@ -109,11 +109,11 @@ const Profilepage = () => {
                 onClick={() => navigate(`/profilepage/${element}`)}
                 className="cursor-grab"
               >
-                <div className="flex flex-wrap -m-2 border-gray-200 border p-4 rounded-lg bg-cyan-300 mt-4">
-                  <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
+                <div className="flex flex-wrap -m-2 border-gray-200 border p-4 rounded-lg bg-blue-950 text-white mt-4">
+                  <div className="p-2 lg:w-1/3 md:w-1/2 w-full text-white">
                     <div className="h-full flex items-center">
                       <div className="flex-grow">
-                        <h2 className="text-gray-900 title-font font-medium">
+                        <h2 className="text-gray-900 title-font font-medium text-white">
                           {element}
                         </h2>
                         <p className="text-gray-500">UI Designer</p>
@@ -131,7 +131,7 @@ const Profilepage = () => {
             {data.skills.map((element, index) => (
               <div
                 key={index}
-                className="relative group flex-grow w-32 h-32 flex items-center justify-center rounded-full bg-green-300 text-black m-2"
+                className="relative group flex-grow w-32 h-16 flex items-center justify-center rounded-full bg-blue-950 text-white m-2"
               >
                 {newUser.email !== email && (
                   <button
@@ -152,10 +152,10 @@ const Profilepage = () => {
                   </button>
                 )}
                 <button
-                  className="absolute bottom-0 bg-sky-950 text-neutral-50 border-4 rounded-lg border-red-400"
+                  className="absolute bottom-0  bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 z-10"
                   onClick={() => fetchingEndorse(email, element)}
                 >
-                  Endorsed By...
+                  Endorsed By.
                 </button>
               </div>
             ))}
@@ -186,21 +186,21 @@ const Profilepage = () => {
             {/* Your existing description content */}
           
               <Link to={`/particularpost/${email}`}>
-                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center">
+                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center">
                   Go to My Posts
                 </div>
               </Link>
               
               <Link to={`/particularjob/${email}`}>
-                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
                   Go to My Jobs
                 </div>
               </Link>
               
               <Link to={`/education/${email}`}>
-                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                <span className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
                   Education
-                </div>
+                </span>
               </Link>
 
           </div>

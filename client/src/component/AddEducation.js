@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -104,7 +103,6 @@ const AddEducation = () => {
           </div>
         </div>
       </section>
-      {/* ToastContainer to show toast notifications */}
       <ToastContainer />
     </div>
   );
