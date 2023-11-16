@@ -1,5 +1,6 @@
 const chatSchema = require('../model/chatSchema');
 const chat = require('../model/chatSchema');
+const User = require('../model/User.js');
 
 
 const cloudinary = require('cloudinary').v2;
@@ -76,4 +77,81 @@ const up=async (req, res) => {
 
 
 
-module.exports = {get,up};
+
+  const getLast = async (req, res) => {
+    try {
+      const email = req.body.email;
+      const user = await User.findOne({ email: email });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const connections = user.connection;
+  
+      try {
+        // Find all users whose email is in the connections array
+        const connectionData = await User.find(
+          { email: { $in: connections } },
+          '_id'
+        );
+        const conn = connectionData.map(item => item._id);
+  
+        const latestMessages = await Promise.all(
+          conn.map(async (senderId) => {
+            const sortedUserIds = [req.body.userid, senderId].sort();
+            const uniqueRoomID = sortedUserIds.join('_');
+            const latestMessage = await chatSchema
+              .find({ room: uniqueRoomID })
+              .sort({ timestamp: -1 })
+              .limit(1);
+  
+            if (latestMessage.length > 0) {
+              return latestMessage[0];
+            } else {
+              return { sender: senderId, content: 'No message found' };
+            }
+          })
+        );
+  
+        const latestMessagesWithUsernames = await Promise.all(
+          latestMessages.map(async (message) => {
+            const otherUserId =
+            message.sender.equals(user._id)
+                ? message.receiver
+                : message.sender;
+               // console.log(req.body.userid)
+               console.log(user._id)
+                console.log(message.sender)
+                console.log(otherUserId)
+  
+            const otherUser = await User.findById(otherUserId);
+  
+            if (otherUser) {
+              return {
+                username: otherUser.username,
+                sender:otherUserId,
+                message: message,
+              };
+            } else {
+              return { sender: otherUserId };
+            }
+          })
+        );
+  
+        //console.log(latestMessagesWithUsernames);
+        return res.status(200).json(latestMessagesWithUsernames);
+      } catch (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: 'An error occurred while fetching connection data' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred while fetching connections' });
+    }
+  };
+  
+
+module.exports = {get,up,getLast};
