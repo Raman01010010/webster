@@ -24,7 +24,14 @@ const PORT=3500
 const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 connectDB();
-
+let server
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+  
+    
+});
+server=app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+initSocket(server)
 
 app.use(logger)
 
@@ -36,6 +43,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser())
 app.use( express.static('uploads'));
+
 app.use('/user',require('./routes/user'))
 app.use('/auth',require('./routes/auth'))
 app.use('/refresh',require('./routes/refresh'))
@@ -64,6 +72,8 @@ app.use('/endorseskill',require('./routes/endorseSkills'))
 app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use('/getpost',require('./routes/getpost'))
 
+app.use('/notif',require('./routes/notif'))
+
 app.use(verifyJWT)
 app.use('/post',require('./routes/post'))
 
@@ -84,12 +94,6 @@ app.all('/*',(req,res)=>{
 
 app.use(errorHandler)
 //Route Handlers
-
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-  const  server=app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    initSocket(server)
-});
 
 
 

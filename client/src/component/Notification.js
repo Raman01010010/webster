@@ -14,8 +14,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 function Notification() {
-    const {newUser}=useContext(User)
-  const [notifications, setNotifications] = useState([]);
+    const {newUser,notifications,setNotifications}=useContext(User)
+ // const [notifications, setNotifications] = useState([]);
   const [show,setShow]=useState(1)
   console.log(newUser)
   const userId = newUser.userid; // Replace with your authentication logic
@@ -38,8 +38,8 @@ function Notification() {
   return (
     <div>
       <h1>Notification App</h1>
-      {show&&<NotifiButton/>}
-      <button onClick={() => sendNotification('Hello!')}>Send Notification</button>
+     
+      <button onClick={() => sendNotification('wowowow!')}>Send Notification</button>
       <ul>
         {notifications.map((notification) => (
             <>

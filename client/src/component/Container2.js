@@ -24,6 +24,7 @@ import YourMainComponent from "./AllPost2";
 import Jobsapplied from "./Jobsapplied";
 import Formsubmit from "./Formsubmit";
 import Notification from "./Notification";
+import NotifiButton from "./NotifiButton";
 export default function Container1(){
     return(<>
     
@@ -32,6 +33,8 @@ export default function Container1(){
 
 
           <Routes>
+     
+          <Route path="/not" element={<><NotifiButton/></>} />
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat" element={<><Chat/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
@@ -41,7 +44,7 @@ export default function Container1(){
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
           <Route path="/endorsepage" element={<><Endorse/></>} />
           <Route path="/particularpost/:email" element={<><ParticularPost/></>} />
-          <Route path="/cpost" element={<> <Post1/><Notification/></>} />
+          <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />
           <Route path="/signin" element={<><Signin/></>} />
@@ -54,6 +57,6 @@ export default function Container1(){
           <Route path="/formsubmitted/:jobId" element={<><Formsubmit/></>} />
 
     </Routes>
-
+    <Notification/>
     </>)
 }

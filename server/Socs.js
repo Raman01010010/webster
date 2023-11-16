@@ -112,4 +112,15 @@ socket.on('message', async ({ name, room, sender, receiver, content,other }) => 
         });
     });
 }
-module.exports={initSocket,io}
+function getIo() {
+    if (!io) {
+      throw new Error('Socket.io not initialized!');
+    }
+  
+    return io;
+  }
+  
+  module.exports = {
+    initSocket,
+    getIo,
+  };
