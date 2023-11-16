@@ -65,6 +65,8 @@ app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use('/getpost',require('./routes/getpost'))
 app.use('/post',require('./routes/post'))
 app.use('/getparticularjob',require('./routes/particularjob'))
+app.use('/geteducation',require('./routes/geteducation'))
+app.use('/addeducation',require('./routes/addeducation'))
 app.use(verifyJWT)
 
 

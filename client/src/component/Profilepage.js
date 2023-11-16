@@ -103,9 +103,9 @@ const Profilepage = () => {
       case "reviews":
         return (
           <div>
-            {data.connection.map((element) => (
+            {data.connection.map((element,index) => (
               <div
-                key={element}
+                key={index}
                 onClick={() => navigate(`/profilepage/${element}`)}
                 className="cursor-grab"
               >
@@ -196,7 +196,13 @@ const Profilepage = () => {
                   Go to My Jobs
                 </div>
               </Link>
-            
+              
+              <Link to={`/education/${email}`}>
+                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                  Education
+                </div>
+              </Link>
+
           </div>
         );
     }
