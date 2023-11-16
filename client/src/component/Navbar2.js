@@ -225,6 +225,26 @@ onClick={fun}
               >
                 <FontAwesomeIcon icon={faHome} />
               </IconButton>
+
+
+              <IconButton
+              onClick={fun}
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+                
+              >
+                <FontAwesomeIcon icon={faHome} />
+              </IconButton>
+
+
+
+
+
+
+
+
+
               <IconButton
                 color="inherit"
                 onClick={handleMenuOpen}

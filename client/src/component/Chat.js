@@ -192,7 +192,7 @@ fetch()
         setUser2id(id)
     }
     return (<>
-        <section style={{ backgroundColor: "#CDC4F9" }}>
+        <section style={{ zIndex:2,backgroundColor: "#CDC4F9" }}>
             <div className="container mx-auto sm:px-4 py-5">
                 <div className="flex flex-wrap ">
                     <div className="md:w-full pr-4 pl-4">

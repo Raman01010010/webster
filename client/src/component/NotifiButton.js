@@ -27,7 +27,7 @@ useEffect(() => {
   return (<>
     <>
       {/* component */}
-      <div className="py-100">
+      <div style={{zIndex:999999999}} className="py-100">
         {/*- more free and premium Tailwind CSS components at https://tailwinduikit.com/ -*/}
         <button
           onclick="notificationHandler(false)"
@@ -39,6 +39,7 @@ useEffect(() => {
       <div
         className="w-full h-full bg-gray-800 bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
         id="chec-div"
+        style={{position: "fixed",zIndex:999999999}}
       >
         {/*- more free and premium Tailwind CSS components at https://tailwinduikit.com/ -*/}
         <div
