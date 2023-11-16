@@ -23,7 +23,11 @@ useEffect(() => {
 
   fetchNotifications();
 }, []); // The empty dependency array ensures that this effect runs once when the component mounts
-
+function fun(){
+  setSh(old=>{
+    return(!old)
+  })
+}
   return (<>
     <>
       {/* component */}
@@ -58,7 +62,7 @@ useEffect(() => {
                 role="button"
                 aria-label="close modal"
                 className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 rounded-md cursor-pointer"
-                onclick="notificationHandler(false)"
+                onClick={fun}
               >
                 <svg
                   width={24}
