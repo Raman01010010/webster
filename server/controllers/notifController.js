@@ -8,7 +8,7 @@ const getnotif = async (req, res) => {
   
     try {
       // Assuming notif is a Mongoose model
-      const notifications = await notif.find({ user: userid });
+      const notifications = await notif.find({ user: userid }).sort({ timestamp: -1 });
   
       if (notifications.length === 0) {
         // Case: No notifications found for the user

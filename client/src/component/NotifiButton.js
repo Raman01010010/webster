@@ -116,8 +116,7 @@ useEffect(() => {
               </div>
               <div className="pl-3">
                 <p tabIndex={0} className="focus:outline-none text-sm leading-none">
-                  <span className="text-indigo-700">Sarah</span> posted in the
-                  thread: <span className="text-indigo-700">{item.message}</span>
+      <span className="text-indigo-700">{item.message}</span>
                 </p>
                 <p
                   tabIndex={0}

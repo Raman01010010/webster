@@ -140,8 +140,8 @@ if(res1.length){
             console.log(u)
             const uid=u[0]?._id
 
-            const r5=await notifController.sendNotification(uid,`This Posnvcncncccncbvt is liked by ${by}`
-            ,'/link','general',res)
+            const r5=await notifController.sendNotification(uid,`This ${emoji} is liked by ${by}`
+            ,`/${p1[0]._id}`,'Reactions',res)
             console.log(r5)
 
 
@@ -163,6 +163,9 @@ const com=async(req,res)=>{
 
     // Create a new comment document
     const comment = new Comment({ postId, text, user });
+
+    const by1=await users.find({_id:user})
+    const by=by1[0].username
     const incrementValue = 1;
     const result = await post.updateOne(
       { _id: postId },
@@ -171,7 +174,15 @@ const com=async(req,res)=>{
     console.log(result)
     // Save the comment to the database
     await comment.save();
+    const p1=await post.find({_id:postId})
+            console.log(p1[0]?.email)
+            const em=p1[0]?.email
+            const u=await users.find({email:em})
+            console.log(u)
+            const uid=u[0]?._id
 
+            const r5=await notifController.sendNotification(uid,`${by} commented  ${text} on your Post`
+            ,`/${p1[0]._id}`,'Comment',res)
     // Respond with a success message or the newly created comment
     res.status(201).json({ message: 'Comment created successfully', comment });
   } catch (error) {
