@@ -104,7 +104,7 @@ async function handle1(){
     console.log(item);
   
     // Use the updated state returned by setLike
-    const updatedLike = {"id": item._id, "react": {"emoji": key, "by": 'rmnprj@outlook.com'}};
+    const updatedLike = {"id": item._id, "react": {"emoji": key, "by": newUser.email}};
     setLike(updatedLike);
   
     console.log(updatedLike);

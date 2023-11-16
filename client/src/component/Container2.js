@@ -23,6 +23,7 @@ import FileUpload from "./Uploadtest";
 import YourMainComponent from "./AllPost2";
 import Jobsapplied from "./Jobsapplied";
 import Formsubmit from "./Formsubmit";
+import Notification from "./Notification";
 export default function Container1(){
     return(<>
     
@@ -40,7 +41,7 @@ export default function Container1(){
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
           <Route path="/endorsepage" element={<><Endorse/></>} />
           <Route path="/particularpost/:email" element={<><ParticularPost/></>} />
-          <Route path="/cpost" element={<> <Post1/></>} />
+          <Route path="/cpost" element={<> <Post1/><Notification/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />
           <Route path="/signin" element={<><Signin/></>} />

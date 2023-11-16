@@ -3,8 +3,10 @@
 const { Server } =require("socket.io");
 const chatSchema =require("./model/chatSchema");
 const allowedOrigin=require('./config/allowedOrigin')
+const Notification=require('./model/notifiSchema')
+let io
 function initSocket(server) {
-    const io = new Server(server, {
+     io = new Server(server, {
         cors: {
             origin: allowedOrigin}
     });
@@ -43,9 +45,24 @@ socket.on('enterRoom', ({ name, room }) => {
     // Update rooms list for everyone 
    
 })
+socket.on('joinRoom', (userId) => {
+    socket.join(userId);
+    console.log(userId,'ghgh')
+  });
 
+  socket.on('sendNotificationtoone', async ({ userId, message,link,cat }) => {
+    try {
+      const newNotification = new Notification({'user': userId, 'message':message,'category':cat,'link':link });
+      await newNotification.save();
+console.log(newNotification)
+      // Broadcast the new notification to the target user
+      io.to(userId).emit('newNotification', newNotification);
+    } catch (error) {
+      console.error('Error saving notification:', error.message);
+    }
+  });
 
-
+  
 //Messsage
 socket.on('message', async ({ name, room, sender, receiver, content,other }) => {
     console.log("sent");
@@ -95,4 +112,4 @@ socket.on('message', async ({ name, room, sender, receiver, content,other }) => 
         });
     });
 }
-module.exports={initSocket}
+module.exports={initSocket,io}
