@@ -2,34 +2,39 @@ const job = require('../model/jobSchema');
 const profile = require('../model/profileSchema');
 const sendEmail = require('./jobemailController');
 const user_w=require('../model/User')
+const  {sendNotification}  = require('./notifController');
 
 const create = async (req, res) => {
   console.log(req.body);
-  // Assuming email is directly available in req.body
   const recipientEmail = req.body.contact[1];
   const pro = new job(req.body);
-  
+  const skills = req.body.skill;
   console.log("Recipient Email:", recipientEmail);
 
   try {
-      const re = await pro.save();
-      console.log(re);
+    const re = await pro.save();
+    console.log(re);
 
-      const users = await user_w.find(); // Retrieve all users from the user_ws schema
-      const emailArray = users.map(user => user.email);
-      console.log(emailArray);
-      
-      await sendEmail("", req.body, recipientEmail, "", recipientEmail);
+    // Retrieve users from the user_ws schema who have matching skills
+    const users = await user_w.find({ skills: { $in: skills } });
+    const emailArray = users.map((user) => user.email);
+    console.log(emailArray);
 
-      for (const email of emailArray) {
-        await sendEmail("","the job is posted", email, "", recipientEmail);
+    await sendEmail("", req.body, recipientEmail, "", recipientEmail);
+
+    for (const email of emailArray) {
+      await sendEmail("", "the job is posted", email, "", recipientEmail);
     }
-      res.status(200).send("success");
+    for (const user of users) {
+      await sendNotification(user._id, 'New job posted', '', 'job', res);
+    }
+
+    res.status(200).send("success");
   } catch (error) {
-      console.log(error);
-      res.status(400).send("22222");
+    console.log(error);
+    res.status(400).send("22222");
   }
-}
+};
 
 const showjob = async (req, res) => {
   try {

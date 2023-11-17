@@ -14,6 +14,7 @@ import {
   faUserFriends,
   faEnvelope,
   faMoneyCheckAlt,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 import { useContext } from "react";
@@ -101,7 +102,7 @@ onClick={fun}
                 component={Link}
                 
               >
-                <FontAwesomeIcon icon={faHome} style={{ marginRight: "5px" }} />
+               <FontAwesomeIcon icon={faBell}  style={{ marginRight: "5px" }} />
                 Notification
               </Button>
 
