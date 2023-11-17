@@ -183,7 +183,7 @@ const Navbar2 = () => {
                         </MenuItem>
                         <MenuItem
                               component={Link}
-                              to="/bnaniihai"
+                              to="/resume"
                             >
                               Resume Builder
                         </MenuItem>
@@ -311,6 +311,7 @@ const Navbar2 = () => {
           )}
         </Toolbar>
       </AppBar>
+      
       <Container2 />
     </>
   );

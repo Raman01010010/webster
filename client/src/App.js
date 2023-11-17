@@ -22,6 +22,28 @@ function App() {
   useEffect(()=>{
     Aos.init()
   })
+  const [inputValues, setInputValues] = React.useState({
+    fullName: '',
+    role: '',
+    email: '',
+    phone: '',
+    address: '',
+    linkedin: '',
+    image:'',
+    education: [
+      { degreeName: '', schoolName: '', startDate: '', endDate: '', grade: '' },
+      { degreeName: '', schoolName: '', startDate: '', endDate: '', grade: '' },
+    ],
+    skill:[],
+  });
+  const [accordionItems, setAccordionItems] = React.useState([
+    { id: 1, content: 'Accordion 1 Content', isOpen: false },
+    { id: 2, content: 'Accordion 2 Content', isOpen: false },
+  ]);
+  const [accordionItems2, setAccordionItems2] = React.useState([
+    { id: 1, content: 'Accordion 1 Content', isOpen: false },
+    { id: 2, content: 'Accordion 2 Content', isOpen: false },
+  ]);
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
   const [comp,setComp]=React.useState({
       titles: "",
@@ -48,7 +70,7 @@ function App() {
     console.log("111"+newUser)
   return (
     <>
-    <User.Provider value={{newUser,setNewUser,comp,setComp}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
