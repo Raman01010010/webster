@@ -1,93 +1,98 @@
 import axios from '../api/axios';
-import React, { useState ,useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { User } from '../context/User';
 import { useDropzone } from 'react-dropzone';
-
+import Loader from "./Loader";
 const PostForm = () => {
+  const [load, setLoad] = React.useState(0)
+  const [stat, setStat] = React.useState('')
 
+  const { newUser } = useContext(User)
+  console.log(newUser)
+  const [image, setImage] = useState('https://preview.cruip.com/open-pro/images/blog-post-01.jpg');
+  const [postData, setPostdata] = useState({ "email": newUser.email, "head": "Heading", "content": "Content of the post", "hashtag": "" })
+  const hashtagRegex = /#[a-zA-Z0-9_]+/g;
+  const [heading, setHeading] = useState('');
+  const [content, setContent] = useState('');
+  const [files, setFiles] = useState([]);
+  console.log(postData)
+  //    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
+  //     const extractedHashtags = text.match(hashtagRegex);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-    const {newUser}=useContext(User)
-    console.log(newUser)
-    const [image, setImage] = useState('https://preview.cruip.com/open-pro/images/blog-post-01.jpg');
-    const [postData, setPostdata] = useState({ "email":newUser.email,"head": "Heading", "content": "Content of the post", "hashtag": "" })
-    const hashtagRegex = /#[a-zA-Z0-9_]+/g; 
-    const [heading, setHeading] = useState('');
-    const [content, setContent] = useState('');
-    const [files, setFiles] = useState([]);
-    console.log(postData)
-//    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
- //     const extractedHashtags = text.match(hashtagRegex);
-    const [selectedFile, setSelectedFile] = useState(null);
+  const handleImageUpload = (e) => {
+    setSelectedFile(e.target.files);
+    const file = e.target.files[0];
+    console.log(file)
+    if (file) {
+      const imageUrl = URL.createObjectURL(file[0]);
+      setImage(imageUrl);
+    }
+  };
+  function handleChange(e) {
 
-    const handleImageUpload= (e) => {
-      setSelectedFile(e.target.files);
-      const file = e.target.files[0];
-      console.log(file)
-      if (file) {
-          const imageUrl = URL.createObjectURL(file[0]);
-          setImage(imageUrl);
-      }
-    };
-    function handleChange(e) {
-
-        const newText = e.target.value; // Use innerText instead of textContent
-        console.log(newText);
-console.log(postData.content.match(hashtagRegex))
-const extractedHashtags = postData.content.match(hashtagRegex);
-setPostdata(old=>{
-    return(
+    const newText = e.target.value; // Use innerText instead of textContent
+    console.log(newText);
+    console.log(postData.content.match(hashtagRegex))
+    const extractedHashtags = postData.content.match(hashtagRegex);
+    setPostdata(old => {
+      return (
         {
-            ...old,
-            "hashtag":extractedHashtags
+          ...old,
+          "hashtag": extractedHashtags
         }
-    )
-})
-        setPostdata((old) => {
-            return {
-                ...old,
-                [e.target.name]: newText,
-                "email":newUser.email
-            };
-        });
-        console.log(postData);
+      )
+    })
+    setPostdata((old) => {
+      return {
+        ...old,
+        [e.target.name]: newText,
+        "email": newUser.email
+      };
+    });
+    console.log(postData);
+  }
+
+
+
+
+
+
+  const handleUpload =async (e) => {
+    e.preventDefault()
+    if (!files) {
+      alert('Please select a file to upload.');
+      return;
     }
 
-   
+    const text = postData.content// Regular expression to match hashtags
 
-
-
-
-    const handleUpload = (e) => {
-        e.preventDefault()
-        if (!files) {
-          alert('Please select a file to upload.');
-          return;
-        }
- 
-        const text=postData.content// Regular expression to match hashtags
-      
-        const formData = new FormData();
-        for (const file of files) {
-          formData.append('files', file);
-        }
-    
-        formData.append('json',JSON.stringify(postData))
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('files', file);
+    }
+    setLoad(1)
+    formData.append('json', JSON.stringify(postData))
     console.log(formData)
-        axios
-          .post('/upload/multiple', formData,postData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then((response) => {
-            console.log('File uploaded successfully:', response.data);
-            // Add any further processing or UI updates here
-          })
-          .catch((error) => {
-            console.error('File upload failed:', error);
-            // Handle errors and display an error message to the user
-          });
-      };
+   const res=await axios
+      .post('/upload/multiple', formData, postData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        console.log('File uploaded successfully:', response.data);
+        // Add any further processing or UI updates here
+      })
+      .catch((error) => {
+        console.error('File upload failed:', error);
+        setStat(error?.response?.data?.error)
+        // Handle errors and display an error message to the user
+      });
+    setLoad(0)
+    console.log(res)
+    
+  };
 
 
 
@@ -164,12 +169,15 @@ setPostdata(old=>{
             </div>
           ))}
         </div>
+        <div>{stat}</div>
         <button
           onClick={handleUpload}
           className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
         >
-          Post
+          Post  
         </button>
+        {load && <Loader />}
+      
       </form>
     </div>
   );
