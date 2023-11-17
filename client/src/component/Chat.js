@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
-
+import Loader from "./Loader";
 
 
 const socket = io('ws://localhost:3500/');
@@ -23,7 +23,8 @@ export default function Chat() {
     const [user2Id,setUser2id]= useState("")
     const [conn,setConn]=useState([])
     const [file, setFile] = useState(null);
-
+    const [load, setLoad] = React.useState(0)
+    const [stat, setStat] = React.useState('')
 
     console.log(newUser)
 
@@ -36,6 +37,7 @@ export default function Chat() {
         const formData = new FormData();
         formData.append("file", file);
         formData.append('json',JSON.stringify(message))
+        setLoad(1)
         try {
           const response = await axios.post("/chat/img", formData, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -47,6 +49,7 @@ export default function Chat() {
         } catch (error) {
           console.error("Upload failed:", error);
         }
+        setLoad(0)
       };
 //////Sockets
     useEffect(() => {
@@ -112,6 +115,7 @@ const fetch=async()=>{
             "receiver":user2Id
         })
     })
+   // setLoad(1)
     try{
         const res1 = await axios.post('/chat', { "room": uniqueRoomID });
         console.log(res1);
@@ -123,6 +127,7 @@ const fetch=async()=>{
     }catch(error){
         console.log(error)
     }
+   // setLoad(0)
 }
 fetch()
     },[user2Id])
@@ -143,6 +148,7 @@ fetch()
         const fetchData = async () => {
             const sortedUserIds = [newUser.userid, user2Id].sort();
             const uniqueRoomID = sortedUserIds.join('_'); 
+        //    setLoad(1)
             try {
                 const res = await axios.post('/chat/last', { "email": newUser.email,'userid':newUser.userid });
                 console.log(res);
@@ -150,6 +156,7 @@ fetch()
             } catch (error) {
                 console.log(error);
             }
+          //  setLoad(0)
 
 
            
@@ -412,6 +419,7 @@ fetch()
                                         <button onClick={handleSend} className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                                             Send
                                         </button>
+                                        {load&&<Loader/>}
                                         <div className="text-gray-700 flex justify-start items-center pe-3 pt-3 mt-2">
 
 

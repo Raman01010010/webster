@@ -24980,3 +24980,13 @@ Fri Nov 17 2023 16:28:35 GMT+0530 (India Standard Time)	fbbd7a85-b1d0-40b2-8bc9-
 Fri Nov 17 2023 16:28:35 GMT+0530 (India Standard Time)	9f1cd49f-a190-4a7e-ae93-6b7e8d756343	GET	http://localhost:3000	/refresh
 Fri Nov 17 2023 16:28:35 GMT+0530 (India Standard Time)	85708f8c-c1c2-4d5c-ad70-183c706aab33	POST	http://localhost:3000	/post/all
 Fri Nov 17 2023 16:28:35 GMT+0530 (India Standard Time)	cf3450ac-ac4a-4e4c-918a-aee80750b2a6	POST	http://localhost:3000	/post/all
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	3c7733f7-0472-46a0-b73e-7135b1ebbccd	OPTIONS	http://localhost:3000	/chat
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	c4401dc5-d1a3-4bbf-b137-05c168b6165f	OPTIONS	http://localhost:3000	/chat/last
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	d894a313-f980-498c-bb87-78afa68005bc	OPTIONS	http://localhost:3000	/chat
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	a310909c-d84c-4036-adf9-807358b70770	OPTIONS	http://localhost:3000	/chat/last
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	78079a40-99bb-4308-aa5c-1369a662b535	POST	http://localhost:3000	/chat
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	31aacfb8-59f3-446f-a61e-74728a8d8a07	POST	http://localhost:3000	/chat/last
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	e47b8563-c4f8-4ab3-bce4-6e57c3c89611	POST	http://localhost:3000	/chat
+Fri Nov 17 2023 16:33:04 GMT+0530 (India Standard Time)	0b9a89bc-1931-4c6d-8613-97581b032b58	POST	http://localhost:3000	/chat/last
+Fri Nov 17 2023 16:33:07 GMT+0530 (India Standard Time)	812ee396-4dbc-46cf-84b7-96df3e24e4cd	POST	http://localhost:3000	/chat
+Fri Nov 17 2023 16:33:26 GMT+0530 (India Standard Time)	b67d7580-81cf-47b6-bad0-968a70c06c2e	POST	http://localhost:3000	/chat/img
