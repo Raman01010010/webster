@@ -15,8 +15,11 @@ const Profilepage = () => {
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
+  const[saveskill,setSaveskill] = useState(false)
+  const[deleteskill,setDeleteskill] = useState(false)
+
   const axiosPrivate=useAxiosPrivate()
-  
+
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchingData = async () => {
@@ -32,7 +35,7 @@ const Profilepage = () => {
       }
     };
     fetchingData();
-  }, [email]);
+  }, [email,saveskill,deleteskill]);
 
   const handleSaveSkills = async (editSkills, newUseremail) => {
     const d = {
@@ -47,6 +50,7 @@ const Profilepage = () => {
       console.log(err);
       toast.error("Can't Add Skill Due to Some Err");
     }
+    setSaveskill(true);
   };
 
   const Endorse = async (skill, newUseremail, otheruser) => {
@@ -77,6 +81,7 @@ const Profilepage = () => {
       console.log(err);
       toast.error("Can't Delete Skill Due to Some Err");
     }
+    setDeleteskill(true)
   };
 
   const fetchingEndorse = async (email, skill) => {
@@ -161,7 +166,7 @@ const Profilepage = () => {
             ))}
             {newUser.email === email && (
               <>
-                <div className="flex-grow w-32 h-32 flex items-center justify-center rounded-full bg-green-100 text-black m-2">
+                <div className="flex-grow w-16 h-16 flex items-center justify-center rounded-full bg-green-100 text-black m-2">
                   <input
                     type="text"
                     placeholder="Add Skill"
@@ -171,6 +176,7 @@ const Profilepage = () => {
                 </div>
                 <button
                   onClick={() => handleSaveSkills(editSkills, newUser.email)}
+
                   className="ml-2 bg-blue-500 text-white py-2 px-4 rounded"
                 >
                   Save
