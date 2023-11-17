@@ -48,6 +48,8 @@ const employmentTypes = [
 ];
 
 const Showjob = () => {
+  const [isTrending, setIsTrending] = useState(false); // State to track trend button click
+
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -61,7 +63,7 @@ const Showjob = () => {
     locationonsite: [],
     company: [],
     userID: userid,
-    trend:"", // Set the userID directly here
+    trend:0, // Set the userID directly here
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
@@ -93,59 +95,34 @@ const Showjob = () => {
         console.error("Error fetching data from the backend:", error);
       }
     };
-
-    // Call the fetchData function
+      // Call the fetchData function
     fetchData();
   }, []);
   console.log("ye hai" + jobData.isExpired);
   const handleFilterDialogOpen = () => {
     setOpenFilterDialog(true);
   };
-  const PostJob = async () => {
+ 
+  const handletrending = async () => {
     try {
-      const response = await axios.post("/job/showjob", data);
-
-      // Assuming 'hasApplied' is a boolean property in each job object
-      const jobsWithApplied = response.data.data.map((job) => ({
-        ...job,
-        hasApplied: job.hasApplied,
-      }));
-
-      setJobData(jobsWithApplied);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handletrending=async()=>{
-    try {
+      // Toggle isTrending first
+      setIsTrending((prevIsTrending) => !prevIsTrending);
+  
+      // Then update data based on the new isTrending value
       setData((prevData) => ({
         ...prevData,
-        trend: 1,
+        trend: !isTrending ? 1 : 0,
       }));
-      const response = await axios.post("/job/showjob",data);
-
-      // Assuming 'hasApplied' is a boolean property in each job object
-      const jobsWithApplied = response.data.data.map((job) => ({
-        ...job,
-        hasApplied: job.hasApplied,
-      }));
-
-      setJobData(jobsWithApplied);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+  
   const handleFilterDialogClose = async () => {
     setOpenFilterDialog(false);
-    try {
-      await PostJob(); // Wait for the job to be posted
-
-      // Once the job is successfully posted, send an email
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to post job or send email. Please try again.");
-    }
   };
+  
+  
   console.log("showjob"+newUser.userid);
 
   useEffect(() => {
@@ -184,16 +161,17 @@ const Showjob = () => {
         <i class="fa-solid fa-filter"></i>
       </Fab>
       <Fab
-        color="primary"
+        color={isTrending ? "success" : "primary"} // Set color based on isTrending state
         aria-label="add"
         onClick={handletrending}
         sx={{
           position: "fixed",
-          bottom: "20px", // Adjust the bottom value as needed
-          left: "20px", // Adjust the right value as needed
+          bottom: "20px",
+          left: "20px",
         }}
       >
-<i class="fa-brands fa-searchengin"></i>      </Fab>
+        <i class="fa-brands fa-searchengin"></i>
+      </Fab>
       {jobData.map((job, index) => (
         <Card
           key={index}
