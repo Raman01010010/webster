@@ -42,15 +42,16 @@ const showjob = async (req, res) => {
     const bType = req.body.locationtypes;
     const cType = req.body.locationonsite;
     const dType = req.body.company;
-
+    const eType =req.body.skill;
     let filter = {};
-    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0) {
+    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0 ||eType.length>0) {
       filter = {
         $or: [
           { jobtype: { $in: aType } },
           { locationtypes: { $in: bType } },
           { locationonsite: { $in: cType } },
           { company: { $in: dType } },
+          { skill: { $in: eType } },
         ],
       };
     }
@@ -156,7 +157,7 @@ const myjob = async (req, res) => {
         // Extract unique locationonsite values
         const uniqueLocations = Array.from(new Set(result.map(item => item.locationonsite)));
          
-        console.log(uniqueLocations);
+        // console.log(uniqueLocations);
         res.status(200).send(uniqueLocations);
     } catch (error) {
         console.log(error);
@@ -177,6 +178,23 @@ const company = async (req, res) => {
       res.status(400).send("11111");
   }
 };
+const filterskill = async (req, res) => {
+  try {
+    const jobs = await job.find();
+
+    // Extract unique skills from all jobs
+    const allSkills = [...new Set(jobs.flatMap((job) => job.skill || []))];
+    
+    console.log(allSkills);
+
+    res.status(200).send(allSkills);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
 const myjobapplication = async (req, res) => {
   try {
     const userId = req.body.userid; 
@@ -217,4 +235,4 @@ const FormSubmitted = async (req, res) => {
 
 
 // locationonsite
-module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted}
+module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted,filterskill}

@@ -57,12 +57,16 @@ const Showjob = () => {
   const userid = newUser.userid;
 
   const [compa, setCompa] = useState([]);
+  const [ski, setSki] = useState([]);
+
   const [data, setData] = useState({
     jobtype: [],
     locationtypes: [],
     locationonsite: [],
     company: [],
+    skill:[],
     userID: userid,
+    
     trend:0, // Set the userID directly here
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
@@ -90,7 +94,22 @@ const Showjob = () => {
         const response = await axios.get("/job/getcompa");
         // Assuming the array is present in the 'data' property of the response
         setCompa(response.data);
-        console.log(compa);
+        // console.log(compa);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error);
+      }
+    };
+      // Call the fetchData function
+    fetchData();
+  }, []);
+  useEffect(() => {
+    // Fetch data from the backend using axios or your preferred method
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/job/getskill");
+        // Assuming the array is present in the 'data' property of the response
+        setSki(response.data);
+        console.log(ski);
       } catch (error) {
         console.error("Error fetching data from the backend:", error);
       }
@@ -421,6 +440,29 @@ const Showjob = () => {
                   variant="standard"
                   label="Company"
                   placeholder="Select Company"
+                />
+              )}
+            />
+             <Autocomplete
+              multiple
+              id="skill"
+              options={ski}
+              value={data.skill}
+              onChange={(event, newValue) => {
+                // setSelectedSkills(newValue);
+                setData((old) => {
+                  return {
+                    ...old,
+                    skill: [...newValue],
+                  };
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Skill"
+                  placeholder="Select Skill"
                 />
               )}
             />
