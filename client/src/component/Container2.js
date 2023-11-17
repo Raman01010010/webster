@@ -28,6 +28,8 @@ import NotifiButton from "./NotifiButton";
 import { useContext } from "react";
 import { User } from "../context/User";
 
+import Resume from "./Resume"
+
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
@@ -59,6 +61,9 @@ export default function Container1(){
           <Route path="/app/:jobId" element={<><Application/></>} />
           <Route path="/jobsapplied" element={<><Jobsapplied/></>} />
           <Route path="/formsubmitted/:jobId" element={<><Formsubmit/></>} />
+          <Route path="/resume" element={<><Resume/></>} />
+          {/* <Route path="/store1" element={<><Store1/></>} /> */}
+          {/* <Route path="/store3" element={<><Store3/></>} /> */}
 
     </Routes>
     <Notification/>

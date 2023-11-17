@@ -200,7 +200,7 @@ onClick={fun}
                             </MenuItem>
                             <MenuItem
                               component={Link}
-                              to="/bnaniihai"
+                              to="/resume"
                             >
                               Resume Builder
                             </MenuItem>
@@ -348,6 +348,7 @@ onClick={fun}
           )}
         </Toolbar>
       </AppBar>
+      
       <Container2 />
     </>
   );

@@ -24,7 +24,9 @@ export default function Skills() {
   
 
   return (
+    
     <React.Fragment>
+    
       <Typography variant="h6" gutterBottom></Typography>
       <Grid container spacing={3}>
         <Autocomplete
