@@ -390,7 +390,11 @@ console.log(accordionItems[0].company);
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip
-                label={option}
+              label={
+            <Typography variant="body1" fontWeight="bold">
+              {option}
+            </Typography>
+          }
                 size="small"
                 color="primary"
                 {...getTagProps({ index })}

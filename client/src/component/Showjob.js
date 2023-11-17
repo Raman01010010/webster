@@ -60,7 +60,8 @@ const Showjob = () => {
     locationtypes: [],
     locationonsite: [],
     company: [],
-    userID: userid, // Set the userID directly here
+    userID: userid,
+    trend:"", // Set the userID directly here
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
@@ -115,6 +116,25 @@ const Showjob = () => {
       console.log(error);
     }
   };
+  const handletrending=async()=>{
+    try {
+      setData((prevData) => ({
+        ...prevData,
+        trend: 1,
+      }));
+      const response = await axios.post("/job/showjob",data);
+
+      // Assuming 'hasApplied' is a boolean property in each job object
+      const jobsWithApplied = response.data.data.map((job) => ({
+        ...job,
+        hasApplied: job.hasApplied,
+      }));
+
+      setJobData(jobsWithApplied);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleFilterDialogClose = async () => {
     setOpenFilterDialog(false);
     try {
@@ -163,6 +183,17 @@ const Showjob = () => {
       >
         <i class="fa-solid fa-filter"></i>
       </Fab>
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={handletrending}
+        sx={{
+          position: "fixed",
+          bottom: "20px", // Adjust the bottom value as needed
+          left: "20px", // Adjust the right value as needed
+        }}
+      >
+<i class="fa-brands fa-searchengin"></i>      </Fab>
       {jobData.map((job, index) => (
         <Card
           key={index}

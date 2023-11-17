@@ -55,11 +55,18 @@ const showjob = async (req, res) => {
       };
     }
 
-    const jobs = await job.find(filter);
+    let sortedJobs = await job.find(filter);
+
+    // Sort jobs based on the size of the 'applicants' field in descending order
+    if (req.body.trend === 1) {
+      sortedJobs = sortedJobs.sort((jobA, jobB) => jobB.applicants.length - jobA.applicants.length);
+    }
+
+    // Find jobs in trending
     const userId = req.body && req.body.userID;
 
     const jobsWithExpirationStatus = await Promise.all(
-      jobs.map(async (job) => {
+      sortedJobs.map(async (job) => {
         const jobObject = job.toObject();
         const hasApplied = job.applicants.includes(userId);
 
@@ -73,7 +80,7 @@ const showjob = async (req, res) => {
         return jobWithStatus;
       })
     );
-    // console.log("vivek2"+jobWithStatus);
+
     res.status(200).send({
       data: jobsWithExpirationStatus,
       message: "Job data retrieved successfully.",
