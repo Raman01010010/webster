@@ -141,7 +141,7 @@ if(res1.length){
             const uid=u[0]?._id
 
             const r5=await notifController.sendNotification(uid,`This ${emoji} is liked by ${by}`
-            ,`/${p1[0]._id}`,'Reactions',res)
+            ,`/post1/${p1[0]._id}`,'Reactions',res)
             console.log(r5)
 
 
