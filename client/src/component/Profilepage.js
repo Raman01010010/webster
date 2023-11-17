@@ -11,13 +11,13 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
   const { email } = useParams();
-  const [data, setData] = useState([]);
   const [editSkills, setEditSkills] = useState();
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
   const axiosPrivate=useAxiosPrivate()
-
+  
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchingData = async () => {
       try {
