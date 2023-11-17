@@ -8,6 +8,7 @@ import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
 import Test from "./Test";
 import { User } from "../context/User";
+import Loader from "./Loader";
 const url="http://localhost:3500/"
 //const url="http://172.29.50.69:3500/"
 const FilePreview = ({ fileList }) => {
@@ -47,6 +48,7 @@ export default function AllPost() {
  const [show,setShow]=useState(1)
 //console.log(extractedHashtags)
 const [like,setLike]=useState({"id":"","react":{"emoji":"","by":""}})
+const [load,setLoad]=React.useState(0)
 const {newUser}=useContext(User)
 async function handle(item){
     console.log("hidfj")
@@ -79,15 +81,19 @@ async function handle1(){
   useEffect(() => {
     // Use an async function within the effect
     const fetchData = async () => {
+      
       try {
         const a=newUser.email
+        setLoad(1)
         const response = await axiosPrivate.post('/post/all',newUser);
         setPosts(response.data);
+        setLoad(0)
         console.log(response.data)
         // Assuming the response is an array of post objects
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
+    
       console.log(posts) 
     };
 
@@ -119,7 +125,7 @@ async function handle1(){
     <section className="text-gray-400 bg-gray-900 body-font">
             <div className="container px-5 py-24 mx-auto">
             <div style={{width:"100vh"}} className="flex flex-wrap mr-auto ml-auto  -m-4">
-
+{load&&<Loader/>}
     {posts.map(item=>{
       return(<>
   
@@ -149,7 +155,7 @@ async function handle1(){
         <FilePreview fileList={item.file}/>
         <div className="flex justify-center p-6">
                     
-                    <SlackCounter counters={item.react}/>
+                    <SlackCounter  counters={item.react}/>
                <br/>
                     <ReactionBarSelector iconSize={15}  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
              
