@@ -16,7 +16,7 @@ try{
 console.log(tm);
 console.log("hbn")
 if(tm.length){
-    res.status(401).send("User already existttt");
+    res.status(401).send("User already exists");
 }
 }catch(err){
     console.log(err);

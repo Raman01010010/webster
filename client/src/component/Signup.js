@@ -1,13 +1,16 @@
 import { User } from "../context/User"
 import { useContext } from "react"
 import React from "react"
+import Loader from "./Loader";
 import { useNavigate } from 'react-router-dom';
 
 import { addClient, addUser } from "../api/api"
 export default function Signup(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
-
+  const [load,setLoad]=React.useState(0)
+  const [stat,setStat]=React.useState('')
+  
   const navigate = useNavigate();
 
 
@@ -43,11 +46,15 @@ check();
 
 
   async function handleSubmit(){
+    setLoad(1)
    const res= await addClient(newUser)
+    setLoad(0)
    console.log(res)
+   setStat(res?.response?.data)
    if(res.status==201||res.status==202){
     console.log("success")
     navigate('/otp')}
+  
   }
   async function  handleChange(event){
     setNewUser(old=>{
@@ -135,6 +142,8 @@ check();
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Button
       </button>
+      {load&&<Loader/>}
+      <div>{stat}</div>
       <p className="text-xs mt-3">
         Literally you probably haven't heard of them jean shorts.
       </p>
