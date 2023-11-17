@@ -132,6 +132,13 @@ onClick={fun}
                 >
                   Add friend
                 </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/pending"
+                >
+                  New Request
+                </MenuItem>
               </Menu>
               <Button
                 color="inherit"

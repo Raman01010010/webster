@@ -39,6 +39,7 @@ const Pending = () => {
     toast.success('You both are Now connected to Each other', {
       position: toast.POSITION.TOP_RIGHT,
     });
+    
   };
 
   return (
