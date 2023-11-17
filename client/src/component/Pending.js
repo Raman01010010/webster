@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Pending = () => {
   const [pending, setPending] = useState([]);
+  const [accepted, setAccepted] = useState(false); // New state for tracking accepted requests
   const { newUser } = useContext(User);
 
   useEffect(() => {
@@ -26,19 +27,22 @@ const Pending = () => {
       }
     };
     fetchpending();
-  }, []);
+  }, [accepted]); // Add accepted to the dependency array
 
   const acceptrequest = async (newUser, senderEmail) => {
     const data = {
       receiverEmail: newUser,
       senderEmail: senderEmail,
     };
-      const res = await axios.post('/acceptrequest', data);
+    await axios.post('/acceptrequest', data);
 
     // Display a success toast
-    toast.success('You both are Now connected to Each other', {
+    toast.success('You both are now connected to each other', {
       position: toast.POSITION.TOP_RIGHT,
     });
+
+    // Update the state to trigger a re-render
+    setAccepted(true);
   };
 
   return (
@@ -48,7 +52,7 @@ const Pending = () => {
           <div className="flex flex-wrap -m-2">
             {pending.map((element) => {
               return (
-                <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
+                <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={element.senderEmail}>
                   <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg bg-cyan-8009">
                     <img
                       alt="team"
