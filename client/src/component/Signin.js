@@ -35,7 +35,7 @@ const axiosPrivate=useAxiosPrivate()
    setLoad(0)
    console.log(res)
    //setStat(res.response.)
-   if(res.response.status===401){
+   if(res?.response?.status===401){
     setStat('Error Credentials')
     console.log("cbxnbznvbnbv")
         }

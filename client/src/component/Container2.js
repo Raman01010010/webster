@@ -27,6 +27,7 @@ import Notification from "./Notification";
 import NotifiButton from "./NotifiButton";
 import { useContext } from "react";
 import { User } from "../context/User";
+import SinglePost from "./SinglePost";
 
 export default function Container1(){
     const {sh,setSh}=useContext(User)
@@ -37,7 +38,8 @@ export default function Container1(){
    { sh&&<NotifiButton/>}
 
           <Routes>
-     
+          <Route path="/post1/:id" element={<>            
+     <SinglePost/></>} />
         
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat" element={<><Chat/></>} />
