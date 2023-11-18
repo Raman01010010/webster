@@ -62,7 +62,10 @@ const Otherusers = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/getuser");
+        const d = {
+          email:newUser.email
+        }
+        const res = await axios.post("/getuser",d);
         setOtheruser(res.data);
       } catch (error) {
         console.error("Error fetching users:", error);

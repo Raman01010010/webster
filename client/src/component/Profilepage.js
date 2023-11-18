@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import AllPost from "./AllPost";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
   const { email } = useParams();
@@ -15,10 +14,11 @@ const Profilepage = () => {
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
-  const[saveskill,setSaveskill] = useState(false)
-  const[deleteskill,setDeleteskill] = useState(false)
+  const [saveskill, setSaveskill] = useState(false);
+  const [deleteskill, setDeleteskill] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
-  const axiosPrivate=useAxiosPrivate()
+  const axiosPrivate = useAxiosPrivate();
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -35,7 +35,7 @@ const Profilepage = () => {
       }
     };
     fetchingData();
-  }, [email,saveskill,deleteskill]);
+  }, [email, saveskill, deleteskill]);
 
   const handleSaveSkills = async (editSkills, newUseremail) => {
     const d = {
@@ -81,7 +81,32 @@ const Profilepage = () => {
       console.log(err);
       toast.error("Can't Delete Skill Due to Some Err");
     }
-    setDeleteskill(true)
+    setDeleteskill(true);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setProfileImage(file);
+  };
+
+  const handleFileUpload = async () => {
+    const formData = new FormData();
+    formData.append("profileImage", profileImage);
+
+    const email = newUser.email
+    try {
+      const res = await axiosPrivate.post("/uploadprofileimage", {formData,email}, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Handle successful upload, e.g., update the UI or show a success message
+      toast.success("Profile Image Uploaded Successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Error Uploading Profile Image");
+    }
   };
 
   const fetchingEndorse = async (email, skill) => {
@@ -108,7 +133,7 @@ const Profilepage = () => {
       case "reviews":
         return (
           <div>
-            {data.connection.map((element,index) => (
+            {data.connection.map((element, index) => (
               <div
                 key={index}
                 onClick={() => navigate(`/profilepage/${element}`)}
@@ -176,7 +201,6 @@ const Profilepage = () => {
                 </div>
                 <button
                   onClick={() => handleSaveSkills(editSkills, newUser.email)}
-
                   className="ml-2 bg-blue-500 text-white py-2 px-4 rounded"
                 >
                   Save
@@ -188,34 +212,47 @@ const Profilepage = () => {
       default:
         return (
           <div>
-
             {/* Your existing description content */}
-          
-              <Link to={`/particularpost/${email}`}>
-                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center">
-                  Go to My Posts
-                </div>
-              </Link>
-              
-              <Link to={`/particularjob/${email}`}>
-                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
-                  Go to My Jobs
-                </div>
-              </Link>
-              
-             
-              <Link to={`/education/${email}`}>
-                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
-                  Education
-                </div>
-              </Link>
+            <Link to={`/particularpost/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center">
+                Go to My Posts
+              </div>
+            </Link>
 
-              <Link to={`/projects/${email}`}>
-                <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+            <Link to={`/particularjob/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                Go to My Jobs
+              </div>
+            </Link>
+
+            <Link to={`/education/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                Education
+              </div>
+            </Link>
+
+            <Link to={`/projects/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
                 My Projects
-                </div>
-              </Link>
+              </div>
+            </Link>
 
+            {/* File upload */}
+            {newUser.email === email && (
+              <>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="mt-4"
+                />
+                <button
+                  onClick={handleFileUpload}
+                  className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
+                >
+                  Upload Profile Image
+                </button>
+              </>
+            )}
           </div>
         );
     }
@@ -223,10 +260,18 @@ const Profilepage = () => {
 
   return (
     <div>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
         <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+        <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">  {/* Updated this line */}
+            {/* Circular profile icon */}
             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+              <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
+                <img
+                  alt="profile"
+                  className="object-cover object-center w-full h-full"
+                  src={data.profileImage || "https://dummyimage.com/400x400"}
+                />
+              </div>
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {data.username}
               </h2>
@@ -263,11 +308,7 @@ const Profilepage = () => {
               </div>
               {renderContent()}
             </div>
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src="https://dummyimage.com/400x400"
-            />
+        
           </div>
         </div>
       </section>
@@ -277,4 +318,3 @@ const Profilepage = () => {
 };
 
 export default Profilepage;
-

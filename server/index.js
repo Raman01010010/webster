@@ -69,6 +69,7 @@ app.use('/geteducation',require('./routes/geteducation'))
 app.use('/addeducation',require('./routes/addeducation'))
 app.use('/getproject',require('./routes/getproject'))
 app.use('/addproject',require('./routes/addproject'))
+app.use('/uploadprofileimage',require('./routes/uploadprofileimage'))
 app.use(verifyJWT)
 
 
