@@ -20,7 +20,7 @@ const get = async (req, res) => {
 
         // Use the `await` keyword when calling `chat.find()` and pass a valid query object
         const result = await chat.find({ room: room });
-
+console.log(result)
         // Use `res.status()` to set the HTTP status code, and send the result as JSON
         res.status(200).json(result);
     } catch (error) {
@@ -154,4 +154,166 @@ const up=async (req, res) => {
   };
   
 
-module.exports = {get,up,getLast};
+
+
+//const User = require('../model/User.js');
+
+const areUsersConnected = async (userId1, userId2) => {
+  if (!userId1|| !userId2) {
+    console.log('Invalid user ID');
+    return
+  }
+  const user1 = await User.findById(userId1);
+  const user2 = await User.findById(userId2);
+
+  if (!user1 || !user2) {
+    console.log('Invalid user ID');
+  }
+
+  return user1.connection.includes(user2.email) && user2.connection.includes(user1.email);
+};
+
+
+
+const Room = require('../model/roomSchema');
+
+const findReq = async (req,res) => {
+  const userId = req.body.userid;
+  try {
+    const rooms = await Room.find({
+      users: userId,
+      accepted: { $ne: userId }
+    }).populate(   {     path: 'accepted',
+    select: '_Id username'} );
+
+
+
+    const mess = await Promise.all(rooms.map(async (item) => {
+      try {
+        const latestMessages = await chatSchema.find({ room: item.room }).sort({ timestamp: -1 }).limit(1);
+        return {item, latestMessages };
+      } catch (err) {
+        console.error(err);
+        return item;
+      }
+    }));
+    
+
+
+
+    res.status(200).send(mess);
+  } catch (error) {
+    console.error('Error finding rooms:', error);
+    throw error;
+    res.status(404).send('failed');
+  }
+};
+
+function splitStringByUnderscore(str) {
+  return str.split('_');
+}
+const roomSchema=Room
+const createR= async (req, res) => {
+  const { room, name } = req.body;
+  console.log(req.body)
+
+  try {
+    const two = splitStringByUnderscore(room);
+    let ch;
+
+    if (two?.length >= 2) {
+      ch = await areUsersConnected(two[0], two[1]);
+    }
+
+    let updateQuery;
+
+    if (ch) {
+      updateQuery = {
+        $addToSet: {
+          active: name,
+          accepted: { $each: [two[0], two[1]] },
+        },
+      };
+    } else {
+      updateQuery = {
+        $addToSet: {
+          active: name,
+          accepted: name,
+        },
+      };
+    }
+
+    const updatedRoom = await roomSchema.findOneAndUpdate(
+      { room: room, users: two },
+      updateQuery,
+      { new: true, upsert: true }
+    );
+
+    console.log('Updated or created room:', updatedRoom);
+    res.status(200).json({ success: true, message: 'Room updated or created successfully' });
+  } catch (error) {
+    console.error('Error updating or creating room:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+const findMain = async (req,res) => {
+  const userId = req.body.userid;
+  const userId2=""
+  try {
+    const rooms = await Room.find({
+      users: userId,
+      $expr: { $gte: [{ $size: '$accepted' }, 2] }
+    }).populate({
+      path: 'accepted',
+      select: '_id username'
+    });
+    
+    
+    
+
+
+    const mess = await Promise.all(rooms.map(async (item) => {
+      let other;
+      
+
+      if (item.accepted[0]._id.toString() === userId) {
+        other = item.accepted[1];
+      } else {
+        other = item.accepted[0];
+      }
+      console.log(other)
+      
+      try {
+        const latestMessages = await chatSchema.find({ room: item.room }).sort({ timestamp: -1 }).limit(1);
+        return {'userid':other._id,'username':other.username,item, latestMessages };
+      } catch (err) {
+        console.error(err);
+        return item;
+      }
+    }));
+    
+
+
+
+    res.status(200).send(mess);
+  } catch (error) {
+    console.error('Error finding rooms:', error);
+    throw error;
+    res.status(404).send('failed');
+  }
+};
+
+
+
+
+module.exports = {get,up,getLast,areUsersConnected,findReq,createR,findMain};

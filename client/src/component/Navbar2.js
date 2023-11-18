@@ -20,7 +20,7 @@ import { useContext } from "react";
 import { User } from "../context/User";
 
 const Navbar2 = () => {
-  const {sh,setSh}=useContext(User)
+  const {sh,setSh,newUser}=useContext(User)
   const isLargeScreen = useMediaQuery("(min-width:600px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const [isJobMenuOpen, setIsJobMenuOpen] = useState(false);
@@ -136,7 +136,7 @@ onClick={fun}
                 color="inherit"
 
                 component={Link}
-                to="/chat"
+                to={`/chat/${newUser.userid}`}
               >
                 <FontAwesomeIcon
                   icon={faEnvelope}
@@ -276,7 +276,7 @@ onClick={fun}
                 color="inherit"
                 style={{ marginRight: "20px" }}
                 component={Link}
-                to="/chat"
+                to={`/chat/${newUser.userid}`}
               >
                 <FontAwesomeIcon icon={faEnvelope} />
               </IconButton>

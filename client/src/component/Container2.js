@@ -15,6 +15,7 @@ import Job from "./Job";
 import Managejob from "./Managejob"
 import Application from "./Application";
 import Chat from "./Chat";
+import ChatR from "./ChatR";
 import ControlledOpenSpeedDial from "./Speed";
 import Profilepage from "./Profilepage";
 import Endorse from "./Endorse";
@@ -42,7 +43,8 @@ export default function Container1(){
      <SinglePost/></>} />
         
           <Route path="/" element={<><Dashboard/></>} />
-          <Route path="/chat" element={<><Chat/></>} />
+          <Route path="/chat/:id" element={<><Chat/></>} />
+          <Route path="/chatr/:id" element={<><ChatR/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
 
           <Route path="/pending" element={<><Pending/></>} />
