@@ -18,6 +18,7 @@ const handleLogin = async (req, res) => {
         const accessToken = jwt.sign(
             {
                 "UserInfo": {
+                    "userid":foundUser._id,
                     "email": foundUser.email,
                     "roles": roles
                 }
@@ -55,7 +56,8 @@ const handleLogin = async (req, res) => {
 
         // Send authorization roles and access token to user
         res.json({ 
-            //roles, 
+            //roles,
+            "username":foundUser.username,"userid":foundUser._id,"email":foundUser.email, 
             accessToken });
 
     } else {

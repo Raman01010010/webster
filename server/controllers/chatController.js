@@ -272,9 +272,9 @@ const findMain = async (req,res) => {
   try {
     const rooms = await Room.find({
       users: userId,
-      $expr: { $gte: [{ $size: '$accepted' }, 2] }
+      accepted:userId
     }).populate({
-      path: 'accepted',
+      path: 'users',
       select: '_id username'
     });
     
@@ -286,10 +286,10 @@ const findMain = async (req,res) => {
       let other;
       
 
-      if (item.accepted[0]._id.toString() === userId) {
-        other = item.accepted[1];
+      if (item.users[0]._id.toString() === userId) {
+        other = item.users[1];
       } else {
-        other = item.accepted[0];
+        other = item.users[0];
       }
       console.log(other)
       
@@ -298,7 +298,7 @@ const findMain = async (req,res) => {
         return {'userid':other._id,'username':other.username,item, latestMessages };
       } catch (err) {
         console.error(err);
-        return item;
+        return {'userid':other._id,'username':other.username,item, 'messages':[{"content":"Not found"}] };
       }
     }));
     

@@ -43,7 +43,8 @@ const axiosPrivate=useAxiosPrivate()
     console.log(res)
     const accessToken = res?.data?.accessToken;
             const roles = res?.data?.roles;
-            setNewUser({ "email":login.email,"pwd":login.pwd,roles, accessToken });
+            const tm=res?.data
+            setNewUser({ "email":login.email,"pwd":login.pwd,roles, accessToken,'username':tm.username,'userid':tm.userid });
     navigate('/dashboard')}
   
   }
