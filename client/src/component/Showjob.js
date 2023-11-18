@@ -55,7 +55,6 @@ const Showjob = () => {
   const [loca, setLoca] = useState([]);
   const { newUser } = useContext(User);
   const userid = newUser.userid;
-
   const [compa, setCompa] = useState([]);
   const [ski, setSki] = useState([]);
 

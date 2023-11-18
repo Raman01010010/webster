@@ -10,7 +10,6 @@ const naukari = async (req, res) => {
     try {
         const userId = req.body.userID;
         const jobId = req.body.jobid;
-    console.log("vive1"+userId+" "+jobId)
         const re = await pro.save();
         console.log("Profile saved");
 

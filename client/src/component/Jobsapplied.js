@@ -138,7 +138,7 @@ const response = await axios.post("/job/jobapplication", { userid: useriD });
               
              
                
-                 <Link to={`/formsubmitted/${e._id}`}>
+                 <Link to={`/formsubmitted/${e._id}/${e.jobberid}`}>
                   <Button
                     variant="contained"
                     color="primary"

@@ -18,6 +18,8 @@ router.get('/getskill', jobController.filterskill); // Use a different path for 
 router.post('/showjob',jobController.showjob)
 router.post('/jobapplication',jobController.myjobapplication)
 router.post('/form',jobController.FormSubmitted)
+router.post('/jobcomment',jobController.Jobcomment)
+router.get('/jobcomment2/:senderid/:receiverid/:jobid',jobController.getJobComments)
 
 // router.post('/mail',emailController.sendEmail)
 module.exports = router;
