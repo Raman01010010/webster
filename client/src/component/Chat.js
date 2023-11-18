@@ -11,7 +11,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
 import Loader from "./Loader";
 import { useParams,useNavigate } from 'react-router-dom';   
-
+import NavigationIcon from '@mui/icons-material/Navigation'
+import AddIcon from '@mui/icons-material/Add';
 const socket = io('ws://localhost:3500/');
 
 export default function Chat() {
@@ -222,16 +223,30 @@ fetch()
       navigate(`/chat/${id}`)
    
     }
+    function mesreq(){
+        navigate(`/chatr/${id}`)
+    }
     return (<>
         <section style={{ zIndex:2,backgroundColor: "#CDC4F9" }}>
+            
             <div className="container mx-auto sm:px-4 py-5">
                 <div className="flex flex-wrap ">
                     <div className="md:w-full pr-4 pl-4">
+                    <Fab onClick={mesreq} sx={{
+          position: "fixed",
+          bottom: "20px", // Adjust the bottom value as needed
+          right: "20px",
+          color: 'success.main', // Adjust the right value as needed
+        }} variant="extended">
+        <NavigationIcon sx={{ mr: 1 }}  />
+        Message Requests
+      </Fab>
                         <div
                             className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300"
                             id="chat3"
                             style={{ borderRadius: 15 }}
                         >
+                            
                             <div className="flex-auto p-6">
                                 <div className="flex flex-wrap ">
 
@@ -278,7 +293,8 @@ fetch()
                                                                 <div className="pt-1">
                                                                     <p className="fw-bold mb-0">{item.username}</p>
                                                                     <p className="text-xs text-gray-700">
-                                                                    {item?.latestMessages[0].content}
+                                                                        
+                                                                    {item?.latestMessages.length&&item?.latestMessages[0].content}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -456,6 +472,7 @@ fetch()
                     </div>
                 </div>
             </div>
+            
         </section>
 
     </>)

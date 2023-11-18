@@ -298,7 +298,7 @@ const findMain = async (req,res) => {
         return {'userid':other._id,'username':other.username,item, latestMessages };
       } catch (err) {
         console.error(err);
-        return {'userid':other._id,'username':other.username,item, 'messages':[{"content":"Not found"}] };
+        return {'userid':other._id,'username':other.username,item, 'latestMessages':[{"content":"Not found"}] };
       }
     }));
     
