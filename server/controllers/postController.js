@@ -6,29 +6,40 @@ const users=require('../model/User')
 const notifController=require('../controllers/notifController')
 
 
-const getAll=async(req,res)=>{
-    console.log("dcnmdnvxv")
-    console.log(req.user)
-   const {email}=req.body;
-   console.log(email)
-   const u1=await users.find({email:email})
-   console.log(u1)
-   const cn=u1[0]?.connection
-   console.log(cn)
-    const f1=await post.find(
-      {
-      $or:[ { email:{ $in: cn} },{email:email}]
-     
-    }
-    )
- //   console.log(f1)
-    if(f1)
-    res.status(201).send(f1)
-else{
-    res.status(202).send("none")
-}
+const getAll = async (req, res) => {
+  try {
+      console.log("dcnmdnvxv");
+      console.log(req.user);
+      
+      const { email, page = 1, limit = 5 } = req.body; // You can set default values for page and limit
 
-}
+      console.log(email);
+
+      const u1 = await users.find({ email: email });
+      console.log(u1);
+
+      const cn = u1[0]?.connection;
+      console.log(cn);
+
+      const skip = (page - 1) * limit;
+
+      const f1 = await post.find({
+          $or: [{ email: { $in: cn } }, { email: email }],
+      })
+      .skip(skip)
+      .limit(limit);
+
+      if (f1.length > 0) {
+          res.status(200).send(f1);
+      } else {
+          res.status(404).send("No posts found");
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+  }
+};
+
 
 const react = async (req, res) => {
     try {

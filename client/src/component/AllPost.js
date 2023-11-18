@@ -9,6 +9,8 @@ import { ReactionBarSelector } from '@charkour/react-reactions';
 import Test from "./Test";
 import { User } from "../context/User";
 import Loader from "./Loader";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 const url="http://localhost:3500/"
 //const url="http://172.29.50.69:3500/"
 const FilePreview = ({ fileList }) => {
@@ -77,7 +79,7 @@ async function handle1(){
 
 }
 //console.log("HIHIIHI")
-
+const [page,setPage]=useState(1)
   useEffect(() => {
     // Use an async function within the effect
     const fetchData = async () => {
@@ -85,8 +87,13 @@ async function handle1(){
       try {
         const a=newUser.email
         setLoad(1)
-        const response = await axiosPrivate.post('/post/all',newUser);
-        setPosts(response.data);
+        const response = await axiosPrivate.post('/post/all',{...newUser,'page':page});
+        setPosts(old=>{
+          return([
+...old,
+...response.data
+          ])
+        });
         setLoad(0)
         console.log(response.data)
         // Assuming the response is an array of post objects
@@ -98,7 +105,7 @@ async function handle1(){
     };
 
     fetchData(); // Call the async function
-  }, []);
+  }, [page]);
 
 
 
@@ -168,6 +175,11 @@ async function handle1(){
 
 
 </>)})}
+
+<div  className="flex flex-wrap ml-auto mr-auto"><Fab onClick={()=>{setPage(old=>{return(old+1)})}} color="primary" aria-label="add">
+  <AddIcon />
+</Fab></div>
+
 </div></div>
 </section>
 
