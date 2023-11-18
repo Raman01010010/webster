@@ -5,14 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { addClient, addUser, getEmp, verifyUser } from "../api/api"
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import Loader from "./Loader";
 export default function Signin(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
 const [login,setLogin]=React.useState({"email":"","pwd":""})
 const { setAuth } = useAuth();
   const navigate = useNavigate();
-
-
+const [load,setLoad]=React.useState(0)
+const [stat,setStat]=React.useState('')
 
 
 var at;
@@ -29,15 +30,25 @@ const axiosPrivate=useAxiosPrivate()
 
   }
   async function handleSubmit(){
+    setLoad(1)
    const res= await verifyUser(login)
+   setLoad(0)
    console.log(res)
+   //setStat(res.response.)
+   if(res?.response?.status===401){
+    setStat('Error Credentials')
+    console.log("cbxnbznvbnbv")
+        }
    if(res.status==200||res.status==201||res.status==202){
     console.log(res)
     const accessToken = res?.data?.accessToken;
             const roles = res?.data?.roles;
-            setNewUser({ "email":login.email,"pwd":login.pwd,roles, accessToken });
+            const tm=res?.data
+            setNewUser({ "email":login.email,"pwd":login.pwd,roles, accessToken,'username':tm.username,'userid':tm.userid });
     navigate('/dashboard')}
+  
   }
+  
 
   async function  handleChange(event){
     setLogin(old=>{
@@ -64,6 +75,7 @@ const axiosPrivate=useAxiosPrivate()
     <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
       <h1 className="title-font font-medium text-3xl text-white">
        Create Account Now
+      
       </h1>
       <p className="leading-relaxed mt-4">
         Join Us Today
@@ -102,6 +114,8 @@ const axiosPrivate=useAxiosPrivate()
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Sign In
       </button>
+      {load&&<Loader/>}
+      <div>{stat}</div>
       <button onClick={hand}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Sign In
       </button>

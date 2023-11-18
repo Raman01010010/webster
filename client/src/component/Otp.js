@@ -2,11 +2,14 @@ import { User } from "../context/User"
 import { useContext } from "react"
 import React from "react"
 import { useNavigate } from 'react-router-dom';
+import Loader from "./Loader";
 import { addClient, addUser, verifyOtp } from "../api/api"
 export default function Otp(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
 const [otp1,setOtp]=React.useState({"otp5":"","email":newUser.email})
+const [load,setLoad]=React.useState(0)
+const [stat,setStat]=React.useState('')
 
 
 
@@ -16,13 +19,18 @@ const navigate=useNavigate()
 
 
   async function handleSubmit(){
-
+setLoad(1)
    const res= await verifyOtp(otp1)
-   console.log(res)
-   if(res.status==201||res.status==202)
+   console.log(res.status)
+
+setLoad(0)
+   if(res?.response?.status===401||res?.response?.status===404){
+    setStat(res?.response?.data)
+   }else
+   if(res.status===201||res.status===202){
     console.log("success")
 navigate('../signin')
-  }
+  }}
   async function  handleChange(event){
     console.log(newUser)
     setOtp(old=>{
@@ -75,6 +83,8 @@ navigate('../signin')
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Verify
       </button>
+      {load&&<Loader/>}
+      {stat}
       <p className="text-xs mt-3">
         Literally you probably haven't heard of them jean shorts.
       </p>

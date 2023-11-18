@@ -15,6 +15,7 @@ import Job from "./Job";
 import Managejob from "./Managejob"
 import Application from "./Application";
 import Chat from "./Chat";
+import ChatR from "./ChatR";
 import ControlledOpenSpeedDial from "./Speed";
 import Profilepage from "./Profilepage";
 import Endorse from "./Endorse";
@@ -27,6 +28,7 @@ import Notification from "./Notification";
 import NotifiButton from "./NotifiButton";
 import { useContext } from "react";
 import { User } from "../context/User";
+import SinglePost from "./SinglePost";
 
 import Resume from "./Resume"
 
@@ -39,10 +41,12 @@ export default function Container1(){
    { sh&&<NotifiButton/>}
 
           <Routes>
-     
+          <Route path="/post1/:id" element={<>            
+     <SinglePost/></>} />
         
           <Route path="/" element={<><Dashboard/></>} />
-          <Route path="/chat" element={<><Chat/></>} />
+          <Route path="/chat/:id" element={<><Chat/></>} />
+          <Route path="/chatr/:id" element={<><ChatR/></>} />
           <Route path="/otherusers" element={<><Otherusers/></>} />
 
           <Route path="/pending" element={<><Pending/></>} />

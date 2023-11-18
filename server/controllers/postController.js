@@ -141,7 +141,7 @@ if(res1.length){
             const uid=u[0]?._id
 
             const r5=await notifController.sendNotification(uid,`This ${emoji} is liked by ${by}`
-            ,`/${p1[0]._id}`,'Reactions',res)
+            ,`/post1/${p1[0]._id}`,'Reactions',res)
             console.log(r5)
 
 
@@ -233,5 +233,24 @@ const getCommentsForPost = async (req, res) => {
  // Import your Post model
   
 
+
+const getPostById = async (req, res) => {
+  try {
+    // Extract the post ID from the request parameters
+    const postId = req.body.id;
+
+    // Find the post with the given ID
+    const post1 = await post.findById(postId);
+
+    // Respond with the post
+    res.json(post1);
+  } catch (error) {
+    console.error('Error retrieving post:', error);
+    res.status(500).json({ message: 'Error retrieving post' });
+  }
+};
+
+
+
   
-module.exports={getAll,react,react1,com,getCommentsForPost}
+module.exports={getAll,react,react1,com,getCommentsForPost,getPostById}

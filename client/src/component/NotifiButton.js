@@ -98,7 +98,7 @@ function fun(){
             
             {notifications.map(item=>{
   return(<>
-  
+  <a href={item.link}>
   <div className="w-full p-3 mt-4 bg-white rounded flex">
               <div
                 tabIndex={0}
@@ -131,7 +131,7 @@ function fun(){
                 </p>
               </div>
             </div>
-  
+            </a>
   </>)
 })}
 

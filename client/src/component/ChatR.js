@@ -10,9 +10,9 @@ import Fab from '@mui/material/Fab';
 import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
 import Loader from "./Loader";
-import { useParams,useNavigate } from 'react-router-dom';   
 import NavigationIcon from '@mui/icons-material/Navigation'
-import AddIcon from '@mui/icons-material/Add';
+import { useParams,useNavigate } from 'react-router-dom';   
+
 const socket = io('ws://localhost:3500/');
 
 export default function Chat() {
@@ -88,43 +88,24 @@ export default function Chat() {
     }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Ensure the room ID is consistent for both users by sorting their IDs
-                const sortedUserIds = [newUser.userid, user2Id].sort();
-                const uniqueRoomID = sortedUserIds.join('_');
-                console.log(uniqueRoomID);
-    
-                const response = await axios.post('/chat/create', {"room": uniqueRoomID, "name": newUser.userid});
-    console.log(response)
-                // Check if the response status is successful (you can customize this condition based on your API)
-                if (response.status === 200) {
-                    // API call was successful
-                    socket.emit('enterRoom', {
-                        name: newUser.userid,
-                        room: uniqueRoomID,
-                    });
-    
-                    setMessage(old => ({
-                        ...old,
-                        "room": uniqueRoomID,
-                        "sender": newUser.userid,
-                        "receiver": user2Id
-                    }));
-                } else {
-                    // Handle the case where the API call was not successful
-                    console.error(`Failed to create room. Server responded with status ${response.status}`);
-                }
-            } catch (error) {
-                // Handle any other errors that might occur during the API call
-                console.error('Error creating room:', error.message);
-            }
-        };
-    
-        fetchData(); // Call the async function
-    
-    }, [newUser.userid, user2Id, socket]);
-    
+        // Ensure the room ID is consistent for both users by sorting their IDs
+        const sortedUserIds = [newUser.userid, user2Id].sort();
+        const uniqueRoomID = sortedUserIds.join('_');
+        console.log(uniqueRoomID) // You can add a timestamp if needed
+        socket.emit('enterRoom', {
+            name: newUser.userid,
+            room: uniqueRoomID,
+        });
+        setMessage(old => {
+            return ({
+                ...old,
+                "room": uniqueRoomID,
+                "sender": newUser.userid,
+                "receiver":user2Id
+            })
+        }
+        )
+    }, [newUser.userid, user2Id]);
 
 
     useEffect(()=>{
@@ -173,7 +154,7 @@ fetch()
             const uniqueRoomID = sortedUserIds.join('_'); 
         //    setLoad(1)
             try {
-                const res = await axios.post('/chat/main', { "email": newUser.email,'userid':newUser.userid });
+                const res = await axios.post('/chat/req', { "email": newUser.email,'userid':newUser.userid });
                 console.log(res);
                 setConn(res?.data);
             } catch (error) {
@@ -205,7 +186,7 @@ fetch()
 
 
 
-    function handleSend(e) {
+   async function handleSend(e) {
         e.preventDefault();
         // if (name && msgInput && chatRoom) {
         socket.emit('message', message);
@@ -215,20 +196,24 @@ fetch()
                 //  "text":""
             })
         })
+        try{
+        const response = await axios.post('/chat/create', {"room": message.room, "name": newUser.userid});
+    }catch(error){  
+        console.log(error)
+    }
         //  }
     }
     const navigate=useNavigate();
     function setO(id){
         setUser2id(id)
-      navigate(`/chat/${id}`)
+      navigate(`/chatr/${id}`)
    
     }
     function mesreq(){
-        navigate(`/chatr/${id}`)
+        navigate(`/chat/${newUser.userid}`)
     }
     return (<>
         <section style={{ zIndex:2,backgroundColor: "#CDC4F9" }}>
-            
             <div className="container mx-auto sm:px-4 py-5">
                 <div className="flex flex-wrap ">
                     <div className="md:w-full pr-4 pl-4">
@@ -239,14 +224,13 @@ fetch()
           color: 'success.main', // Adjust the right value as needed
         }} variant="extended">
         <NavigationIcon sx={{ mr: 1 }}  />
-        Message Requests
+        INBOX
       </Fab>
                         <div
                             className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300"
                             id="chat3"
                             style={{ borderRadius: 15 }}
                         >
-                            
                             <div className="flex-auto p-6">
                                 <div className="flex flex-wrap ">
 
@@ -279,7 +263,7 @@ fetch()
                                                     {conn.map(item=>{
                                                         return(<>
                                                          <li className="p-2 border-b">
-                                                        <a onClick={()=>setO(item?.userid)} className="flex justify-between">
+                                                        <a onClick={()=>setO(item?.item.accepted[0]._id)} className="flex justify-between">
                                                             <div className="flex flex-row">
                                                                 <div>
                                                                     <img
@@ -291,10 +275,9 @@ fetch()
                                                                     <span className="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 badge-dot" />
                                                                 </div>
                                                                 <div className="pt-1">
-                                                                    <p className="fw-bold mb-0">{item.username}</p>
+                                                                    <p className="fw-bold mb-0">{item?.item.accepted[0].username}</p>
                                                                     <p className="text-xs text-gray-700">
-                                                                        
-                                                                    {item?.latestMessages.length&&item?.latestMessages[0].content}
+                                                                    {item?.latestMessages[0].content}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -457,7 +440,7 @@ fetch()
                                             />
                                         </div>
                                         <button onClick={handleSend} className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
-                                            Send
+                                            Accept
                                         </button>
                                         {load&&<Loader/>}
                                         <div className="text-gray-700 flex justify-start items-center pe-3 pt-3 mt-2">
@@ -472,7 +455,6 @@ fetch()
                     </div>
                 </div>
             </div>
-            
         </section>
 
     </>)
