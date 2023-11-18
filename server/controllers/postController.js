@@ -1,161 +1,212 @@
 const post = require('../model/postSchema');
 
-const Comment=require('../model/commentSchema')
+const Comment = require('../model/commentSchema')
 
-const users=require('../model/User')
-const notifController=require('../controllers/notifController')
+const users = require('../model/User')
+const notifController = require('../controllers/notifController')
 
 
-const getAll=async(req,res)=>{
-    console.log("dcnmdnvxv")
-    console.log(req.user)
-   const {email}=req.body;
-   console.log(email)
-   const u1=await users.find({email:email})
-   console.log(u1)
-   const cn=u1[0]?.connection
-   console.log(cn)
-    const f1=await post.find(
-      {
-      $or:[ { email:{ $in: cn} },{email:email}]
-     
+const getAll = async (req, res) => {
+  try {
+    console.log("dcnmdnvxv");
+    console.log(req.user);
+
+    const { email, page = 1, limit = 5 } = req.body; // You can set default values for page and limit
+
+    console.log(email);
+
+    const u1 = await users.find({ email: email });
+    console.log(u1);
+
+    const cn = u1[0]?.connection;
+    console.log(cn);
+
+    const skip = (page - 1) * limit;
+
+    const f1 = await post.find({
+      $or: [{ email: { $in: cn } }, { email: email }],
+    })
+      .skip(skip)
+      .limit(limit);
+
+    if (f1.length > 0) {
+      res.status(200).send(f1);
+    } else {
+      res.status(404).send("No posts found");
     }
-    )
- //   console.log(f1)
-    if(f1)
-    res.status(201).send(f1)
-else{
-    res.status(202).send("none")
-}
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+const getSearch = async (req, res) => {
+  try {
+    console.log("dcnmdnvxv");
+    console.log(req.user);
 
-}
+    const { email, page = 1, limit = 5, hashtags } = req.body; // Add hashtags to destructuring
+
+    console.log(email);
+
+    const u1 = await users.find({ email: email });
+    console.log(u1);
+
+    const cn = u1[0]?.connection;
+    console.log(cn);
+
+    const skip = (page - 1) * limit;
+
+    // Use $in for matching multiple hashtags
+    const f1 = await post.find({
+      $and: [
+        {
+          $or: [{ email: { $in: cn } },
+          { email: email }]
+        },
+        { hashtag: { $regex: `${hashtags}`, $options: "i" } } // Add this line for hashtag search
+      ],
+    })
+      .skip(skip)
+      .limit(limit);
+
+    if (f1.length > 0) {
+      res.status(200).send(f1);
+    } else {
+      res.status(404).send("No posts found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 
 const react = async (req, res) => {
-    try {
-      console.log("Raman");
-      console.log(req.body);
-      const searchCriteria = {
-        'react': {
-          $elemMatch: {
-            'by': 'rmprjrrr@gmail.com',
-            'emoji':'congrats'
-          }
+  try {
+    console.log("Raman");
+    console.log(req.body);
+    const searchCriteria = {
+      'react': {
+        $elemMatch: {
+          'by': 'rmprjrrr@gmail.com',
+          'emoji': 'congrats'
         }
-      };
-      
-      // Use the `find` method and execute it to get a promise
-      post.find(searchCriteria)
-        .then(posts => {
-            console.log("find")
-          console.log(posts);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-      // Check if 'id' is provided in the request body
-      const id = req.body?.id;
-  
-      if (!id) {
-        return res.status(400).send("Blank"); // 400 Bad Request
       }
-  
-      // Assuming you have a 'Post' model for MongoDB
-      const upd = await post.findByIdAndUpdate(
-        id,
-        { $push: { react: req.body.react } },
-        { new: true }
-      );
-  
-     // console.log(upd);
-  
-      if (!upd) {
-        return res.status(404).send("Post not found"); // 404 Not Found
-      }
-  
-      res.status(201).send("Success"); // 201 Created
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Failed"); // 500 Internal Server Error
+    };
+
+    // Use the `find` method and execute it to get a promise
+    post.find(searchCriteria)
+      .then(posts => {
+        console.log("find")
+        console.log(posts);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    // Check if 'id' is provided in the request body
+    const id = req.body?.id;
+
+    if (!id) {
+      return res.status(400).send("Blank"); // 400 Bad Request
     }
-  };
+
+    // Assuming you have a 'Post' model for MongoDB
+    const upd = await post.findByIdAndUpdate(
+      id,
+      { $push: { react: req.body.react } },
+      { new: true }
+    );
+
+    // console.log(upd);
+
+    if (!upd) {
+      return res.status(404).send("Post not found"); // 404 Not Found
+    }
+
+    res.status(201).send("Success"); // 201 Created
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Failed"); // 500 Internal Server Error
+  }
+};
 
 
 
 
 const react1 = async (req, res) => {
-    console.log("react1");
-    // res.status(201).send("react1");
-    const emoji=req.body?.react?.emoji
-    const by=req.user//req.body?.react?.by
-    console.log(req.body);
-    try {
-        const { id } = req.body; // Assuming you pass the _id in the request body
-        const res1 = await post.find({
-            $and: [
-                { _id: id }, // Match the _id
-                { react: { $elemMatch: { by:by,emoji:emoji } } } // Match the 'react' condition
-            ]
-        });
-        console.log(res1);
-if(res1.length){
-    const updateResult = await post.updateOne(
+  console.log("react1");
+  // res.status(201).send("react1");
+  const emoji = req.body?.react?.emoji
+  const by = req.user//req.body?.react?.by
+  console.log(req.body);
+  try {
+    const { id } = req.body; // Assuming you pass the _id in the request body
+    const res1 = await post.find({
+      $and: [
+        { _id: id }, // Match the _id
+        { react: { $elemMatch: { by: by, emoji: emoji } } } // Match the 'react' condition
+      ]
+    });
+    console.log(res1);
+    if (res1.length) {
+      const updateResult = await post.updateOne(
         {
-            _id: id,
-            'react.by': by // Match the document by _id and the 'react.by' email
+          _id: id,
+          'react.by': by // Match the document by _id and the 'react.by' email
         },
         {
-            $pull: {
-                react: { by: by, emoji:emoji} // Pull the entry with the specified email
-            }
+          $pull: {
+            react: { by: by, emoji: emoji } // Pull the entry with the specified email
+          }
         }
-    );
-}else{
-    const updateResult1 = await post.updateOne(
+      );
+    } else {
+      const updateResult1 = await post.updateOne(
         {
-            _id: id,
-            'react.by': by // Match the document by _id and the 'react.by' email
+          _id: id,
+          'react.by': by // Match the document by _id and the 'react.by' email
         },
         {
-            $pull: {
-                react: { by: by} // Pull the entry with the specified email
-            }
+          $pull: {
+            react: { by: by } // Pull the entry with the specified email
+          }
         })
 
-        const updateResult2 = await post.updateOne(
-            {
-                _id: id,
-                // Match the document by _id and the 'react.by' email
-            },
-            {
-                $push: {
-                    react: { by: by, emoji:emoji} // Pull the entry with the specified email
-                }
-            })
+      const updateResult2 = await post.updateOne(
+        {
+          _id: id,
+          // Match the document by _id and the 'react.by' email
+        },
+        {
+          $push: {
+            react: { by: by, emoji: emoji } // Pull the entry with the specified email
+          }
+        })
 
 
-            const p1=await post.find({_id:id})
-            console.log(p1[0]?.email)
-            const em=p1[0]?.email
-            const u=await users.find({email:em})
-            console.log(u)
-            const uid=u[0]?._id
+      const p1 = await post.find({ _id: id })
+      console.log(p1[0]?.email)
+      const em = p1[0]?.email
+      const u = await users.find({ email: em })
+      console.log(u)
+      const uid = u[0]?._id
 
-            const r5=await notifController.sendNotification(uid,`This ${emoji} is liked by ${by}`
-            ,`/post1/${p1[0]._id}`,'Reactions',res)
-            console.log(r5)
-
-
-}
+      const r5 = await notifController.sendNotification(uid, `This ${emoji} is liked by ${by}`
+        , `/post1/${p1[0]._id}`, 'Reactions', res)
+      console.log(r5)
 
 
-
-
-    } catch (error) {
-        console.log(error);
     }
-    res.status(201).send('wow');
+
+
+
+
+  } catch (error) {
+    console.log(error);
+  }
+  res.status(201).send('wow');
 }
-const com=async(req,res)=>{
+const com = async (req, res) => {
   console.log(req.body)
   try {
     // Extract the comment data from the request body
@@ -164,8 +215,8 @@ const com=async(req,res)=>{
     // Create a new comment document
     const comment = new Comment({ postId, text, user });
 
-    const by1=await users.find({_id:user})
-    const by=by1[0].username
+    const by1 = await users.find({ _id: user })
+    const by = by1[0].username
     const incrementValue = 1;
     const result = await post.updateOne(
       { _id: postId },
@@ -174,15 +225,15 @@ const com=async(req,res)=>{
     console.log(result)
     // Save the comment to the database
     await comment.save();
-    const p1=await post.find({_id:postId})
-            console.log(p1[0]?.email)
-            const em=p1[0]?.email
-            const u=await users.find({email:em})
-            console.log(u)
-            const uid=u[0]?._id
+    const p1 = await post.find({ _id: postId })
+    console.log(p1[0]?.email)
+    const em = p1[0]?.email
+    const u = await users.find({ email: em })
+    console.log(u)
+    const uid = u[0]?._id
 
-            const r5=await notifController.sendNotification(uid,`${by} commented  ${text} on your Post`
-            ,`/${p1[0]._id}`,'Comment',res)
+    const r5 = await notifController.sendNotification(uid, `${by} commented  ${text} on your Post`
+      , `/${p1[0]._id}`, 'Comment', res)
     // Respond with a success message or the newly created comment
     res.status(201).json({ message: 'Comment created successfully', comment });
   } catch (error) {
@@ -199,7 +250,7 @@ const getCommentsForPost = async (req, res) => {
     const postId = req.body.postId;
 
     // Find all comments that have the same postId
-    const comments = await Comment.find({ postId }).populate('user','username');
+    const comments = await Comment.find({ postId }).populate('user', 'username');
 
     // Respond with the list of comments
     res.json(comments);
@@ -210,28 +261,28 @@ const getCommentsForPost = async (req, res) => {
 };
 
 
-    // const query = {
-    //     _id: req.body.id,
-    //     "react.emoji": "like",
-    //   };
-  
-    //   const projection = {
-    //     "react.$": 1,
-    //   };
-  
-    //   const result = await post.findOne(query, projection);
-  
-    //   if (result && result.reactions) {
-    //     const usersWhoLiked = result.reactions.map(reaction => reaction.user_id);
-    //     console.log('Users who liked the post:', usersWhoLiked);
-    //   } else {
-    //     console.log('Post not found or no users liked the post.');
-    //   }
-    // }
-  
-  // You should have a model 'Post' defined somewhere in your code, for example:
- // Import your Post model
-  
+// const query = {
+//     _id: req.body.id,
+//     "react.emoji": "like",
+//   };
+
+//   const projection = {
+//     "react.$": 1,
+//   };
+
+//   const result = await post.findOne(query, projection);
+
+//   if (result && result.reactions) {
+//     const usersWhoLiked = result.reactions.map(reaction => reaction.user_id);
+//     console.log('Users who liked the post:', usersWhoLiked);
+//   } else {
+//     console.log('Post not found or no users liked the post.');
+//   }
+// }
+
+// You should have a model 'Post' defined somewhere in your code, for example:
+// Import your Post model
+
 
 
 const getPostById = async (req, res) => {
@@ -252,5 +303,5 @@ const getPostById = async (req, res) => {
 
 
 
-  
-module.exports={getAll,react,react1,com,getCommentsForPost,getPostById}
+
+module.exports = { getAll, react, react1, com, getCommentsForPost, getPostById,getSearch }
