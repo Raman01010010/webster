@@ -3,6 +3,7 @@ import React, { useState, useEffect ,useContext} from "react";
 import {Reactions,Counter} from "./Reactions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
+import NavigationIcon from '@mui/icons-material/Navigation'
 //const url="http://localhost:3500/"
 import { SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
@@ -126,6 +127,17 @@ const [page,setPage]=useState(1)
     console.log(res);
   }
   
+const [hash,setHash]=useState('')
+
+  async function handSearch(){
+try{
+const res=await axiosPrivate.post('/post/search',{...newUser,'hashtags':hash})
+setPosts(res?.data)
+console.log(res)
+}catch(error){
+  console.log(error)
+}
+  }
   return (
     <>
  
@@ -179,7 +191,16 @@ const [page,setPage]=useState(1)
 <div  className="flex flex-wrap ml-auto mr-auto"><Fab onClick={()=>{setPage(old=>{return(old+1)})}} color="primary" aria-label="add">
   <AddIcon />
 </Fab></div>
-
+<Fab  sx={{
+          position: "fixed",
+          bottom: "20px", // Adjust the bottom value as needed
+          right: "20px",
+          color: 'success.main', // Adjust the right value as needed
+        }} variant="extended">
+       
+        <input onChange={(e)=>{setHash(e.target.value)}}type="text"></input>
+        <NavigationIcon onClick={handSearch}sx={{ mr: 1 }}  />
+      </Fab>
 </div></div>
 </section>
 

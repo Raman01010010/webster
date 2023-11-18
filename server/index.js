@@ -73,9 +73,9 @@ app.use('/fetchendorse',require('./routes/fetchingEndorse'))
 app.use('/getpost',require('./routes/getpost'))
 
 app.use('/notif',require('./routes/notif'))
-app.use(verifyJWT)
-app.use('/post',require('./routes/post'))
 
+app.use('/post',require('./routes/post'))
+app.use(verifyJWT)
 
 
 

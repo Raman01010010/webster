@@ -7,10 +7,11 @@ import axios from '../api/axios';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
+import NavigationIcon from '@mui/icons-material/Navigation'
 import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
 import Loader from "./Loader";
-import NavigationIcon from '@mui/icons-material/Navigation'
+
 import { useParams,useNavigate } from 'react-router-dom';   
 
 const socket = io('ws://localhost:3500/');
