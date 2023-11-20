@@ -72,6 +72,7 @@ const Jobcomment = () => {
     };
     fetchInitialMessages();
   }, [userid, secondId, jobId]);
+  const [inputFocus, setInputFocus] = useState(false);
 
   // console.log(sendermessages)
   // useEffect(() => {
@@ -104,42 +105,89 @@ const Jobcomment = () => {
   console.log("v1"+userid);
   console.log("v2"+secondId);
   return (
-    <div>
-      {/* Two <div> elements with the text "vivek" */}
-      <div>vivek</div>
-      <div>vivek</div>
-      {/* Display all messages */}
-      // Display all messages
-      <div style={{ height: "300px", overflowY: "scroll" }}>
-  {allMessages && allMessages[0] && allMessages[0].length > 0 ? (
-    allMessages[0].map((message, index) => (
+    
+      <>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div
-        key={index}
         style={{
-          color: "blue",
-          textAlign: message.senderid === userid ? "right" : "left",
+          flex: 1,
+          overflowY: 'scroll',
+          padding: '10px',
+          borderBottom: '1px solid #ccc',
         }}
       >
-        {message && message.text && (
-          <p style={{ color: "blue" }}>{message.text}</p>
-        )}
-        {message && message.timestamp && (
-          <p style={{ color: "blue" }}> {new Date(message.timestamp).toLocaleString()}</p>
+        {allMessages && allMessages[0] && allMessages[0].length > 0 ? (
+          allMessages[0].map((message, index) => (
+            <div
+              key={index}
+              style={{
+                marginBottom: '10px',
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: message.senderid === userid ? '#e6f7ff' : '#fff',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  maxWidth: '70%',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <p style={{ margin: '0', color: 'blue' }}>{message.text}</p>
+                <p style={{ margin: '0', color: 'gray', fontSize: '12px' }}>
+                  {new Date(message.timestamp).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No messages available</p>
         )}
       </div>
-    ))
-  ) : (
-    <p>No messages available</p>
-  )}
-</div>
-
-
-
-      <form onSubmit={handleSendMessage}>
-        <button type="submit">Send Message</button>
-      </form>
-      <input type="text" value={data.text} onChange={handleMessageChange} />
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '10px',
+          borderTop: '1px solid #ccc',
+        }}
+      >
+        <input
+          type="text"
+          value={data.text}
+          onChange={handleMessageChange}
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
+          style={{
+            flex: 1,
+            padding: '8px',
+            marginRight: '10px',
+            borderRadius: '5px',
+            border: '1px solid #ccc',
+            fontSize: '16px',
+          }}
+        />
+        <button
+          type="submit"
+          onClick={handleSendMessage}
+          style={{
+            padding: '10px',
+            borderRadius: '5px',
+            backgroundColor: '#2ea44f',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            opacity: inputFocus ? '1' : '0.7',
+          }}
+        >
+          Send Message
+        </button>
+      </div>
     </div>
+    </>
   );
 };
 
