@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Container2 from "./Container2";
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import { User } from "../context/User";
 import MenuIcon from "@mui/icons-material/Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,10 +15,11 @@ import {
   faUserFriends,
   faEnvelope,
   faMoneyCheckAlt,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
-import { useContext } from "react";
-import { User } from "../context/User";
+
+
 
 const Navbar2 = () => {
   const {sh,setSh,newUser}=useContext(User)
@@ -157,6 +159,22 @@ onClick={fun}
                   />
                   Job
                 </Button>
+
+
+
+
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to={`/profilepage/${newUser.email}`}
+                >
+                  <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
+                 My Profile
+                </Button>
+
+
+
+
                 {location.pathname === "/showjob" && (
                   <>
                     {isJobMenuOpen && (

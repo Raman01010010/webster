@@ -14,10 +14,11 @@ import {
   faUserFriends,
   faEnvelope,
   faMoneyCheckAlt,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 
-const Navbar= () => {
+const Navbar = () => {
   const isLargeScreen = useMediaQuery("(min-width:600px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const [isJobMenuOpen, setIsJobMenuOpen] = useState(false);
@@ -32,6 +33,7 @@ const Navbar= () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -39,10 +41,8 @@ const Navbar= () => {
   const handleDropdownClose = () => {
     setIsDropdownOpen(false);
   };
-  
 
   function handleNavAndClose() {
-    
     handleMenuClose();
   }
 
@@ -51,14 +51,12 @@ const Navbar= () => {
   };
 
   useEffect(() => {
-    // Cleanup function to set isJobMenuOpen to false when component unmounts
     return () => {
       setIsJobMenuOpen(false);
     };
   }, []);
 
   useEffect(() => {
-    // Set isJobMenuOpen to true when the location changes to "/showjob"
     setIsJobMenuOpen(location.pathname === "/showjob");
   }, [location.pathname]);
 
@@ -81,7 +79,6 @@ const Navbar= () => {
             <>
               <Button
                 color="inherit"
-                
                 component={Link}
                 to="/post"
               >
@@ -117,7 +114,6 @@ const Navbar= () => {
               </Menu>
               <Button
                 color="inherit"
-               
                 component={Link}
                 to="/chat"
               >
@@ -140,66 +136,63 @@ const Navbar= () => {
                   />
                   Job
                 </Button>
+      
                 {location.pathname === "/showjob" && (
                   <>
-                {isJobMenuOpen && (
-                  <>
-                    <i
-                      className="fas fa-chevron-down fa-xs"
-                      style={{ marginLeft: "5px" }}
-                      onClick={handleDropdownToggle}
-                    ></i>
-                    {isDropdownOpen && (
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={isDropdownOpen}
-                        onClose={handleDropdownClose}
-                        anchorOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
-                        }}
-                      >
-                        {/* Add your dropdown menu items here */}
-                        <MenuItem component={Link} to="/jobsapplied">
-                          My job
-                        </MenuItem>
-                        <MenuItem
-                          onClick={handleNavAndClose}
-                          component={Link}
-                          to="/createjob"
-                        >
-                          Post Job
-                        </MenuItem>
-                        <MenuItem
-                          onClick={handleNavAndClose}
-                          component={Link}
-                          to="/myjob"
-                        >
-                          Managae Job Posted
-                        </MenuItem>
-                        <MenuItem
+                    {isJobMenuOpen && (
+                      <>
+                        <i
+                          className="fas fa-chevron-down fa-xs"
+                          style={{ marginLeft: "5px" }}
+                          onClick={handleDropdownToggle}
+                        ></i>
+                        {isDropdownOpen && (
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={isDropdownOpen}
+                            onClose={handleDropdownClose}
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            transformOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                          >
+                            <MenuItem component={Link} to="/jobsapplied">
+                              My job
+                            </MenuItem>
+                            <MenuItem
+                              onClick={handleNavAndClose}
+                              component={Link}
+                              to="/createjob"
+                            >
+                              Post Job
+                            </MenuItem>
+                            <MenuItem
+                              onClick={handleNavAndClose}
+                              component={Link}
+                              to="/myjob"
+                            >
+                              Manage Job Posted
+                            </MenuItem>
+                            <MenuItem
                               component={Link}
                               to="/bnaniihai"
                             >
                               Resume Builder
-                        </MenuItem>
-
-                      </Menu>
-                      
+                            </MenuItem>
+                          </Menu>
+                        )}
+                      </>
                     )}
                   </>
-                )}
-                </>
                 )}
               </div>
             </>
           ) : (
             <>
-              {/* ... (unchanged code) */}
               <IconButton
                 color="inherit"
                 style={{ marginRight: "20px" }}
@@ -244,17 +237,23 @@ const Navbar= () => {
                 <FontAwesomeIcon icon={faEnvelope} />
               </IconButton>
               <div style={{ display: "flex", alignItems: "center" }}>
-               
-                    <IconButton
-                      color="inherit"
-                      onClick={handleJobMenuToggle}
-                      style={{ marginRight: "4px" }}
-                      component={Link}
-                      to="/showjob"
-                    >
-                      <FontAwesomeIcon icon={faMoneyCheckAlt} />
-                    </IconButton>
-                    {location.pathname === "/showjob" && (
+                <IconButton
+                  color="inherit"
+                  onClick={handleJobMenuToggle}
+                  style={{ marginRight: "4px" }}
+                  component={Link}
+                  to="/showjob"
+                >
+                  <FontAwesomeIcon icon={faMoneyCheckAlt} />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  component={Link}
+                  to="/profile"
+                >
+                  <FontAwesomeIcon icon={faUser} />
+                </IconButton>
+                {location.pathname === "/showjob" && (
                   <>
                     {isJobMenuOpen && (
                       <>
@@ -277,12 +276,10 @@ const Navbar= () => {
                               horizontal: "right",
                             }}
                           >
-                            {/* Add your dropdown menu items here */}
                             <MenuItem component={Link} to="/jobsapplied">
                               My job
                             </MenuItem>
                             <MenuItem
-                              
                               component={Link}
                               to="/createjob"
                             >

@@ -5,26 +5,29 @@ import axios from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllPost from "./AllPost";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Profilepage = () => {
   const [activeTab, setActiveTab] = useState("description");
   const { email } = useParams();
-  const [data, setData] = useState([]);
   const [editSkills, setEditSkills] = useState();
   const { newUser } = useContext(User);
   const navigate = useNavigate();
 
-  // const dataToSend = {
-  //   key1: "email",
-  // };
+  const [saveskill, setSaveskill] = useState(false);
+  const [deleteskill, setDeleteskill] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
+  const axiosPrivate = useAxiosPrivate();
+
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchingData = async () => {
       try {
         const d = {
           email: email,
         };
-        const res = await axios.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/fetchingdata", d);
         setData(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -32,7 +35,7 @@ const Profilepage = () => {
       }
     };
     fetchingData();
-  }, [email]);
+  }, [email, saveskill, deleteskill]);
 
   const handleSaveSkills = async (editSkills, newUseremail) => {
     const d = {
@@ -40,13 +43,14 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axios.post("/addskill", d);
+      const res = await axiosPrivate.post("/addskill", d);
 
       toast.success("Added Skill Successfully");
     } catch (err) {
       console.log(err);
       toast.error("Can't Add Skill Due to Some Err");
     }
+    setSaveskill(true);
   };
 
   const Endorse = async (skill, newUseremail, otheruser) => {
@@ -56,7 +60,7 @@ const Profilepage = () => {
       otheruserEmail: otheruser,
     };
     try {
-      const res = await axios.post("/endorseskill", d);
+      const res = await axiosPrivate.post("/endorseskill", d);
       toast.success("Skill Endorsed Successfully");
     } catch (err) {
       console.log(err);
@@ -70,12 +74,38 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axios.post("/deleteskill", d);
+      const res = await axiosPrivate.post("/deleteskill", d);
 
       toast.success("Skill Deleted Successfully");
     } catch (err) {
       console.log(err);
       toast.error("Can't Delete Skill Due to Some Err");
+    }
+    setDeleteskill(true);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setProfileImage(file);
+  };
+
+  const handleFileUpload = async () => {
+    const formData = new FormData();
+    formData.append("profileImage", profileImage);
+
+    const email = newUser.email
+    try {
+      const res = await axiosPrivate.post("/uploadprofileimage", {formData,email}, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Handle successful upload, e.g., update the UI or show a success message
+      toast.success("Profile Image Uploaded Successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Error Uploading Profile Image");
     }
   };
 
@@ -85,7 +115,7 @@ const Profilepage = () => {
       skill: skill,
     };
     try {
-      const res = await axios.post("/fetchendorse", d);
+      const res = await axiosPrivate.post("/fetchendorse", d);
       console.log("Endorsement data:", res.data);
       // Ensure this log statement is printed in the console
       navigate("/endorsepage", { state: { param1: res.data } });
@@ -103,17 +133,17 @@ const Profilepage = () => {
       case "reviews":
         return (
           <div>
-            {data.connection.map((element) => (
+            {data.connection.map((element, index) => (
               <div
-                key={element}
+                key={index}
                 onClick={() => navigate(`/profilepage/${element}`)}
                 className="cursor-grab"
               >
-                <div className="flex flex-wrap -m-2 border-gray-200 border p-4 rounded-lg bg-cyan-300 mt-4">
-                  <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
+                <div className="flex flex-wrap -m-2 border-gray-200 border p-4 rounded-lg bg-blue-950 text-white mt-4">
+                  <div className="p-2 lg:w-1/3 md:w-1/2 w-full text-white">
                     <div className="h-full flex items-center">
                       <div className="flex-grow">
-                        <h2 className="text-gray-900 title-font font-medium">
+                        <h2 className="text-gray-900 title-font font-medium text-white">
                           {element}
                         </h2>
                         <p className="text-gray-500">UI Designer</p>
@@ -131,7 +161,7 @@ const Profilepage = () => {
             {data.skills.map((element, index) => (
               <div
                 key={index}
-                className="relative group flex-grow w-32 h-32 flex items-center justify-center rounded-full bg-green-300 text-black m-2"
+                className="relative group flex-grow w-32 h-16 flex items-center justify-center rounded-full bg-blue-950 text-white m-2"
               >
                 {newUser.email !== email && (
                   <button
@@ -152,16 +182,16 @@ const Profilepage = () => {
                   </button>
                 )}
                 <button
-                  className="absolute bottom-0 bg-sky-950 text-neutral-50	border-4 rounded-lg border-red-400"
+                  className="absolute bottom-0  bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 z-10"
                   onClick={() => fetchingEndorse(email, element)}
                 >
-                  Endorsed By...
+                  Endorsed By.
                 </button>
               </div>
             ))}
             {newUser.email === email && (
               <>
-                <div className="flex-grow w-32 h-32 flex items-center justify-center rounded-full bg-green-100 text-black m-2">
+                <div className="flex-grow w-16 h-16 flex items-center justify-center rounded-full bg-green-100 text-black m-2">
                   <input
                     type="text"
                     placeholder="Add Skill"
@@ -182,16 +212,47 @@ const Profilepage = () => {
       default:
         return (
           <div>
-
             {/* Your existing description content */}
-          
-              <Link to={`/particularpost/${email}`}>
-                <div className="bg-blue-950 w-36 text-white rounded-lg h-16 flex items-center justify-center">
-                  Go to My Posts
-                </div>
-              </Link>
-            
-            
+            <Link to={`/particularpost/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center">
+                Go to My Posts
+              </div>
+            </Link>
+
+            <Link to={`/particularjob/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                Go to My Jobs
+              </div>
+            </Link>
+
+            <Link to={`/education/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                Education
+              </div>
+            </Link>
+
+            <Link to={`/projects/${email}`}>
+              <div className="bg-blue-950  text-white rounded-lg h-16 flex items-center justify-center mt-4">
+                My Projects
+              </div>
+            </Link>
+
+            {/* File upload */}
+            {newUser.email === email && (
+              <>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="mt-4"
+                />
+                <button
+                  onClick={handleFileUpload}
+                  className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
+                >
+                  Upload Profile Image
+                </button>
+              </>
+            )}
           </div>
         );
     }
@@ -199,10 +260,18 @@ const Profilepage = () => {
 
   return (
     <div>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
         <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+        <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">  {/* Updated this line */}
+            {/* Circular profile icon */}
             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+              <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
+                <img
+                  alt="profile"
+                  className="object-cover object-center w-full h-full"
+                  src={data.profileImage || "https://dummyimage.com/400x400"}
+                />
+              </div>
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {data.username}
               </h2>
@@ -239,11 +308,7 @@ const Profilepage = () => {
               </div>
               {renderContent()}
             </div>
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src="https://dummyimage.com/400x400"
-            />
+        
           </div>
         </div>
       </section>
