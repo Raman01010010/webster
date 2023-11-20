@@ -17,7 +17,7 @@ const Pending = () => {
         newUser: newUser.email,
       };
       try {
-        const res = await axios.post('/getpending', data);
+        const res = await axios.post('/connect/getpending', data);
         // Convert the object values into an array
         console.log('xkjdfhshdfushdfi', res.data);
         const pendingArray = Object.values(res.data);
@@ -34,7 +34,7 @@ const Pending = () => {
       receiverEmail: newUser,
       senderEmail: senderEmail,
     };
-    await axios.post('/acceptrequest', data);
+    await axios.post('/connect/acceptrequest', data);
 
     // Display a success toast
     toast.success('You both are now connected to each other', {

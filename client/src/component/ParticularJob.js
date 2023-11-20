@@ -15,7 +15,7 @@ const ParticularJob = () => {
             email:email
         }
         //step4
-        const response = await axios.post('/getparticularjob',d);
+        const response = await axios.post('/connect/getparticularjob',d);
         setJobData(response.data);
         console.log(response.data);
       } catch (error) {

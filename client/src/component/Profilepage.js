@@ -27,7 +27,7 @@ const Profilepage = () => {
         const d = {
           email: email,
         };
-        const res = await axiosPrivate.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/connect/fetchingdata", d);
         setData(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -43,7 +43,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axiosPrivate.post("/addskill", d);
+      const res = await axiosPrivate.post("/connect/addskill", d);
 
       toast.success("Added Skill Successfully");
     } catch (err) {
@@ -60,7 +60,7 @@ const Profilepage = () => {
       otheruserEmail: otheruser,
     };
     try {
-      const res = await axiosPrivate.post("/endorseskill", d);
+      const res = await axiosPrivate.post("/connect/endorseskill", d);
       toast.success("Skill Endorsed Successfully");
     } catch (err) {
       console.log(err);
@@ -74,7 +74,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axiosPrivate.post("/deleteskill", d);
+      const res = await axiosPrivate.post("/connect/deleteskill", d);
 
       toast.success("Skill Deleted Successfully");
     } catch (err) {
@@ -115,7 +115,7 @@ const Profilepage = () => {
       skill: skill,
     };
     try {
-      const res = await axiosPrivate.post("/fetchendorse", d);
+      const res = await axiosPrivate.post("/connect/fetchendorse", d);
       console.log("Endorsement data:", res.data);
       // Ensure this log statement is printed in the console
       navigate("/endorsepage", { state: { param1: res.data } });

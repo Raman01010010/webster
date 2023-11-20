@@ -260,27 +260,7 @@ const Jobcomment = async (req, res) => {
       ],
     }).sort({ timestamp: 1 }); // Adjust the sorting based on your needs
 
-    // Separate messages based on sender and receiver
-    // const senderMessages = allMessages.filter(message => message.senderid === senderid);
-    // const receiverMessages = allMessages.filter(message => message.receiverid === receiverid);
-
-    // Include timestamp in each message
-    // const formatMessages = (messages) => {
-    //   return messages.map(message => {
-    //     return {
-    //       text: message.text,
-    //       senderid: message.senderid,
-    //       receiverid: message.receiverid,
-    //       timestamp: message.timestamp,
-    //     };
-    //   });
-    // };
-
-    // const formattedSenderMessages = formatMessages(senderMessages);
-    // const formattedReceiverMessages = formatMessages(receiverMessages);
-
-    // console.log(formattedSenderMessages);
-    // console.log(formattedReceiverMessages);
+   
 
     res.status(200).json({
       success: true,
@@ -305,27 +285,7 @@ const getJobComments = async (req, res) => {
       ],
     }).populate('senderid').populate('receiverid').sort({ timestamp: 1 }); // Adjust the sorting based on your needs
 
-    // Separate messages based on sender and receiver
-    // const senderMessages = allMessages.filter(message => message.senderid === senderid);
-    // const receiverMessages = allMessages.filter(message => message.receiverid === senderid);
-
-    // // Include timestamp in each message
-    // const formatMessages = (messages) => {
-    //   return messages.map(message => {
-    //     return {
-    //       text: message.text,
-    //       senderid: message.senderid,
-    //       receiverid: message.receiverid,
-    //       timestamp: message.timestamp,
-    //     };
-    //   });
-    // };
-
-    // const formattedSenderMessages = formatMessages(senderMessages);
-    // const formattedReceiverMessages = formatMessages(receiverMessages);
-
-    // console.log(formattedSenderMessages);
-    // console.log(formattedReceiverMessages);
+   
 
     res.status(200).json({
       success: true,

@@ -77,8 +77,6 @@ export default function Container1(){
           <Route path="/formsubmitted/:jobId/:jobberId" element={<><Formsubmit/></>} />
           <Route path="/resume" element={<><Resume/></>} />
           <Route path="/jobcomment/:secondId/:jobId" element={<><Jobcomment/></>} />
-
-
     </Routes>
     <Notification/>
     </>)

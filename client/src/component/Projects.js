@@ -16,7 +16,7 @@ const Projects = () => {
       const d = {
         email: email,
       };
-      const response = await axios.post("/getproject", d);
+      const response = await axios.post("/connect/getproject", d);
       setProjectData(response.data);
     };
     fetchData();

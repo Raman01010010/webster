@@ -17,7 +17,7 @@ const Education = () => {
         const d = {
             email:email
         }
-        const responce = await axios.post('/geteducation',d);
+        const responce = await axios.post('/connect/geteducation',d);
         setEducationData(responce.data);
 
     }

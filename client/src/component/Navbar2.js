@@ -76,7 +76,10 @@ function fun(){
     <>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
+          
+          {isLargeScreen ? (
+            <>
+            <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -87,8 +90,8 @@ function fun(){
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Navbar
           </Typography>
-          {isLargeScreen ? (
-            <>
+         
+           
               <Button
                 color="inherit"
 
@@ -171,15 +174,7 @@ onClick={fun}
 
 
 
-                <Button
-                  color="inherit"
-                  component={Link}
-                  to={`/profilepage/${newUser.email}`}
-                >
-                  <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
-                 My Profile
-                </Button>
-
+               
 
 
 
@@ -239,6 +234,15 @@ onClick={fun}
                   </>
                 )}
               </div>
+              <Button
+                  color="inherit"
+                  component={Link}
+                  to={`/profilepage/${newUser.email}`}
+                >
+                  <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
+                 My Profile
+                </Button>
+
             </>
           ) : (
             <>
@@ -296,6 +300,13 @@ onClick={fun}
                   to="/otherusers"
                 >
                   Add friend
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/pending"
+                >
+                  New Request
                 </MenuItem>
               </Menu>
               <IconButton
@@ -370,6 +381,13 @@ onClick={fun}
                   </>
                 )}
               </div>
+              <IconButton
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+                to={`/profilepage/${newUser.email}`}              >
+                <FontAwesomeIcon icon={faUser} />
+              </IconButton>
             </>
           )}
         </Toolbar>

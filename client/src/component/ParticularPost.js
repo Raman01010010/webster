@@ -76,7 +76,7 @@ async function handle1(){
             email:email
         }
         //step4
-        const response = await axiosPrivate.post('/getpost',d);
+        const response = await axiosPrivate.post('/connect/getpost',d);
         setPosts(response.data);
         console.log(response.data)
       } catch (error) {

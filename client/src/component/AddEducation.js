@@ -23,7 +23,7 @@ const AddEducation = () => {
     };
 
     try {
-      const res = await axiosPrivate.post("/addeducation", educationData);
+      const res = await axiosPrivate.post("/connect/addeducation", educationData);
       console.log(res.data);
 
       // Show success toast

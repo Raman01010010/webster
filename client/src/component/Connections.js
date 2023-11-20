@@ -11,7 +11,7 @@ export default function Connections() {
             const data = {
                 newUser:newUser.email
             }
-            const res = await axios.post('/connections',data)
+            const res = await axios.post('/connect/connections',data)
             // const connectionArray = Object.values(res.data);
             setConnecteduser(res.data)
             // console.log(connectionArray)
