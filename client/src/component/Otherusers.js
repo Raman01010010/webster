@@ -62,7 +62,10 @@ const Otherusers = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/getuser");
+        const d = {
+          email:newUser.email
+        }
+        const res = await axios.post("/getuser",d);
         setOtheruser(res.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -80,13 +83,15 @@ const Otherusers = () => {
             {otheruser.map((element) => {
               return (
                 <div className="p-4 md:w-1/3" key={element.email}>
-                  <Link to={`/profilepage/${element.email}`} className="flex">
+                
                     <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
+                    <Link to={`/profilepage/${element.email}`} className="flex">
                       <img
                         className="lg:h-48 md:h-36 w-full object-cover object-center"
                         src="https://dummyimage.com/720x400"
                         alt="blog"
                       />
+                        </Link>
                       <div className="p-6">
                         <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
                           {element.email}
@@ -128,7 +133,6 @@ const Otherusers = () => {
                         </div>
                       </div>
                     </div>
-                  </Link>
                 </div>
               );
             })}

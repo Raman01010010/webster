@@ -32,6 +32,11 @@ import SinglePost from "./SinglePost";
 
 import Resume from "./Resume"
 
+import ParticularJob from "./ParticularJob";
+import Education from "./Education";
+import AddEducation from "./AddEducation";
+import Projects from "./Projects";
+import Addproject from "./Addproject";
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
@@ -54,6 +59,11 @@ export default function Container1(){
           <Route path="/profilepage/:email" element={<><Profilepage/></>} />
           <Route path="/endorsepage" element={<><Endorse/></>} />
           <Route path="/particularpost/:email" element={<><ParticularPost/></>} />
+          <Route path="/particularjob/:email" element={<><ParticularJob/></>} />
+          <Route path="/education/:email" element={<><Education/></>} />
+          <Route path="/addeducation/:email" element={<><AddEducation/></>} />
+          <Route path="/projects/:email" element={<><Projects/></>} />
+          <Route path="/addproject/:email" element={<><Addproject/></>} />
           <Route path="/cpost" element={<> <Post1/></>} />
           <Route path="/post" element={<>            
      <AllPost/></>} />
