@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Container2 from "./Container2";
-import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';import { User } from "../context/User";
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import { User } from "../context/User";
 import MenuIcon from "@mui/icons-material/Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,8 +18,8 @@ import {
   faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
-import { useContext } from "react";
-import { User } from "../context/User";
+
+
 
 const Navbar2 = () => {
   const {sh,setSh,newUser}=useContext(User)
@@ -28,7 +29,7 @@ const Navbar2 = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const location = useLocation();
-  const { newUser } = useContext(User);
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
