@@ -21,6 +21,7 @@ exports.uploadProfileImage = async (req, res) => {
       "Profile Image Filename:",
       profileImageFilename
     );
+    
 
     const user = await User.findOneAndUpdate(
       { email: userEmail },
