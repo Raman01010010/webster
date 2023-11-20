@@ -303,7 +303,7 @@ const getJobComments = async (req, res) => {
         { senderid: senderid, receiverid: receiverid, jobid: jobid },
         { senderid: receiverid, receiverid: senderid, jobid: jobid },
       ],
-    }).sort({ timestamp: 1 }); // Adjust the sorting based on your needs
+    }).populate('senderid').populate('receiverid').sort({ timestamp: 1 }); // Adjust the sorting based on your needs
 
     // Separate messages based on sender and receiver
     // const senderMessages = allMessages.filter(message => message.senderid === senderid);

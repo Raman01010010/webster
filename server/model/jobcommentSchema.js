@@ -7,11 +7,13 @@ const jobcommentSchema = new Schema({
     required: true,
   },
   senderid: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user_w', // Reference to a User schema (if you have one)
     required: true,
   },
   receiverid: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user_w', // Reference to a User schema (if you have one)
     required: true,
   },
   jobid:{
