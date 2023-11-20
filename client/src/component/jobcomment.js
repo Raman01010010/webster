@@ -109,45 +109,49 @@ const Jobcomment = () => {
       <>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div
+  style={{
+    flex: 1,
+    overflowY: 'scroll',
+    padding: '10px',
+    borderBottom: '1px solid #ccc',
+  }}
+>
+  {allMessages && allMessages[0] && allMessages[0].length > 0 ? (
+    allMessages[0].map((message, index) => (
+      <div
+        key={index}
         style={{
-          flex: 1,
-          overflowY: 'scroll',
-          padding: '10px',
-          borderBottom: '1px solid #ccc',
+          marginBottom: '10px',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
         }}
       >
-        {allMessages && allMessages[0] && allMessages[0].length > 0 ? (
-          allMessages[0].map((message, index) => (
-            <div
-              key={index}
-              style={{
-                marginBottom: '10px',
-                display: 'flex',
-                flexDirection: 'row',
-              }}
-            >
-            
-              <div
-                style={{
-                  backgroundColor: message?.senderid?._id === userid ? '#e6f7ff' : '#fff',
-                  padding: '10px',
-                  borderRadius: '8px',
-                  maxWidth: '70%',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-              <p>{message.senderid.username}</p>
-                <p style={{ margin: '0', color: 'blue' }}>{message.text}</p>
-                <p style={{ margin: '0', color: 'gray', fontSize: '12px' }}>
-                  {new Date(message.timestamp).toLocaleString()}
-                </p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No messages available</p>
-        )}
+        <div
+          style={{
+            backgroundColor: message?.senderid?._id === userid ? '#e6f7ff' : '#fff',
+            padding: '10px',
+            borderRadius: '8px',
+            maxWidth: '70%',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems:'flex-start',
+          }}
+        >
+          <p style={{ margin: '0', color: '#333', fontWeight: 'bold' }}>{message.senderid.username}</p>
+          <p style={{ margin: '0', color: 'blue' }}>{message.text}</p>
+          <p style={{ margin: '0', color: 'gray', fontSize: '12px' }}>
+            {new Date(message.timestamp).toLocaleString()}
+          </p>
+        </div>
       </div>
+    ))
+  ) : (
+    <p>No messages available</p>
+  )}
+</div>
+
       <div
         style={{
           display: 'flex',
