@@ -23,7 +23,7 @@ import FileUpload from "./Uploadtest";
 import YourMainComponent from "./AllPost2";
 import Jobsapplied from "./Jobsapplied";
 import Formsubmit from "./Formsubmit";
-import ParticularJob from "./Particularjob";
+import ParticularJob from "./ParticularJob";
 import Education from "./Education";
 import AddEducation from "./AddEducation";
 import Projects from "./Projects";
