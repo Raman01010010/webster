@@ -15,8 +15,8 @@ import {
   faUserFriends,
   faEnvelope,
   faMoneyCheckAlt,
-  faUser
-  faBell,
+  faUser,
+  faBell
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 
