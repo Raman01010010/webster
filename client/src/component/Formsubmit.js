@@ -5,10 +5,11 @@ import { useParams } from 'react-router-dom';
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 const Formsubmit = () => {
   const { newUser } = useContext(User);
-  const { jobId } = useParams();
+  const { jobId ,jobberId} = useParams();
   const [myapp, setMyapp] = useState([]);
   const [showResume, setShowResume] = useState(false);
   const [serverResponse, setServerResponse] = useState({ data: null, error: null });
@@ -64,11 +65,14 @@ const Formsubmit = () => {
             <p>Professional Experience: {applicant.additionalQuestions[0]}</p>
             <p>Additional Question 1: {applicant.additionalQuestions[1]}</p>
             <p>Additional Question 2: {applicant.additionalQuestions[2]}</p>
+            <Link to={`/jobcomment/${jobberId}/${jobId}`}>
+
             <input
               type="text"
               id="location"
               className="border p-2 mt-2 focus:outline-none"
             />
+            </Link>
           </div>
         </div>
       ))}

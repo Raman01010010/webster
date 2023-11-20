@@ -1,4 +1,6 @@
 const profile = require('../model/profileSchema');
+const  {sendNotification}  = require('./notifController');
+
 const jobs = require('../model/jobSchema');
 
 const naukari = async (req, res) => {
@@ -10,7 +12,6 @@ const naukari = async (req, res) => {
     try {
         const userId = req.body.userID;
         const jobId = req.body.jobid;
-    console.log("vive1"+userId+" "+jobId)
         const re = await pro.save();
         console.log("Profile saved");
 
@@ -25,6 +26,7 @@ console.log("vive2"+job)
         // Add the userId to the applicants array
         
         job.applicants.push(userId);
+        await sendNotification(job.jobberid, `A person applied on your job `, '', 'job', res);
 
         // Save the updated job document
         await job.save();

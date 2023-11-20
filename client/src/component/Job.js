@@ -3,6 +3,7 @@ import Review from "./Review";
 import { User } from "../context/User";
 import Box from "@mui/material/Box";
 import swal from 'sweetalert';
+import { TailSpin } from 'react-loader-spinner';
 
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -153,6 +154,7 @@ export default function Job() {
       timer: 3000
     });
     setLoading(false);
+    
   } catch (error) {
     console.log(error);
     console.log("yaha")
@@ -540,7 +542,9 @@ export default function Job() {
               </Button>
             )}
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={Submit}>Submit</Button>
+            <Button onClick={Submit}>
+            {loading? <TailSpin height={25} color="white"/>:'Submit'} 
+                        </Button>
           </Box>
         </div>
       )}

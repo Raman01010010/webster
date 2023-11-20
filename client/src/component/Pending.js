@@ -43,6 +43,7 @@ const Pending = () => {
 
     // Update the state to trigger a re-render
     setAccepted(true);
+    
   };
 
   return (

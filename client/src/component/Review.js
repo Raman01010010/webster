@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import Resume from "./Resume"
+import Resume from "./Resumes"
 import {
   Container,
   Card,

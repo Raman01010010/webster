@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   
   Typography,
@@ -150,11 +152,13 @@ const Application = () => {
               <p>Skills: {applicant.skill.map((skill, i) => (
                 <span key={i}>{skill}</span>
               ))}</p>
+              <Link to={`/jobcomment/${applicant.userID}/${jobId}`}>
               <input
                 type="text"
                 id="location"
                 className="border p-2 mt-2 focus:outline-none"
               />
+              </Link>
             </div>
           </div>
         ))}

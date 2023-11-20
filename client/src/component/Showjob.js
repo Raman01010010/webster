@@ -48,19 +48,25 @@ const employmentTypes = [
 ];
 
 const Showjob = () => {
+  const [isTrending, setIsTrending] = useState(false); // State to track trend button click
+
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
   const { newUser } = useContext(User);
   const userid = newUser.userid;
-
   const [compa, setCompa] = useState([]);
+  const [ski, setSki] = useState([]);
+
   const [data, setData] = useState({
     jobtype: [],
     locationtypes: [],
     locationonsite: [],
     company: [],
-    userID: userid, // Set the userID directly here
+    skill:[],
+    userID: userid,
+    
+    trend:0, // Set the userID directly here
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
@@ -87,45 +93,54 @@ const Showjob = () => {
         const response = await axios.get("/job/getcompa");
         // Assuming the array is present in the 'data' property of the response
         setCompa(response.data);
-        console.log(compa);
+        // console.log(compa);
       } catch (error) {
         console.error("Error fetching data from the backend:", error);
       }
     };
-
-    // Call the fetchData function
+      // Call the fetchData function
+    fetchData();
+  }, []);
+  useEffect(() => {
+    // Fetch data from the backend using axios or your preferred method
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/job/getskill");
+        // Assuming the array is present in the 'data' property of the response
+        setSki(response.data);
+        console.log(ski);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error);
+      }
+    };
+      // Call the fetchData function
     fetchData();
   }, []);
   console.log("ye hai" + jobData.isExpired);
   const handleFilterDialogOpen = () => {
     setOpenFilterDialog(true);
   };
-  const PostJob = async () => {
+ 
+  const handletrending = async () => {
     try {
-      const response = await axios.post("/job/showjob", data);
-
-      // Assuming 'hasApplied' is a boolean property in each job object
-      const jobsWithApplied = response.data.data.map((job) => ({
-        ...job,
-        hasApplied: job.hasApplied,
+      // Toggle isTrending first
+      setIsTrending((prevIsTrending) => !prevIsTrending);
+  
+      // Then update data based on the new isTrending value
+      setData((prevData) => ({
+        ...prevData,
+        trend: !isTrending ? 1 : 0,
       }));
-
-      setJobData(jobsWithApplied);
     } catch (error) {
       console.log(error);
     }
   };
+  
   const handleFilterDialogClose = async () => {
     setOpenFilterDialog(false);
-    try {
-      await PostJob(); // Wait for the job to be posted
-
-      // Once the job is successfully posted, send an email
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to post job or send email. Please try again.");
-    }
   };
+  
+  
   console.log("showjob"+newUser.userid);
 
   useEffect(() => {
@@ -162,6 +177,18 @@ const Showjob = () => {
         }}
       >
         <i class="fa-solid fa-filter"></i>
+      </Fab>
+      <Fab
+        color={isTrending ? "success" : "primary"} // Set color based on isTrending state
+        aria-label="add"
+        onClick={handletrending}
+        sx={{
+          position: "fixed",
+          bottom: "20px",
+          left: "20px",
+        }}
+      >
+        <i class="fa-brands fa-searchengin"></i>
       </Fab>
       {jobData.map((job, index) => (
         <Card
@@ -412,6 +439,29 @@ const Showjob = () => {
                   variant="standard"
                   label="Company"
                   placeholder="Select Company"
+                />
+              )}
+            />
+             <Autocomplete
+              multiple
+              id="skill"
+              options={ski}
+              value={data.skill}
+              onChange={(event, newValue) => {
+                // setSelectedSkills(newValue);
+                setData((old) => {
+                  return {
+                    ...old,
+                    skill: [...newValue],
+                  };
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Skill"
+                  placeholder="Select Skill"
                 />
               )}
             />

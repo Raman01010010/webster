@@ -16,6 +16,7 @@ import {
   faEnvelope,
   faMoneyCheckAlt,
   faUser
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 
@@ -103,7 +104,7 @@ onClick={fun}
                 component={Link}
                 
               >
-                <FontAwesomeIcon icon={faHome} style={{ marginRight: "5px" }} />
+               <FontAwesomeIcon icon={faBell}  style={{ marginRight: "5px" }} />
                 Notification
               </Button>
 
@@ -132,6 +133,13 @@ onClick={fun}
                   to="/otherusers"
                 >
                   Add friend
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/pending"
+                >
+                  New Request
                 </MenuItem>
               </Menu>
               <Button
