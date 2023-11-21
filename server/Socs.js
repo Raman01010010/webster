@@ -12,6 +12,10 @@ function splitStringByUnderscore(str) {
   return str.split('_');
 }
 
+
+const emailToSocketIdMap = new Map();
+const socketidToEmailMap = new Map();
+
 function initSocket(server) {
   io = new Server(server, {
     cors: {
@@ -31,7 +35,7 @@ function initSocket(server) {
 
     //Enter room
     socket.on('enterRoom', async({ name, room }) => {
-
+      console.log(room)
       console.log("cnxnm")
 
       //const user = activateUser(socket.id, name, room)
@@ -121,6 +125,38 @@ if(ro.length>0){
       console.log("acc")
       // ... Handle activity ...
     });
+
+
+
+
+    socket.on("room:join", (data) => {
+      console.log("joineddd")
+      const { email, room } = data;
+      console.log(room)
+      //emailToSocketIdMap.set(email, socket.id);
+     // socketidToEmailMap.set(socket.id, email);
+      io.to(room).emit("user:joined", { id: socket.id });
+      socket.join(room);
+      io.to(socket.id).emit("room:join", {"i":"i"});
+    });
+    socket.on("user:call", ({ to, offer }) => {
+      console.log(offer)
+      io.to(to).emit("incomming:call", { from: socket.id, offer });
+      console.log("gayaa")
+    });
+    socket.on("call:accepted", ({ to, ans }) => {
+      io.to(to).emit("call:accepted", { from: socket.id, ans });
+    });
+    socket.on("peer:nego:needed", ({ to, offer }) => {
+      console.log("peer:nego:needed", offer);
+      io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
+    });
+  
+    socket.on("peer:nego:done", ({ to, ans }) => {
+      console.log("peer:nego:done", ans);
+      io.to(to).emit("peer:nego:final", { from: socket.id, ans });
+    });
+  
   });
 }
 function getIo() {

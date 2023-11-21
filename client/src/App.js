@@ -2,7 +2,7 @@
 import { User } from './context/User';
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, useNavigate, Route } from 'react-router-dom';
 import Home from './component/Home';
 import Navbar from './component/Navbar';
 import Navbar2 from './component/Navbar2';
@@ -18,6 +18,8 @@ import YourMainComponent from './component/AllPost2';
 import Test1 from './component/Test1';
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import VideoC from './component/VideoC';
+import LobbyScreen from './component/Enter';
 function App() {
   useEffect(()=>{
     Aos.init()
@@ -76,9 +78,7 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   
- 
-   
+    
       </Router>
 
     </User.Provider>

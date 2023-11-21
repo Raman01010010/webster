@@ -13,9 +13,8 @@ import Dropzone from "react-dropzone";
 import Loader from "./Loader";
 
 import { useParams,useNavigate } from 'react-router-dom';   
-
 const socket = io('ws://localhost:3500/');
-
+//const socket = io('ws://172.29.50.69:3000//');
 export default function Chat() {
     let { id } = useParams();
     console.log(id)

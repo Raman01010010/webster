@@ -37,6 +37,7 @@ import Education from "./Education";
 import AddEducation from "./AddEducation";
 import Projects from "./Projects";
 import Addproject from "./Addproject";
+import RoomPage from "./VideoC";
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
@@ -77,7 +78,7 @@ export default function Container1(){
           <Route path="/formsubmitted/:jobId/:jobberId" element={<><Formsubmit/></>} />
           <Route path="/resume" element={<><Resume/></>} />
           <Route path="/jobcomment/:secondId/:jobId" element={<><Jobcomment/></>} />
-
+          <Route path="/room/:roomId" element={<><RoomPage/></>} />
 
     </Routes>
     <Notification/>

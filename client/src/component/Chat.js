@@ -1,9 +1,9 @@
 
 import io from 'socket.io-client';
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext ,useCallback} from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
-
+import VideoChatIcon from '@mui/icons-material/VideoChat';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -13,7 +13,12 @@ import Loader from "./Loader";
 import { useParams,useNavigate } from 'react-router-dom';   
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddIcon from '@mui/icons-material/Add';
-const socket = io('ws://localhost:3500/');
+import socket from '../services/socket';
+//const socket = io('ws://localhost:3500/');
+//const socket = io('ws://172.29.50.69:3000//');
+
+
+
 
 export default function Chat() {
     let { id } = useParams();
@@ -28,7 +33,9 @@ export default function Chat() {
     const [file, setFile] = useState(null);
     const [load, setLoad] = React.useState(0)
     const [stat, setStat] = React.useState('')
-
+    const [email, setEmail] = useState("");
+    const [room, setRoom] = useState("");
+  
     console.log(newUser)
 
     ///FILE UPLOAD
@@ -104,7 +111,8 @@ export default function Chat() {
                         name: newUser.userid,
                         room: uniqueRoomID,
                     });
-    
+    setRoom(uniqueRoomID)
+    setEmail(user2Id)
                     setMessage(old => ({
                         ...old,
                         "room": uniqueRoomID,
@@ -226,6 +234,36 @@ fetch()
     function mesreq(){
         navigate(`/chatr/${id}`)
     }
+
+
+
+
+
+
+    const handleSubmitForm = useCallback(
+        (e) => {
+          e.preventDefault();
+          socket.emit("room:join", { email, room });
+        },
+        [email, room, socket]
+      );
+
+
+      const handleJoinRoom = useCallback(
+        (data) => {
+          const { email, room } = data;
+          navigate(`/room/${room}`);
+        },
+        [navigate]
+      );
+    
+      useEffect(() => {
+        socket.on("room:join", handleJoinRoom);
+        return () => {
+          socket.off("room:join", handleJoinRoom);
+        };
+      }, [socket, handleJoinRoom]);
+    
     return (<>
         <section style={{ zIndex:2,backgroundColor: "#CDC4F9" }}>
             
@@ -318,7 +356,7 @@ fetch()
 
 
                                     <div className=" md:w-1/2 pr-4 pl-4 lg:w-3/5 pr-4 pl-4 xl:w-2/3 pr-4 pl-4">
-
+<VideoChatIcon onClick={handleSubmitForm}  sx={{ fontSize: 40 }}/>
                                         <div
                                             className="pt-3 pe-3"
 
