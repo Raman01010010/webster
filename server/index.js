@@ -28,7 +28,7 @@ app.use(cors(corsOption));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static("uploads"));
+
 
 app.use("/user", require("./routes/user"));
 app.use("/auth", require("./routes/auth"));
@@ -46,6 +46,7 @@ app.use("/post", require("./routes/post"));
 
 app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));
+app.use(express.static("uploads"));
 app.use(verifyJWT);
 
 app.all("/*", (req, res) => {

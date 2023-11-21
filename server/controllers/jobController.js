@@ -13,13 +13,43 @@ const create = async (req, res) => {
   console.log("Recipient Email:", recipientEmail);
 
   try {
-    const re = await pro.save();
-    console.log(re);
+    // console.log(re);
     // Retrieve users from the user_ws schema who have matching skills
-    const users = await user_w.find({ skills: { $in: skills } });
-    const emailArray = users.map((user) => user.email);
-    console.log(emailArray);
+    // const usersWithMatchingSkills = await user_w.find({ skills: { $in: skills } });
+    // const alertedUsers = Array.from(new Set([...skills, ...usersWithMatchingSkills.map(user => user.alertedBy)]));
+    // const users = await user_w.find({ _id: { $in: alertedUsers } });
 
+
+
+    const denewla=await user_w.find({_id:req.body.jobberid}).populate('alertedBy')
+    const alby=denewla[0].alertedBy
+console.log(denewla)
+console.log(alby)
+    const usersWithMatchingSkills = await user_w.find({ skills: { $in: skills } });
+    console.log(usersWithMatchingSkills);
+//const alertedUsers = alby.map(user => user._id);
+//console.log(alertedUsers);
+
+// const validAlertedUsers = alertedUsers.filter(alertedUser => mongoose.Types.ObjectId.isValid(alertedUser));
+const uniqueValidAlertedUsers = Array.from(new Set([...skills, ...alby]));
+console.log(uniqueValidAlertedUsers);
+console.log("bimnnif")
+
+
+
+const idar=uniqueValidAlertedUsers.map(item=>{
+  if(item._id)
+  return(
+    {
+    _id:item._id}
+  )
+})
+console.log(idar);
+const users = await user_w.find({ _id: { $in: idar } });
+    const emailArray = users.map((user) => user.email);
+    // console.log(emailArray);
+    console.log(emailArray);
+    
     await sendEmail("", req.body, recipientEmail, "", recipientEmail);
 
     for (const email of emailArray) {
@@ -28,6 +58,7 @@ const create = async (req, res) => {
     for (const user of users) {
       await sendNotification(user._id, 'New job posted', '', 'job', res);
     }
+    const re = await pro.save();
 
     res.status(200).send("success");
   } catch (error) {

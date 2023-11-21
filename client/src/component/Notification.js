@@ -29,7 +29,6 @@ function Notification() {
       setNotifications((prevNotifications) => [notification, ...prevNotifications]);
     });
 
-    
   }, []);
   const sendNotification = (message) => {
     socket.emit('sendNotificationtoone', { userId:'65492160c09f811600265617', message });

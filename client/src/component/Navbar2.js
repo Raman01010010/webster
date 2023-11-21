@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,7 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Container2 from "./Container2";
-import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import Modal from "@mui/material/Modal";
+import { Backdrop, Fade } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Autocomplete from "@mui/material/Autocomplete";
+import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import { User } from "../context/User";
 import MenuIcon from "@mui/icons-material/Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,20 +21,28 @@ import {
   faEnvelope,
   faMoneyCheckAlt,
   faUser,
-  faBell
+  faBell,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
-
-
+import { styled, alpha } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
+import axios from "../api/axios";
 
 const Navbar2 = () => {
-  const {sh,setSh,newUser}=useContext(User)
+  const { sh, setSh, newUser } = useContext(User);
   const isLargeScreen = useMediaQuery("(min-width:600px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const [isJobMenuOpen, setIsJobMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const [searchInput, setSearchInput] = useState([]); // New state for search input
+  const [name, setName] = useState(null);
   const location = useLocation();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -46,15 +59,14 @@ const Navbar2 = () => {
     setIsDropdownOpen(false);
   };
 
-
   function handleNavAndClose() {
-
     handleMenuClose();
   }
 
   const handleJobMenuToggle = () => {
     setIsJobMenuOpen(!isJobMenuOpen);
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Cleanup function to set isJobMenuOpen to false when component unmounts
@@ -67,47 +79,81 @@ const Navbar2 = () => {
     // Set isJobMenuOpen to true when the location changes to "/showjob"
     setIsJobMenuOpen(location.pathname === "/showjob");
   }, [location.pathname]);
-function fun(){
-  setSh(old=>{
-    return(!old)
-  })
-}
+  function fun() {
+    setSh((old) => {
+      return !old;
+    });
+  }
+
+  useEffect(() => {
+    // Fetch data from the backend using axios or your preferred method
+    const fetchData = async () => {
+      try {
+        console.log(searchInput)
+        const response = await axios.post("/connect/searchname", {
+          searchInput
+        });
+  
+        // Access the data property of the response
+        const responseData = response.data;
+  
+        // Access the matchedUsernames property from the data
+        const matchedUsernames = responseData.matchedUsernames;
+  
+        // Assuming setName is a state update function
+        setName(matchedUsernames);
+      } catch (error) {
+        console.error("Error fetching data from the backend:", error);
+      }
+    };
+  
+    // Call the fetchData function
+   
+  
+    // Call the fetchData function
+    fetchData();
+  }, [searchInput]);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleChange = (event, value) => {
+    setSearchInput(value);
+  };
+console.log(name);
   return (
     <>
       <AppBar position="fixed">
         <Toolbar>
-          
           {isLargeScreen ? (
             <>
-            <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Navbar
-          </Typography>
-         
-           
-              <Button
+              <IconButton
+                size="large"
+                edge="start"
                 color="inherit"
-
-                component={Link}
-                to="/post"
+                aria-label="menu"
               >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Navbar
+              </Typography>
+
+              <Button color="inherit" onClick={handleOpenModal}>
+                <FontAwesomeIcon icon={faSearch} />
+              </Button>
+
+              <Button color="inherit" component={Link} to="/post">
                 <FontAwesomeIcon icon={faHome} style={{ marginRight: "5px" }} />
                 Home
               </Button>
-              <Button
-                color="inherit"
-onClick={fun}
-                component={Link}
-                
-              >
-               <FontAwesomeIcon icon={faBell}  style={{ marginRight: "5px" }} />
+              <Button color="inherit" onClick={fun} component={Link}>
+                <FontAwesomeIcon icon={faBell} style={{ marginRight: "5px" }} />
                 Notification
               </Button>
 
@@ -147,7 +193,6 @@ onClick={fun}
               </Menu>
               <Button
                 color="inherit"
-
                 component={Link}
                 to={`/chat/${newUser.userid}`}
               >
@@ -170,13 +215,6 @@ onClick={fun}
                   />
                   Job
                 </Button>
-
-
-
-
-               
-
-
 
                 {location.pathname === "/showjob" && (
                   <>
@@ -219,15 +257,10 @@ onClick={fun}
                             >
                               Managae Job Posted
                             </MenuItem>
-                            <MenuItem
-                              component={Link}
-                              to="/resume"
-                            >
+                            <MenuItem component={Link} to="/resume">
                               Resume Builder
                             </MenuItem>
-
                           </Menu>
-
                         )}
                       </>
                     )}
@@ -235,14 +268,13 @@ onClick={fun}
                 )}
               </div>
               <Button
-                  color="inherit"
-                  component={Link}
-                  to={`/profilepage/${newUser.email}`}
-                >
-                  <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
-                 My Profile
-                </Button>
-
+                color="inherit"
+                component={Link}
+                to={`/profilepage/${newUser.email}`}
+              >
+                <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
+                My Profile
+              </Button>
             </>
           ) : (
             <>
@@ -255,25 +287,17 @@ onClick={fun}
               >
                 <FontAwesomeIcon icon={faHome} />
               </IconButton>
-
-
+              <Button color="inherit" onClick={handleOpenModal}>
+                <FontAwesomeIcon icon={faSearch} />
+              </Button>
               <IconButton
-              onClick={fun}
+                onClick={fun}
                 color="inherit"
                 style={{ marginRight: "20px" }}
                 component={Link}
-                
               >
                 <FontAwesomeIcon icon={faHome} />
               </IconButton>
-
-
-
-
-
-
-
-
 
               <IconButton
                 color="inherit"
@@ -318,7 +342,6 @@ onClick={fun}
                 <FontAwesomeIcon icon={faEnvelope} />
               </IconButton>
               <div style={{ display: "flex", alignItems: "center" }}>
-
                 <IconButton
                   color="inherit"
                   onClick={handleJobMenuToggle}
@@ -355,23 +378,13 @@ onClick={fun}
                             <MenuItem component={Link} to="/jobsapplied">
                               My job
                             </MenuItem>
-                            <MenuItem
-
-                              component={Link}
-                              to="/createjob"
-                            >
+                            <MenuItem component={Link} to="/createjob">
                               Post Job
                             </MenuItem>
-                            <MenuItem
-                              component={Link}
-                              to="/myjob"
-                            >
+                            <MenuItem component={Link} to="/myjob">
                               Manage Job Posted
                             </MenuItem>
-                            <MenuItem
-                              component={Link}
-                              to="/bnaniihai"
-                            >
+                            <MenuItem component={Link} to="/bnaniihai">
                               Resume Builder
                             </MenuItem>
                           </Menu>
@@ -385,14 +398,52 @@ onClick={fun}
                 color="inherit"
                 style={{ marginRight: "20px" }}
                 component={Link}
-                to={`/profilepage/${newUser.email}`}              >
+                to={`/profilepage/${newUser.email}`}
+              >
                 <FontAwesomeIcon icon={faUser} />
               </IconButton>
             </>
           )}
+
+          <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
+  <DialogTitle>Search Modal</DialogTitle>
+  <Stack spacing={2}>
+    {name && name.length > 0 && (
+      <Autocomplete
+  freeSolo
+  id="free-solo-2-demo"
+  disableClearable
+  options={name.map((option) => ({
+    label: option.username,
+    link: `/profilepage/${option.email}`,
+  }))}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Search input"
+      value={searchInput}
+      onChange={(e) => setSearchInput(e.target.value)}
+      InputProps={{
+        ...params.InputProps,
+        type: "search",
+      }}
+    />
+  )}
+  getOptionLabel={(option) => option.label}
+  renderOption={(props, option) => (
+    <Link to={option.link} {...props}>
+      {option.label}
+    </Link>
+  )}
+/>
+
+    )}
+  </Stack>
+</Dialog>
+
         </Toolbar>
       </AppBar>
-      
+
       <Container2 />
     </>
   );

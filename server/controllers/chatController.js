@@ -29,10 +29,6 @@ console.log(result)
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
-
-
-
 const up=async (req, res) => {
     console.log(req.file)
     console.log(req.body.json)
@@ -73,11 +69,6 @@ const up=async (req, res) => {
         res.status(400).json({ error: "Upload failed" });
       }
   }
-
-
-
-
-
   const getLast = async (req, res) => {
     try {
       const email = req.body.email;

@@ -1,6 +1,8 @@
 const express=require('express')
 const router=express()
 const connectController = require('../controllers/connectController');
+const upload = require('./multer-setup'); // Adjust the path based on your project structure
+const {imageController} = require('../controllers/imageController'); // Create this controller
 
 
 
@@ -23,4 +25,10 @@ router.post('/api/sendconnect',connectController.connection)
 router.post('/connections', connectController.myconnection);
 router.post('/sendMessageRequest',connectController.sendMessagerequest)
 router.post('/getuser',connectController.getAll)
+router.post('/searchname',connectController.searchname)
+router.post('/image', upload.single('file'), imageController.uploadImage);
+router.post('/bell',connectController.alert)
+router.post('/getalert',connectController.getalert);
+
+
 module.exports=router
