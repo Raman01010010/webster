@@ -49,6 +49,7 @@ const employmentTypes = [
 
 const Showjob = () => {
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -141,27 +142,54 @@ const Showjob = () => {
   
   
   console.log("showjob"+newUser.userid);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Send data as the request body
-        const response = await axios.post("/job/showjob", data);
-
-        // Assuming 'hasApplied' is a boolean property in each job object
+        const response = await axios.post("/job/showjob", {
+          ...data,
+          page: currentPage,
+        });
+  
         const jobsWithApplied = response.data.data.map((job) => ({
           ...job,
           hasApplied: job.hasApplied,
         }));
-
-        setJobData(jobsWithApplied);
+  
+        // If it's the first page, replace the existing data; otherwise, append the new data
+        setJobData((prevData) =>
+          currentPage === 1 ? jobsWithApplied : [...prevData, ...jobsWithApplied]
+        );
       } catch (error) {
         console.error("Error fetching job data: ", error);
       }
     };
-    
+  
     fetchData();
-  }, [data]);
+  }, [data, currentPage]);
+  const handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+  
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+  
+    const windowBottom = windowHeight + window.pageYOffset;
+  
+    if (windowBottom >= docHeight - 1) {
+      // You can adjust the threshold (e.g., docHeight - 100) to start fetching data a bit earlier
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+  
   const handleShareOnWhatsApp = (jobId) => {
     
     const jobLink = `${window.location.origin}/singlejob/${jobId}`; // Construct the job link
@@ -172,6 +200,16 @@ const Showjob = () => {
     // Open the WhatsApp link in a new window or redirect the user to WhatsApp
     window.open(whatsappLink, "_blank");
   };
+  useEffect(() => {
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+  
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
   return (
     <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...	">
       <Fab

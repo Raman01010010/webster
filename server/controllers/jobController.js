@@ -73,9 +73,13 @@ const showjob = async (req, res) => {
     const bType = req.body.locationtypes;
     const cType = req.body.locationonsite;
     const dType = req.body.company;
-    const eType =req.body.skill;
+    const eType = req.body.skill;
+
+    const page = req.body.page || 1;
+    const pageSize = 2; // Adjust the page size as needed
+
     let filter = {};
-    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0 ||eType.length>0) {
+    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0 || eType.length > 0) {
       filter = {
         $or: [
           { jobtype: { $in: aType } },
@@ -87,11 +91,15 @@ const showjob = async (req, res) => {
       };
     }
 
-    let sortedJobs = await job.find(filter);
+    let sortedJobs;
 
-    // Sort jobs based on the size of the 'applicants' field in descending order
     if (req.body.trend === 1) {
-      sortedJobs = sortedJobs.sort((jobA, jobB) => jobB.applicants.length - jobA.applicants.length);
+      // Fetch trending jobs without pagination
+      sortedJobs = await job.find(filter).sort({ applicants: -1 });
+    } else {
+      // Fetch paginated jobs without sorting
+      const startIndex = (page - 1) * pageSize;
+      sortedJobs = await job.find(filter).sort({ /* your sorting criteria */ }).skip(startIndex).limit(pageSize);
     }
 
     // Find jobs in trending
@@ -122,8 +130,6 @@ const showjob = async (req, res) => {
     res.status(400).send({ error: "Error fetching jobs." });
   }
 };
-
-
 
 const myjob = async (req, res) => {
     try {
