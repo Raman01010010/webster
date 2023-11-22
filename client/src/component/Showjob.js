@@ -120,7 +120,6 @@ const Showjob = () => {
   const handleFilterDialogOpen = () => {
     setOpenFilterDialog(true);
   };
- 
   const handletrending = async () => {
     try {
       // Toggle isTrending first
