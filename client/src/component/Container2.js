@@ -31,7 +31,7 @@ import { User } from "../context/User";
 import SinglePost from "./SinglePost";
 import Jobcomment from "./jobcomment"
 import Resume from "./Resume"
-
+import Singlejob from "./Singlejob"
 import ParticularJob from "./ParticularJob";
 import Education from "./Education";
 import AddEducation from "./AddEducation";
@@ -77,6 +77,7 @@ export default function Container1(){
           <Route path="/formsubmitted/:jobId/:jobberId" element={<><Formsubmit/></>} />
           <Route path="/resume" element={<><Resume/></>} />
           <Route path="/jobcomment/:secondId/:jobId" element={<><Jobcomment/></>} />
+          <Route path="/singlejob/:jobId" element={<><Singlejob/></>} />
     </Routes>
     <Notification/>
     </>)

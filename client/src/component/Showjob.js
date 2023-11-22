@@ -163,9 +163,18 @@ const Showjob = () => {
     
     fetchData();
   }, [data]);
+  const handleShareOnWhatsApp = (jobId) => {
+    
+    const jobLink = `${window.location.origin}/singlejob/${jobId}`; // Construct the job link
 
+    // Construct the WhatsApp share link
+    const whatsappLink = `whatsapp://send?text=${encodeURIComponent(jobLink)}`;
+
+    // Open the WhatsApp link in a new window or redirect the user to WhatsApp
+    window.open(whatsappLink, "_blank");
+  };
   return (
-    <div className="flex-grow flex flex-col items-center justify-center">
+    <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...	">
       <Fab
         color="primary"
         aria-label="add"
@@ -191,18 +200,21 @@ const Showjob = () => {
         <i class="fa-brands fa-searchengin"></i>
       </Fab>
       {jobData.map((job, index) => (
+        <Link to={`/singlejob/${job._id}`}>
         <Card
           key={index}
           sx={{
             maxWidth: 400,
             margin: "16px",
             transition: "transform 0.2s",
+            backgroundColor: "rgb(254 215 170)",
+
             "&:hover": {
               transform: "scale(1.05)",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             },
-            backgroundColor: "#F0F6F1", // Add your desired background color here
           }}
+
         >
           <CardContent>
             <Typography
@@ -320,15 +332,31 @@ const Showjob = () => {
                       >
                         Apply Now
                       </Button>
+                      
                     </Link>
+                   
                     
                   </>
                 )}
+                <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleShareOnWhatsApp(job._id)}
+              sx={{
+                mt: 2,
+                backgroundColor: "#1976D2",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              Share
+            </Button>
                 
               </>
             )}
           </CardContent>
         </Card>
+      </Link>
       ))}
       <Dialog open={openFilterDialog} onClose={handleFilterDialogClose}>
         <DialogTitle>Filter</DialogTitle>

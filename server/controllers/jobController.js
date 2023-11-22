@@ -328,6 +328,30 @@ const getJobComments = async (req, res) => {
     res.status(400).send("Failed to save the comment to the database");
   }
 };
+const Singlejob = async (req, res) => {
+  const jobId = req.body.jobId;
+  const userId=req.body.userId;
+console.log(jobId)
+  try {
+    // Assuming you have a Job model or a database query to retrieve job data
+    const jobData = await job.findById(jobId); // Adjust this based on your data model
+console.log(jobData);
+const hasApplied = jobData.applicants.includes(userId);
+    if (!jobData) {
+      // If no job is found with the given ID, send a 404 response
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    // If job data is found, send it as a response
+    res.status(200).json({ data: jobData ,hasApplied:hasApplied});
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error("Error fetching job data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = Singlejob;
 
 // locationonsite
-module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted,filterskill,Jobcomment,getJobComments}
+module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted,filterskill,Jobcomment,getJobComments,Singlejob}

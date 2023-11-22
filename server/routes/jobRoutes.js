@@ -20,6 +20,7 @@ router.post('/jobapplication',jobController.myjobapplication)
 router.post('/form',jobController.FormSubmitted)
 router.post('/jobcomment',jobController.Jobcomment)
 router.get('/jobcomment2/:senderid/:receiverid/:jobid',jobController.getJobComments)
+router.post('/singlejob',jobController.Singlejob)
 
 // router.post('/mail',emailController.sendEmail)
 module.exports = router;
