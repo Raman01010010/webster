@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { User } from "../context/User";
 
 import {
   Card,
@@ -26,7 +25,9 @@ import {
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import moment from "moment"; // Import the moment library for date formatting
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import MenuIcon from "@mui/icons-material/Menu";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -36,6 +37,7 @@ import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Hidden } from "@mui/material";
+import { User } from "../context/User";
 
 const locationTypes = ["On-site", "Hybrid", "Remote"];
 const employmentTypes = [
@@ -50,7 +52,9 @@ const employmentTypes = [
 const Showjob = () => {
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
   const [currentPage, setCurrentPage] = useState(1);
+  const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
 
+  
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -58,6 +62,7 @@ const Showjob = () => {
   const userid = newUser.userid;
   const [compa, setCompa] = useState([]);
   const [ski, setSki] = useState([]);
+const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState({
     jobtype: [],
@@ -199,7 +204,13 @@ const Showjob = () => {
 
     // Open the WhatsApp link in a new window or redirect the user to WhatsApp
     window.open(whatsappLink, "_blank");
+    setShowSnackbar(true);
+
   };
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
+
   useEffect(() => {
     // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
@@ -538,6 +549,20 @@ const Showjob = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Job Shared Successfully!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };
