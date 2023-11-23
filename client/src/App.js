@@ -45,7 +45,7 @@ function App() {
     { id: 2, content: 'Accordion 2 Content', isOpen: false },
   ]);
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
-  const [vdata,setVdata]=React.useState({"myid":"","remote":"d6d9e961-2478-4b51-9c34-3427ee8ea8f1"})
+  const [vdata,setVdata]=React.useState({"myid":"","remote":""})
   const [comp,setComp]=React.useState({
       titles: "",
       company: "",

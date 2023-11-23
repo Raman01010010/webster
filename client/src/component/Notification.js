@@ -14,10 +14,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 function Notification() {
-    const {newUser,notifications,setNotifications}=useContext(User)
+    const {newUser,notifications,setNotifications,vdata,setVdata}=useContext(User)
  // const [notifications, setNotifications] = useState([]);
   const [show,setShow]=useState(1)
-  console.log(newUser)
+  //console.log(newUser)
   const userId = newUser.userid; // Replace with your authentication logic
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function Notification() {
     socket.on('newNotification', (notification) => {
       setNotifications((prevNotifications) => [notification, ...prevNotifications]);
     });
-
+    
     
   }, []);
   const sendNotification = (message) => {

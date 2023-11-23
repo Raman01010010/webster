@@ -11,6 +11,7 @@ let io
 function splitStringByUnderscore(str) {
   return str.split('_');
 }
+const myMap = new Map();
 
 function initSocket(server) {
   io = new Server(server, {
@@ -121,6 +122,27 @@ if(ro.length>0){
       console.log("acc")
       // ... Handle activity ...
     });
+
+    socket.on('call', (data) => {
+      console.log(data)
+
+      io.to(data.remote).emit('newcall',data);
+      // ... Handle activity ...
+    });
+    socket.on('accept', (data) => {
+      console.log(data)
+      io.to(data.origin).emit('final',data);
+      // ... Handle activity ...
+    });
+socket.on('create',(data)=>{
+  myMap.set(data.myid, data.callid);
+  console.log(myMap.get(data.myid))
+  console.log(data)
+})
+
+
+
+
   });
 }
 function getIo() {
