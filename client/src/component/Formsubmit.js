@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from '../api/axios';
 import { User } from "../context/User";
 import { useParams } from 'react-router-dom';
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Formsubmit = () => {
   const { newUser } = useContext(User);
-  const { jobId ,jobberId} = useParams();
+  const { jobId, jobberId } = useParams();
   const [myapp, setMyapp] = useState([]);
   const [showResume, setShowResume] = useState(false);
   const [serverResponse, setServerResponse] = useState({ data: null, error: null });
@@ -38,27 +37,22 @@ const Formsubmit = () => {
   };
 
   return (
-    <>
-
-
-    <div className="flex items-center justify-center h-full mt-100px">
+    <div className="flex items-center justify-center h-full mt-10">
       {myapp.map((applicant, index) => (
-        <div key={index} className="card bg-yellow-300 mt-20">
-          <div className="bg-cyan p-4 rounded-lg shadow-md">
+        <div key={index} className="max-w-lg mx-auto bg-white rounded-md overflow-hidden shadow-md my-4">
+          <div className="bg-cyan p-4">
             <h3 className="text-lg font-semibold mb-2">Name: {applicant.name}</h3>
             <p>Email: {applicant.email}</p>
             <p>Phone: {applicant.phone}</p>
             <p>Place: {applicant.place}</p>
             <p>Location: {applicant.location}</p>
-            <p>
-              Resume:{' '}
-              
-
+            <p className="mb-2">
+              <span className="font-semibold">Resume:</span>
               {showResume && (
                 <iframe
                   src={applicant.resume}
                   title="Resume"
-                  style={{ width: '100%', height: '500px', border: 'none' }}
+                  className="w-full h-48 border-none"
                 />
               )}
             </p>
@@ -66,21 +60,26 @@ const Formsubmit = () => {
             <p>Additional Question 1: {applicant.additionalQuestions[1]}</p>
             <p>Additional Question 2: {applicant.additionalQuestions[2]}</p>
             <Link to={`/jobcomment/${jobberId}/${jobId}`}>
-
-            <input
-              type="text"
-              id="location"
-              className="border p-2 mt-2 focus:outline-none"
-            />
+              <input
+                type="text"
+                id="location"
+                className="border p-2 mt-2 focus:outline-none w-full"
+                placeholder="Add a comment..."
+              />
             </Link>
+          </div>
+          <div className="bg-gray-200 py-2 px-4 flex justify-end items-center">
+            <button
+              onClick={handleShowResume}
+              className="text-blue-500 hover:text-blue-700 flex items-center"
+            >
+              <FontAwesomeIcon icon={faEye} className="mr-2" />
+              View Resume
+            </button>
           </div>
         </div>
       ))}
-      <button onClick={handleShowResume} style={{ color: '#1EB9E5', display: 'flex', alignItems: 'center' }}>
-  <i className="fas fa-eye" style={{ marginRight: '8px' }}></i> View Resume
-</button> 
-   </div>
-    </>
+    </div>
   );
 };
 
