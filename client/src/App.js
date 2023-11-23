@@ -45,6 +45,7 @@ function App() {
     { id: 2, content: 'Accordion 2 Content', isOpen: false },
   ]);
   const [newUser, setNewUser] = React.useState({ "email": "", "username": "dummy", "pwd": "", "name": "", "accessToken": "" })
+  const [vdata,setVdata]=React.useState({"myid":"","remote":"d6d9e961-2478-4b51-9c34-3427ee8ea8f1"})
   const [comp,setComp]=React.useState({
       titles: "",
       company: "",
@@ -72,7 +73,7 @@ function App() {
     console.log("111"+newUser)
   return (
     <>
-    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2,vdata,setVdata}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
