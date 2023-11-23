@@ -159,14 +159,14 @@ const [scr,setScr]=useState(1)
 
   const send = async() => {
     setM(0)
+    
+    socket.emit('call', { myid: newUser.userid, callid: myPeerId, remote: aid });
     try{
-      const re=await axios.post('/videoc/call', {"userid":aid,"callid":myPeerId,"myid":aid})
+      const re=await axios.post('/videoc/call', {"userid":aid,"callid":myPeerId,"myid":newUser.userid})
       console.log(re)
           }catch(error){
             console.log(error)
           }
-    socket.emit('call', { myid: newUser.userid, callid: myPeerId, remote: aid });
-
   
   };
 
@@ -215,9 +215,9 @@ const [scr,setScr]=useState(1)
   
   return (
     
-<div className="bg-blue-500 min-h-screen flex flex-col items-center justify-center" style={{ paddingTop: '5vh' }}>
-  <h1 className="text-4xl font-bold text-white mb-4">Video Call App</h1>
-  <p className="text-white mb-4">Your Peer ID: {myPeerId}</p>
+<div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center" style={{ paddingTop: '5vh' }}>
+  <h1 className="text-4xl font-bold text-white mb-4">Video Call </h1>
+  {/* <p className="text-white mb-4">Your Peer ID: {myPeerId}</p>
 
   <input
     type="text"
@@ -225,11 +225,11 @@ const [scr,setScr]=useState(1)
     onChange={(e) => setPeerId(e.target.value)}
     placeholder="Enter peer id"
     className="p-2 mb-4 rounded border border-gray-300"
-  />
+  /> */}
 
   <div className="relative w-full h-full"> {/* Make the container relative */}
-    <video playsInline ref={peerVideo} autoPlay className="w-full h-full" /> {/* Make the peer video full screen */}
-    <video playsInline muted ref={myVideo} autoPlay className="absolute bottom-4 right-4 w-64 h-48 border border-gray-300" /> {/* Make your video floating on top */}
+    <video playsInline ref={peerVideo} autoPlay className="shadow-lg shadow-cyan-500/50 border-solid border-2 border-sky-500 mx-auto w-3/4 h-1/4" /> {/* Make the peer video full screen */}
+    <video playsInline muted ref={myVideo} autoPlay className="absolute bottom-4 right-4 w-64 h-48 border shadow-lg shadow-gray-200/50 border-solid border-2 border-gray-100 " /> {/* Make your video floating on top */}
   </div>
 
   <div className="flex justify-center space-x-4 mt-4"> {/* Added flex container for buttons */}
@@ -252,7 +252,7 @@ const [scr,setScr]=useState(1)
       <FontAwesomeIcon icon={peerId ? faPhone : faVideo} className="mr-2" />
      Call
     </button>:<div>Calling.... Wait to Connect the Call</div>}
-    <div className="flex justify-center space-x-4 mt-4">
+   
   {callStatus === 'ongoing' && (
     <button onClick={endCall} className="bg-red-500 text-white py-2 px-4 rounded">
       <FontAwesomeIcon icon={faPhone} className="mr-2" />
@@ -273,7 +273,7 @@ const [scr,setScr]=useState(1)
   {/* ... other buttons ... */}
 </div>
 
-  </div>
+  
 </div>
   );
 }
