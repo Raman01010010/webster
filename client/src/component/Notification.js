@@ -17,10 +17,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 function Notification() {
-    const {newUser,notifications,setNotifications}=useContext(User)
+    const {newUser,notifications,setNotifications,vdata,setVdata}=useContext(User)
  // const [notifications, setNotifications] = useState([]);
   const [show,setShow]=useState(1)
-  console.log(newUser)
+  //console.log(newUser)
   const userId = newUser.userid; // Replace with your authentication logic
 
   useEffect(() => {
@@ -35,7 +35,19 @@ function Notification() {
 
       setNotifications((prevNotifications) => [notification, ...prevNotifications]);
     });
-
+    
+    socket.on('newcall', (data) => {
+      console.log(data)
+      const d = { myid: vdata.myid, remote: data.callid };
+      setVdata(d);
+      socket.emit('answer', { callid: vdata.myid, userid: data.remote });
+      localStorage.setItem('remote',data.callid);
+    });
+    socket.on('final', (data) => {
+      setVdata({ myid: vdata.myid, remote: data.callid });
+      localStorage.setItem('remote',data.callid);
+     // setPeerId(data.callid);
+    });
   }, []);
 
   const sendNotification = (message) => {

@@ -1,6 +1,6 @@
 
 import io from 'socket.io-client';
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext ,useRef} from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
 
@@ -226,6 +226,13 @@ fetch()
     function mesreq(){
         navigate(`/chatr/${id}`)
     }
+
+
+    const chatBoxRef = useRef(null);
+    useEffect(() => {
+        // Scroll to the bottom of the chat box whenever messages are updated
+        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+      }, [messages]);
     return (<>
         <section style={{ zIndex:2,backgroundColor: "#CDC4F9" }}>
             
@@ -324,7 +331,7 @@ fetch()
 
                                             style={{ position: "relative", height: 350 }}
                                         >
-                                            <div className="h-5/6 overflow-scroll">
+                                            <div ref={chatBoxRef} className="h-5/6 overflow-scroll">
 
                                                 {messages.map(item => {
                                                     //console.log(messages)

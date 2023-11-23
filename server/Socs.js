@@ -7,11 +7,15 @@ const Notification = require('./model/notifiSchema');
 const { areUsersConnected } = require("./controllers/chatController");
 const roomSchema = require("./model/roomSchema");
 const chatRSchema = require("./model/chatRSchema");
+const notifiSchema = require("./model/notifiSchema");
+
 let io
 function splitStringByUnderscore(str) {
   return str.split('_');
 }
-
+const myMap = new Map();
+const myMap1 = new Map();
+const myMap2 = new Map();
 function initSocket(server) {
   io = new Server(server, {
     cors: {
@@ -26,6 +30,13 @@ function initSocket(server) {
 
     socket.on('disconnect', () => {
       console.log("disconnected")
+      const ans=myMap2.get(socket.id);
+      myMap1.delete(ans);
+      if(!myMap2.has(socket.id)){
+        myMap2.delete(socket.id);
+      }
+      console.log("Online")
+      console.log(myMap1)
       // ... Handle user disconnection ...
     });
 
@@ -35,9 +46,11 @@ function initSocket(server) {
       console.log("cnxnm")
 
       //const user = activateUser(socket.id, name, room)
-
+console.log(name,socket.id)
       // Cannot update previous room users list until after the state update in activate user 
-
+      myMap1.set(name,socket.id);
+      myMap2.set(socket.id,name);
+      console.log(myMap1.get(name))
  
       socket.join(room)
 
@@ -83,7 +96,24 @@ if(ro.length>0){
           "receiver": receiver,
           "content": content
         });
+if(!myMap1.has(receiver)){
+  console.log("Send notification")
+  
+  try {
+    const newNotification = new notifiSchema({'user': receiver, 'message':content,'category':"message",'link':`/chat/${sender}` });
+    console.log(newNotification)
+  await newNotification.save();
+console.log(io)
+  // Broadcast the new notification to the target user
+  io.to(receiver).emit('newNotification', newNotification);
 
+  console.log(newNotification);
+ // res.status(200).json({ success: true, message: 'Notification sent successfully' });
+} catch (error) {
+  console.error('Error saving notification:', error.message);
+  //res.status(500).json({ success: false, message: 'Internal server error' });
+}
+}
         // Save the chat document to the database
         await chat.save();
 
@@ -121,6 +151,28 @@ if(ro.length>0){
       console.log("acc")
       // ... Handle activity ...
     });
+
+    socket.on('call',async (data) => {
+      console.log(data)
+
+      io.to(data.remote).emit('newcall',data);
+      // await sendNotification(data.remote, 'You have a new call', 'call', data.myid);
+      // ... Handle activity ...
+    });
+    socket.on('accept', (data) => {
+      console.log(data)
+      io.to(data.origin).emit('final',data);
+      // ... Handle activity ...
+    });
+socket.on('create',(data)=>{
+  myMap.set(data.myid, data.callid);
+  console.log(myMap.get(data.myid))
+  console.log(data)
+})
+
+
+
+
   });
 }
 function getIo() {

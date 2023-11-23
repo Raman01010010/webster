@@ -34,7 +34,7 @@ app.use("/user", require("./routes/user"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/upload", require("./routes/uploadPost"));
-
+app.use('/videoc',require('./routes/Video'))
 app.use("/job", require("./routes/jobRoutes"));
 
 app.use("/user1", require("./routes/userUpdate"));
@@ -46,6 +46,7 @@ app.use("/post", require("./routes/post"));
 
 app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));
+
 app.use(express.static("uploads"));
 app.use(verifyJWT);
 
