@@ -29,7 +29,18 @@ function Notification() {
       setNotifications((prevNotifications) => [notification, ...prevNotifications]);
     });
     
-    
+    socket.on('newcall', (data) => {
+      console.log(data)
+      const d = { myid: vdata.myid, remote: data.callid };
+      setVdata(d);
+      socket.emit('answer', { callid: vdata.myid, userid: data.remote });
+      localStorage.setItem('remote',data.callid);
+    });
+    socket.on('final', (data) => {
+      setVdata({ myid: vdata.myid, remote: data.callid });
+      localStorage.setItem('remote',data.callid);
+     // setPeerId(data.callid);
+    });
   }, []);
   const sendNotification = (message) => {
     socket.emit('sendNotificationtoone', { userId:'65492160c09f811600265617', message });

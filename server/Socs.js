@@ -7,6 +7,7 @@ const Notification = require('./model/notifiSchema');
 const { areUsersConnected } = require("./controllers/chatController");
 const roomSchema = require("./model/roomSchema");
 const chatRSchema = require("./model/chatRSchema");
+
 let io
 function splitStringByUnderscore(str) {
   return str.split('_');
@@ -123,10 +124,11 @@ if(ro.length>0){
       // ... Handle activity ...
     });
 
-    socket.on('call', (data) => {
+    socket.on('call',async (data) => {
       console.log(data)
 
       io.to(data.remote).emit('newcall',data);
+      // await sendNotification(data.remote, 'You have a new call', 'call', data.myid);
       // ... Handle activity ...
     });
     socket.on('accept', (data) => {

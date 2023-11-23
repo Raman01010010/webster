@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
 import { User } from '../context/User';
-import axios from '../api/axios';
+import axios, { axiosPrivate } from '../api/axios';
 import socket from '../services/socket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faMicrophone, faDesktop, faPhone, faVideoSlash } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ import { faVideo, faMicrophone, faDesktop, faPhone, faVideoSlash } from '@fortaw
 // ... your existing code ...
 function App() {
   const { vdata, setVdata, newUser } = useContext(User);
-  const { aid } = useParams();
+  const { aid,cid } = useParams();
 
   const [peer, setPeer] = useState(null);
   const [myStream, setMyStream] = useState();
@@ -26,7 +26,13 @@ const [scr,setScr]=useState(1)
   useEffect(() => {
     if (vdata.remote !== '') {
       setPeerId(vdata.remote);
+
     }
+    if(cid!=1){
+      setPeerId(cid)
+    }
+    const storedValue = localStorage.getItem('myKey');
+    
   }, [vdata.remote]);
 
   useEffect(() => {
@@ -151,9 +157,17 @@ const [scr,setScr]=useState(1)
     }
   }
 
-  const send = () => {
+  const send = async() => {
     setM(0)
+    try{
+      const re=await axios.post('/videoc/call', {"userid":aid,"callid":myPeerId,"myid":aid})
+      console.log(re)
+          }catch(error){
+            console.log(error)
+          }
     socket.emit('call', { myid: newUser.userid, callid: myPeerId, remote: aid });
+
+  
   };
 
   useEffect(() => {
@@ -172,11 +186,17 @@ const [scr,setScr]=useState(1)
       const d = { myid: vdata.myid, remote: data.callid };
       setVdata(d);
       socket.emit('answer', { callid: vdata.myid, userid: data.remote });
-      
+      localStorage.setItem('remote',data.callid);
+      console.log(data.callid)
+      if(data.callid)
+      setPeerId(data.callid);
+    setM(1)
     });
     socket.on('final', (data) => {
       setVdata({ myid: vdata.myid, remote: data.callid });
+      localStorage.setItem('remote',data.callid);
       setPeerId(data.callid);
+      
     });
     socket.on('ram', () => {
       connectToPeer();
@@ -249,6 +269,7 @@ const [scr,setScr]=useState(1)
       <FontAwesomeIcon icon={faVideo} className="mr-2" />
       Reconnect
     </button>}
+   
   {/* ... other buttons ... */}
 </div>
 

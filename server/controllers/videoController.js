@@ -9,8 +9,8 @@ const notifController = require('../controllers/notifController')
 const call = async (req, res) => {
     console.log(req.body)
     const { userid,callid,myid } = req.body;
-    const r5 = await notifController.sendNotification(userid, `Someone is calling you`
-    , `/videoc/${myid}`, callid, res)
+    const r5 = await notifController.sendNotification(userid, `${myid} is calling you`
+    , `/videoc/${myid}/${callid}`, callid, res)
 };
 
 
