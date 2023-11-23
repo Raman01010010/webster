@@ -9,6 +9,7 @@ import socket from '../services/socket';
 import NotifiButton from './NotifiButton';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import notificationSound from './notifications-sound-127856.mp3';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,6 +29,8 @@ function Notification() {
 
     // Listen for new notifications
     socket.on('newNotification', (notification) => {
+      const audio = new Audio(notificationSound);
+      audio.play();
       toast.success("New notification check it now");
 
       setNotifications((prevNotifications) => [notification, ...prevNotifications]);
