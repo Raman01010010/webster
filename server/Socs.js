@@ -5,6 +5,7 @@ const chatSchema = require("./model/chatSchema");
 const allowedOrigin = require('./config/allowedOrigin')
 const Notification = require('./model/notifiSchema');
 const { areUsersConnected } = require("./controllers/chatController");
+
 const roomSchema = require("./model/roomSchema");
 const chatRSchema = require("./model/chatRSchema");
 let io
@@ -15,7 +16,7 @@ function splitStringByUnderscore(str) {
 
 const emailToSocketIdMap = new Map();
 const socketidToEmailMap = new Map();
-
+const socketidToroom= new Map();
 function initSocket(server) {
   io = new Server(server, {
     cors: {
@@ -133,12 +134,23 @@ if(ro.length>0){
       console.log("joineddd")
       const { email, room } = data;
       console.log(room)
-      //emailToSocketIdMap.set(email, socket.id);
-     // socketidToEmailMap.set(socket.id, email);
-      io.to(room).emit("user:joined", { id: socket.id });
       socket.join(room);
-      io.to(socket.id).emit("room:join", {"i":"i"});
+      const socketidd = emailToSocketIdMap.get(room);
+      //emailToSocketIdMap.set(email, socket.id);
+     //socketidToRoomMap.set(room, socket.id);
+   
+     io.to(socket.id).emit("room:join", {"room":room});
+      io.to(room).emit("user:joined", { id: socket.id });
+      //io.emit("user:joined", { id: socket.id });
+     
     });
+
+
+
+
+
+
+    
     socket.on("user:call", ({ to, offer }) => {
       console.log(offer)
       io.to(to).emit("incomming:call", { from: socket.id, offer });

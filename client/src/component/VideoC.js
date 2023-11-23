@@ -1,11 +1,11 @@
 import React, { useEffect, useCallback, useState } from "react";
 import ReactPlayer from "react-player";
 import peer from "../services/Peer";
-
+import { useParams } from "react-router-dom";
 import socket from "../services/socket";
 
 const RoomPage = () => {
-  
+  const {roomId}=useParams()
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const [myStream, setMyStream] = useState();
   const [remoteStream, setRemoteStream] = useState();
@@ -13,6 +13,7 @@ const RoomPage = () => {
   const handleUserJoined = useCallback(({ email, id }) => {
     console.log(`Email ${email} joined room`);
     setRemoteSocketId(id);
+   // socket.emit("room:joinn", { room:roomId });
   }, []);
 
   const handleCallUser = useCallback(async () => {
@@ -111,40 +112,63 @@ const RoomPage = () => {
   ]);
 
   return (
-    <div>
-    <br/>
-    <br/>
-      <br/>
-      <br/>
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
-      {myStream && (
-        <>
-          <h1>My Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={myStream}
-          />
-        </>
-      )}
-      {remoteStream && (
-        <>
-          <h1>Remote Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={remoteStream}
-          />
-        </>
-      )}
+<>
+<div class="p-4 space-y-4">
+  <h1 class="text-3xl font-bold mb-4">Room Page</h1>
+  
+  <h4 class="text-lg">
+    {remoteSocketId ? "Connected" : "No one in room"}
+  </h4>
+
+  {myStream && (
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onClick={sendStreams}
+    >
+      Send Stream
+    </button>
+  )}
+
+  {remoteSocketId && (
+    <button
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      onClick={handleCallUser}
+    >
+      CALL
+    </button>
+  )}
+
+  {myStream && (
+    <div class="mb-4 border border-gray-300 rounded">
+      <h2 class="text-xl font-bold mb-2">My Stream</h2>
+      <div class="relative h-32 w-64 overflow-hidden">
+        <ReactPlayer
+          playing
+          muted
+          height="100%"
+          width="100%"
+          url={myStream}
+        />
+      </div>
     </div>
+  )}
+
+  {remoteStream && (
+    <div class="mb-4 border border-gray-300 rounded">
+      <h2 class="text-xl font-bold mb-2">Remote Stream</h2>
+      <div class="relative h-64 w-96 overflow-hidden">
+        <ReactPlayer
+          playing
+          muted
+          height="100%"
+          width="100%"
+          url={remoteStream}
+        />
+      </div>
+    </div>
+  )}
+</div>
+</>
   );
 };
 

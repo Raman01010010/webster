@@ -244,6 +244,7 @@ fetch()
         (e) => {
           e.preventDefault();
           socket.emit("room:join", { email, room });
+          console.log(room)
         },
         [email, room, socket]
       );
