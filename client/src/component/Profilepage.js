@@ -6,28 +6,38 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllPost from "./AllPost";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import Dropzone from "react-dropzone";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell as solidBell } from "@fortawesome/free-solid-svg-icons"; // Import solid bell
+import { faBellSlash as solidBellSlash } from "@fortawesome/free-solid-svg-icons"; // Import solid bell-slash
+
+import Button from "@mui/material/Button";
 
 const Profilepage = () => {
+  const [file, setFile] = useState(null);
+
   const [activeTab, setActiveTab] = useState("description");
   const { email } = useParams();
   const [editSkills, setEditSkills] = useState();
   const { newUser } = useContext(User);
   const navigate = useNavigate();
-
+  const [buttonColor, setButtonColor] = useState("inherit");
   const [saveskill, setSaveskill] = useState(false);
   const [deleteskill, setDeleteskill] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
 
   const axiosPrivate = useAxiosPrivate();
 
+  const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
+const [alert,setAlert]=useState([]);
   useEffect(() => {
     const fetchingData = async () => {
       try {
         const d = {
           email: email,
         };
-        const res = await axiosPrivate.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/connect/fetchingdata", d);
         setData(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -43,7 +53,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axiosPrivate.post("/addskill", d);
+      const res = await axiosPrivate.post("/connect/addskill", d);
 
       toast.success("Added Skill Successfully");
     } catch (err) {
@@ -60,7 +70,7 @@ const Profilepage = () => {
       otheruserEmail: otheruser,
     };
     try {
-      const res = await axiosPrivate.post("/endorseskill", d);
+      const res = await axiosPrivate.post("/connect/endorseskill", d);
       toast.success("Skill Endorsed Successfully");
     } catch (err) {
       console.log(err);
@@ -74,7 +84,7 @@ const Profilepage = () => {
       userEmail: newUseremail,
     };
     try {
-      const res = await axiosPrivate.post("/deleteskill", d);
+      const res = await axiosPrivate.post("/connect/deleteskill", d);
 
       toast.success("Skill Deleted Successfully");
     } catch (err) {
@@ -84,38 +94,44 @@ const Profilepage = () => {
     setDeleteskill(true);
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setProfileImage(file);
+  const handleDrop = (acceptedFiles) => {
+    setFile(acceptedFiles[0]);
+    console.log(file);
   };
 
-  const handleFileUpload = async () => {
+  const handleUpload = async () => {
     const formData = new FormData();
-    formData.append("profileImage", profileImage);
+    formData.append("file", file);
+    formData.append("email", newUser.email);
+    formData.append("xyz", "raman");
+    // Assuming userEmail is defined somewhere
 
-    const email = newUser.email
     try {
-      const res = await axiosPrivate.post("/uploadprofileimage", {formData,email}, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // Handle successful upload, e.g., update the UI or show a success message
-      toast.success("Profile Image Uploaded Successfully");
-    } catch (err) {
-      console.log(err);
-      toast.error("Error Uploading Profile Image");
+      const response = await axios.post(
+        "/connect/image",
+        formData,
+        { email: newUser.email },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log("File uploaded:", response.data);
+      console.log(response.data.filename);
+      setProfileImageFilename(response.data.filename);
+      // Handle the response as needed (e.g., store the URL in your database).
+    } catch (error) {
+      console.error("Upload failed:", error);
     }
   };
-
+  
+  console.log("viv" + profileImageFilename);
   const fetchingEndorse = async (email, skill) => {
     const d = {
       email: email,
       skill: skill,
     };
     try {
-      const res = await axiosPrivate.post("/fetchendorse", d);
+      const res = await axiosPrivate.post("/connect/fetchendorse", d);
       console.log("Endorsement data:", res.data);
       // Ensure this log statement is printed in the console
       navigate("/endorsepage", { state: { param1: res.data } });
@@ -236,45 +252,123 @@ const Profilepage = () => {
                 My Projects
               </div>
             </Link>
-
+            {
+              newUser.email===data.email&&
+<div>
             {/* File upload */}
-            {newUser.email === email && (
-              <>
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="mt-4"
-                />
-                <button
-                  onClick={handleFileUpload}
-                  className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
-                >
-                  Upload Profile Image
-                </button>
-              </>
+            <Dropzone onDrop={handleDrop}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()} className="dropzone">
+                  <input {...getInputProps()} />
+                  <p>Drop files here or click to select files</p>
+                </div>
+              )}
+            </Dropzone>
+            {file && (
+              <div>
+                <p>Selected file: {file.name}</p>
+                <button onClick={handleUpload}>Upload</button>
+              </div>
             )}
+
+</div>}
+
           </div>
         );
     }
   };
+  console.log("vi" + newUser.picture);
+  const t = `http://localhost:3500/${data.picture}`;
 
+  
+
+
+  useEffect(() => {
+    const fetchingData = async () => {
+      try {
+        const userId = newUser.userid; // Assuming userid is the user ID, adjust it accordingly
+        const res = await axiosPrivate.post("/connect/getalert", {userId} );
+        console.log("vivv"+res);
+        // Assuming the response structure is { alertingTo: [...array] }
+        console.log(res.data)
+        setAlert(res.data.alertingTo);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    fetchingData();
+  }, []); 
+
+
+  const handleBellClick = async () => {
+    try {
+      
+      const response = await axiosPrivate.post("/connect/bell", {
+        userId: newUser.userid, // Assuming userid is the user ID, adjust it accordingly
+        userEmail: data.email,
+      });
+  
+      // Check the response if needed
+      if (response.data.success) {
+        // If the server successfully processed the request
+        toast.success("Bell pressed successfully");
+      } else {
+        // If there was an issue on the server side
+        // Keep or revert the bell icon state to its previous value
+        toast.error("Failed to process the bell press");
+      }
+    } catch (error) {
+      // Handle any error that occurred during the request
+      console.error("Error pressing the bell:", error);
+      // Keep or revert the bell icon state to its previous value
+      toast.error("Error pressing the bell");
+    }
+  };
+  // console.log(alert);
+  console.log("vivek"+alert);
+  console.log(data._id);
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
         <div className="container px-5 py-24 mx-auto">
-        <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">  {/* Updated this line */}
+          <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">
+            {" "}
+            {/* Updated this line */}
             {/* Circular profile icon */}
             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
               <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
-                <img
-                  alt="profile"
-                  className="object-cover object-center w-full h-full"
-                  src={data.profileImage || "https://dummyimage.com/400x400"}
-                />
+                {newUser.picture !== "xx" ? (
+                  <img
+                    alt="profile"
+                    className="object-cover object-center w-full h-full"
+                    src={t}
+                  />
+                ) : (
+                  <p>No profile image available</p>
+                )}
               </div>
+
+                     
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {data.username}
               </h2>
+              <Button
+                color={buttonColor}
+                component={Link}
+                onClick={handleBellClick}
+              >
+               {
+                
+                alert.includes(data._id) ? (
+  <FontAwesomeIcon icon={solidBell} />
+) : (
+  <FontAwesomeIcon icon={solidBellSlash} />
+)}
+
+              </Button>
+             
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
                 {data.name}
               </h1>
@@ -288,6 +382,7 @@ const Profilepage = () => {
                   Description
                 </button>
                 <button
+
                   onClick={() => handleTabClick("reviews")}
                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
                     activeTab === "reviews" &&
@@ -308,7 +403,6 @@ const Profilepage = () => {
               </div>
               {renderContent()}
             </div>
-        
           </div>
         </div>
       </section>

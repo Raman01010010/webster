@@ -13,13 +13,43 @@ const create = async (req, res) => {
   console.log("Recipient Email:", recipientEmail);
 
   try {
-    const re = await pro.save();
-    console.log(re);
+    // console.log(re);
     // Retrieve users from the user_ws schema who have matching skills
-    const users = await user_w.find({ skills: { $in: skills } });
-    const emailArray = users.map((user) => user.email);
-    console.log(emailArray);
+    // const usersWithMatchingSkills = await user_w.find({ skills: { $in: skills } });
+    // const alertedUsers = Array.from(new Set([...skills, ...usersWithMatchingSkills.map(user => user.alertedBy)]));
+    // const users = await user_w.find({ _id: { $in: alertedUsers } });
 
+
+
+    const denewla=await user_w.find({_id:req.body.jobberid}).populate('alertedBy')
+    const alby=denewla[0].alertedBy
+console.log(denewla)
+console.log(alby)
+    const usersWithMatchingSkills = await user_w.find({ skills: { $in: skills } });
+    console.log(usersWithMatchingSkills);
+//const alertedUsers = alby.map(user => user._id);
+//console.log(alertedUsers);
+
+// const validAlertedUsers = alertedUsers.filter(alertedUser => mongoose.Types.ObjectId.isValid(alertedUser));
+const uniqueValidAlertedUsers = Array.from(new Set([...skills, ...alby]));
+console.log(uniqueValidAlertedUsers);
+console.log("bimnnif")
+
+
+
+const idar=uniqueValidAlertedUsers.map(item=>{
+  if(item._id)
+  return(
+    {
+    _id:item._id}
+  )
+})
+console.log(idar);
+const users = await user_w.find({ _id: { $in: idar } });
+    const emailArray = users.map((user) => user.email);
+    // console.log(emailArray);
+    console.log(emailArray);
+    
     await sendEmail("", req.body, recipientEmail, "", recipientEmail);
 
     for (const email of emailArray) {
@@ -28,6 +58,7 @@ const create = async (req, res) => {
     for (const user of users) {
       await sendNotification(user._id, 'New job posted', '', 'job', res);
     }
+    const re = await pro.save();
 
     res.status(200).send("success");
   } catch (error) {
@@ -42,9 +73,13 @@ const showjob = async (req, res) => {
     const bType = req.body.locationtypes;
     const cType = req.body.locationonsite;
     const dType = req.body.company;
-    const eType =req.body.skill;
+    const eType = req.body.skill;
+
+    const page = req.body.page || 1;
+    const pageSize = 2; // Adjust the page size as needed
+
     let filter = {};
-    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0 ||eType.length>0) {
+    if (aType.length > 0 || bType.length > 0 || cType.length > 0 || dType.length > 0 || eType.length > 0) {
       filter = {
         $or: [
           { jobtype: { $in: aType } },
@@ -56,11 +91,15 @@ const showjob = async (req, res) => {
       };
     }
 
-    let sortedJobs = await job.find(filter);
+    let sortedJobs;
 
-    // Sort jobs based on the size of the 'applicants' field in descending order
     if (req.body.trend === 1) {
-      sortedJobs = sortedJobs.sort((jobA, jobB) => jobB.applicants.length - jobA.applicants.length);
+      // Fetch trending jobs without pagination
+      sortedJobs = await job.find(filter).sort({ applicants: -1 });
+    } else {
+      // Fetch paginated jobs without sorting
+      const startIndex = (page - 1) * pageSize;
+      sortedJobs = await job.find(filter).sort({ /* your sorting criteria */ }).skip(startIndex).limit(pageSize);
     }
 
     // Find jobs in trending
@@ -91,8 +130,6 @@ const showjob = async (req, res) => {
     res.status(400).send({ error: "Error fetching jobs." });
   }
 };
-
-
 
 const myjob = async (req, res) => {
     try {
@@ -260,27 +297,7 @@ const Jobcomment = async (req, res) => {
       ],
     }).sort({ timestamp: 1 }); // Adjust the sorting based on your needs
 
-    // Separate messages based on sender and receiver
-    // const senderMessages = allMessages.filter(message => message.senderid === senderid);
-    // const receiverMessages = allMessages.filter(message => message.receiverid === receiverid);
-
-    // Include timestamp in each message
-    // const formatMessages = (messages) => {
-    //   return messages.map(message => {
-    //     return {
-    //       text: message.text,
-    //       senderid: message.senderid,
-    //       receiverid: message.receiverid,
-    //       timestamp: message.timestamp,
-    //     };
-    //   });
-    // };
-
-    // const formattedSenderMessages = formatMessages(senderMessages);
-    // const formattedReceiverMessages = formatMessages(receiverMessages);
-
-    // console.log(formattedSenderMessages);
-    // console.log(formattedReceiverMessages);
+   
 
     res.status(200).json({
       success: true,
@@ -305,27 +322,7 @@ const getJobComments = async (req, res) => {
       ],
     }).populate('senderid').populate('receiverid').sort({ timestamp: 1 }); // Adjust the sorting based on your needs
 
-    // Separate messages based on sender and receiver
-    // const senderMessages = allMessages.filter(message => message.senderid === senderid);
-    // const receiverMessages = allMessages.filter(message => message.receiverid === senderid);
-
-    // // Include timestamp in each message
-    // const formatMessages = (messages) => {
-    //   return messages.map(message => {
-    //     return {
-    //       text: message.text,
-    //       senderid: message.senderid,
-    //       receiverid: message.receiverid,
-    //       timestamp: message.timestamp,
-    //     };
-    //   });
-    // };
-
-    // const formattedSenderMessages = formatMessages(senderMessages);
-    // const formattedReceiverMessages = formatMessages(receiverMessages);
-
-    // console.log(formattedSenderMessages);
-    // console.log(formattedReceiverMessages);
+   
 
     res.status(200).json({
       success: true,
@@ -337,6 +334,30 @@ const getJobComments = async (req, res) => {
     res.status(400).send("Failed to save the comment to the database");
   }
 };
+const Singlejob = async (req, res) => {
+  const jobId = req.body.jobId;
+  const userId=req.body.userId;
+console.log(jobId)
+  try {
+    // Assuming you have a Job model or a database query to retrieve job data
+    const jobData = await job.findById(jobId); // Adjust this based on your data model
+console.log(jobData);
+const hasApplied = jobData.applicants.includes(userId);
+    if (!jobData) {
+      // If no job is found with the given ID, send a 404 response
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    // If job data is found, send it as a response
+    res.status(200).json({ data: jobData ,hasApplied:hasApplied});
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error("Error fetching job data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = Singlejob;
 
 // locationonsite
-module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted,filterskill,Jobcomment,getJobComments}
+module.exports={create,showjob,myjob,Application,location,company,myjobapplication,FormSubmitted,filterskill,Jobcomment,getJobComments,Singlejob}

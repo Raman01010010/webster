@@ -58,6 +58,14 @@ function App() {
       skill:[],
       jobberid: newUser.userid // Jobber id aur user id same hai dhyan dena koi antar nii hai
     })
+    const [showSnackbar, setShowSnackbar] = React.useState(false);
+    const openSnackbar = () => {
+      setShowSnackbar(true);
+    };
+  
+    const closeSnackbar = () => {
+      setShowSnackbar(false);
+    };
     const[sh,setSh]=React.useState(0)
     const [notifications, setNotifications] = React.useState([]);
     useEffect(() => {
@@ -72,7 +80,7 @@ function App() {
     console.log("111"+newUser)
   return (
     <>
-    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2}}>
+    <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2, showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar}}>
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}

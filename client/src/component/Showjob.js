@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { User } from "../context/User";
 
 import {
   Card,
@@ -26,7 +25,9 @@ import {
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import moment from "moment"; // Import the moment library for date formatting
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import MenuIcon from "@mui/icons-material/Menu";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -36,6 +37,7 @@ import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Hidden } from "@mui/material";
+import { User } from "../context/User";
 
 const locationTypes = ["On-site", "Hybrid", "Remote"];
 const employmentTypes = [
@@ -49,7 +51,10 @@ const employmentTypes = [
 
 const Showjob = () => {
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
+  const [currentPage, setCurrentPage] = useState(1);
+  const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
 
+  
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -57,6 +62,7 @@ const Showjob = () => {
   const userid = newUser.userid;
   const [compa, setCompa] = useState([]);
   const [ski, setSki] = useState([]);
+const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState({
     jobtype: [],
@@ -120,7 +126,6 @@ const Showjob = () => {
   const handleFilterDialogOpen = () => {
     setOpenFilterDialog(true);
   };
- 
   const handletrending = async () => {
     try {
       // Toggle isTrending first
@@ -142,30 +147,82 @@ const Showjob = () => {
   
   
   console.log("showjob"+newUser.userid);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Send data as the request body
-        const response = await axios.post("/job/showjob", data);
-
-        // Assuming 'hasApplied' is a boolean property in each job object
+        const response = await axios.post("/job/showjob", {
+          ...data,
+          page: currentPage,
+        });
+  
         const jobsWithApplied = response.data.data.map((job) => ({
           ...job,
           hasApplied: job.hasApplied,
         }));
-
-        setJobData(jobsWithApplied);
+  
+        // If it's the first page, replace the existing data; otherwise, append the new data
+        setJobData((prevData) =>
+          currentPage === 1 ? jobsWithApplied : [...prevData, ...jobsWithApplied]
+        );
       } catch (error) {
         console.error("Error fetching job data: ", error);
       }
     };
-    
+  
     fetchData();
-  }, [data]);
+  }, [data, currentPage]);
+  const handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+  
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+  
+    const windowBottom = windowHeight + window.pageYOffset;
+  
+    if (windowBottom >= docHeight - 1) {
+      // You can adjust the threshold (e.g., docHeight - 100) to start fetching data a bit earlier
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+  
+  const handleShareOnWhatsApp = (jobId) => {
+    
+    const jobLink = `${window.location.origin}/singlejob/${jobId}`; // Construct the job link
 
+    // Construct the WhatsApp share link
+    const whatsappLink = `whatsapp://send?text=${encodeURIComponent(jobLink)}`;
+
+    // Open the WhatsApp link in a new window or redirect the user to WhatsApp
+    window.open(whatsappLink, "_blank");
+    setShowSnackbar(true);
+
+  };
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
+
+  useEffect(() => {
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+  
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
   return (
-    <div className="flex-grow flex flex-col items-center justify-center">
+    <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...	">
       <Fab
         color="primary"
         aria-label="add"
@@ -191,18 +248,21 @@ const Showjob = () => {
         <i class="fa-brands fa-searchengin"></i>
       </Fab>
       {jobData.map((job, index) => (
+        <Link to={`/singlejob/${job._id}`}>
         <Card
           key={index}
           sx={{
             maxWidth: 400,
             margin: "16px",
             transition: "transform 0.2s",
+            backgroundColor: "rgb(254 215 170)",
+
             "&:hover": {
               transform: "scale(1.05)",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             },
-            backgroundColor: "#F0F6F1", // Add your desired background color here
           }}
+
         >
           <CardContent>
             <Typography
@@ -320,15 +380,31 @@ const Showjob = () => {
                       >
                         Apply Now
                       </Button>
+                      
                     </Link>
+                   
                     
                   </>
                 )}
+                <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleShareOnWhatsApp(job._id)}
+              sx={{
+                mt: 2,
+                backgroundColor: "#1976D2",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              Share
+            </Button>
                 
               </>
             )}
           </CardContent>
         </Card>
+      </Link>
       ))}
       <Dialog open={openFilterDialog} onClose={handleFilterDialogClose}>
         <DialogTitle>Filter</DialogTitle>
@@ -473,6 +549,20 @@ const Showjob = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Job Shared Successfully!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };

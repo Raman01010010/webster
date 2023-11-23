@@ -39,7 +39,15 @@ const userSchema = new Schema({
     education:[{org:String,degree:String,time:String}],
     skills:{type:Array},
     projects:[{name:String,tech:Array,colab:Array,link:String}],
-    connection:[String]
+    connection:[String],
+    alertedBy: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user_w'
+    }],
+    alertingTo: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user_w'
+    }]
 });
 
 module.exports = mongoose.model('user_w', userSchema);

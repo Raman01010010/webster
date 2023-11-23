@@ -57,7 +57,7 @@ const handleLogin = async (req, res) => {
         // Send authorization roles and access token to user
         res.json({ 
             //roles,
-            "username":foundUser.username,"userid":foundUser._id,"email":foundUser.email, 
+            "username":foundUser.username,"userid":foundUser._id,"email":foundUser.email,'picture':foundUser.picture, 
             accessToken });
 
     } else {

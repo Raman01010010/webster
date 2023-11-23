@@ -18,7 +18,7 @@ const Otherusers = () => {
         otheruser: otheruser,
       };
 
-      const res = await axios.post("/api/sendconnect", data);
+      const res = await axios.post("/connect/api/sendconnect", data);
       toast.success("Connection request sent successfully");
     } catch (error) {
       // Handle errors
@@ -34,7 +34,7 @@ const Otherusers = () => {
         otheruser: otheruser,
       };
 
-      const res = await axios.post("/api/senddelete", data);
+      const res = await axios.post("/connect/api/senddelete", data);
       toast.success("Delete Connection request sent successfully");
     } catch (error) {
       // Handle errors
@@ -50,7 +50,7 @@ const Otherusers = () => {
         otheruser: otheruser,
       };
 
-      const res = await axios.post("/api/sendMessageRequest", data);
+      const res = await axios.post("/connect/api/sendMessageRequest", data);
       toast.success("Message request sent successfully");
     } catch (error) {
       // Handle errors
@@ -65,7 +65,7 @@ const Otherusers = () => {
         const d = {
           email:newUser.email
         }
-        const res = await axios.post("/getuser",d);
+        const res = await axios.post("/connect/getuser",d);
         setOtheruser(res.data);
       } catch (error) {
         console.error("Error fetching users:", error);

@@ -26,7 +26,7 @@ const Addproject = () => {
       };
   
       try {
-        const res = await axiosPrivate.post("/addproject", projectData);
+        const res = await axiosPrivate.post("/connect/addproject", projectData);
         console.log(res.data);
   
         toast.success('Project added successfully', {
