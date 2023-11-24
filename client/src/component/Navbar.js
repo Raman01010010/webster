@@ -15,7 +15,9 @@ import {
   faEnvelope,
   faMoneyCheckAlt,
   faUser,
+  faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { useMediaQuery, Menu, MenuItem } from "@mui/material";
 
 const Navbar = () => {
@@ -77,20 +79,12 @@ const Navbar = () => {
           </Typography>
           {isLargeScreen ? (
             <>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/"
-              >
+              <Button color="inherit" component={Link} to="/home2">
                 <FontAwesomeIcon icon={faHome} style={{ marginRight: "5px" }} />
                 Home
               </Button>
-              
-              <Button
-                color="inherit"
-                component={Link}
-                to="/chat"
-              >
+
+              <Button color="inherit" component={Link} to="/about">
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   style={{ marginRight: "5px" }}
@@ -98,18 +92,18 @@ const Navbar = () => {
                 About Us
               </Button>
               <Button
-                color="inherit"
-                component={Link}
-                to="/chat"
-              >
-                <FontAwesomeIcon
-                  icon={faEnvelope}
-                  style={{ marginRight: "5px" }}
-                />
-                Login
-              </Button>
-                    
-             
+  color="inherit"
+  component={Link}
+  to="/signin"
+>
+  <FontAwesomeIcon
+    icon={faSignInAlt}
+    style={{ marginRight: "5px" }}
+  />
+  Login
+</Button>
+
+
             </>
           ) : (
             <>
@@ -117,29 +111,38 @@ const Navbar = () => {
                 color="inherit"
                 style={{ marginRight: "20px" }}
                 component={Link}
-                to="/"
+                to="/home2"
               >
                 <FontAwesomeIcon icon={faHome} />
               </IconButton>
-             
+
               <IconButton
                 color="inherit"
                 style={{ marginRight: "20px" }}
                 component={Link}
-                to="/chat"
+                to="/about"
               >
                 <FontAwesomeIcon icon={faEnvelope} />
               </IconButton>
-              
+              <IconButton
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+                to="/signin"
+              >
+                <FontAwesomeIcon icon={faSignInAlt} />
+              </IconButton>
             </>
           )}
         </Toolbar>
       </AppBar>
-      <div style={{ paddingTop: "9vh" /* Adjust the value based on your design */ }}>
-  <Container1 />
-</div>
-
-      
+      <div
+        style={{
+          paddingTop: "9vh" /* Adjust the value based on your design */,
+        }}
+      >
+        <Container1 />
+      </div>
     </>
   );
 };

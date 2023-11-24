@@ -487,6 +487,7 @@ exports.searchname = async (req, res) => {
         { username: regex },   // Query criteria
         "username email"      // Projection
       );
+    
     // Extract usernames from the matchingUsers array
     const matchedUsernames = matchingUsers.map((user) => ({
       username: user.username,

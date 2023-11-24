@@ -21,7 +21,12 @@ const SingleCard = () => {
             padding-bottom: 2rem;
             box-sizing: border-box;
           }
-
+          .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+          }
           .card {
             background: #191c29;
             width: var(--card-width);
@@ -33,6 +38,7 @@ const SingleCard = () => {
             align-items: center;
             text-align: center;
             display: flex;
+
             font-size: 1.5em;
             color: rgb(88 199 250 / 0%);
             cursor: pointer;
@@ -109,7 +115,7 @@ const SingleCard = () => {
         `}
       </style>
 
-      <div className="flex items-center justify-around space-x-4">
+      <div className="flex items-center justify-around space-x-4" style={{ flexWrap: 'wrap', gap: '1rem' }}>
         <div className="card">
           <div className="card-info">
             <img
@@ -121,6 +127,7 @@ const SingleCard = () => {
             <p>Full Stack Developer</p>
           </div>
         </div>
+        
         <div className="card">
           <div className="card-info">
             <img
@@ -147,6 +154,7 @@ const SingleCard = () => {
       <a href="https://mythrillfiction.com/" target="_blank" rel="noopener noreferrer">
         Visit Mythrill
       </a>
+       
     </>
   );
 };

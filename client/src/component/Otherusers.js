@@ -121,15 +121,16 @@ const Otherusers = () => {
                               ? "Connected"
                               : "Send Request"}
                           </button>
-
+                          <a href={`/chat/${element._id}`}>
                           <button
-                            onClick={() =>
-                              handleMessageRequest(newUser.email, element.email)
-                            }
+                            // onClick={() =>
+                            //   handleMessageRequest(newUser.email, element.email)
+                            // }
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                           >
                             Send Message
-                          </button>
+                          </button>  
+                          </a>
                         </div>
                       </div>
                     </div>

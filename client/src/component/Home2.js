@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { Element } from 'react-scroll';
 import { motion } from 'framer-motion';
 import img1 from "./pexels-buro-millennial-1438081.jpg";
-import img2 from "./pexels-fauxels-3184430.jpg";
+import img2 from "./pexels-anna-shvets-4226140.jpg";
+import img3 from "./pexels-lukas-590016 (1).jpg"
 import 'animate.css/animate.css';
 import { useInView } from 'react-intersection-observer';
-
+import About from "./AboutUs"
+import Footer from "./Footer"
 const Home2 = () => {
   const pageStyle = {
-    background: 'linear-gradient(to right, violet, indigo)',
+    background: '#212534',
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
@@ -34,30 +36,30 @@ const Home2 = () => {
   const [isScrollingIn1, setIsScrollingIn1] = useState(true);
   const [isScrollingIn2, setIsScrollingIn2] = useState(true);
   const [isScrollingIn3, setIsScrollingIn3] = useState(true);
-  
+  const [thresholdRange1, thresholdRange2] = [0, 250];
+const [thresholdRange3, thresholdRange4] = [200, 550];
+const [thresholdRange5, thresholdRange6] = [600, 900];
+
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-
-      const threshold1 = 200;
-      const threshold2 = 400;
-      const threshold3 = 850;
-
-      if (offset < threshold1 && !isScrollingIn1) {
+  
+      if (offset >= thresholdRange1 && offset < thresholdRange2 && !isScrollingIn1) {
         setIsScrollingIn1(true);
-      } else if (offset >= threshold1 && isScrollingIn1) {
+      } else if ((offset < thresholdRange1 || offset >= thresholdRange2) && isScrollingIn1) {
         setIsScrollingIn1(false);
       }
-
-      if (offset < threshold2 && !isScrollingIn2) {
+  
+      if (offset >= thresholdRange3 && offset < thresholdRange4 && !isScrollingIn2) {
         setIsScrollingIn2(true);
-      } else if (offset >= threshold2 && isScrollingIn2) {
+      } else if ((offset < thresholdRange3 || offset >= thresholdRange4) && isScrollingIn2) {
         setIsScrollingIn2(false);
       }
-
-      if (offset < threshold3 && !isScrollingIn3) {
+  
+      if (offset >= thresholdRange5 && offset < thresholdRange6 && !isScrollingIn3) {
         setIsScrollingIn3(true);
-      } else if (offset >= threshold3 && isScrollingIn3) {
+      } else if ((offset < thresholdRange5 || offset >= thresholdRange6) && isScrollingIn3) {
         setIsScrollingIn3(false);
       }
     };
@@ -70,6 +72,7 @@ const Home2 = () => {
   }, [isScrollingIn1, isScrollingIn2, isScrollingIn3]);
 
   return (
+    <>
     <Element name="home2">
       <div style={pageStyle}>
         <div className="text-center text-white p-4">
@@ -87,7 +90,7 @@ const Home2 = () => {
             </Link>
           </div>
           <div className="space-y-8">
-            <motion.div className="flex items-center p-4 animate__animated animate__fadeInRight">
+            <motion.div className="flex items-center p-4 animate__animated animate__fadeInRight ">
               <motion.img
                 ref={ref1}
                 src={img1}
@@ -97,20 +100,18 @@ const Home2 = () => {
                 animate={inView1 && isScrollingIn1 ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 1 }}
               />
-              <div className="flex-1">
-                <h2 className="text-xl mb-4">
-                  Build your professional narrative seamlessly with our Resume Builder. Craft customized resumes, showcase your skills, and make a lasting impression. Elevate your career journey with ease and precision using our intuitive and powerful resume-building feature.
-                </h2>
-                <p>Data 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p>Data 2: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div className="flex-1 ">
+              <h1 className="text-4xl	">Your Carrear,Our Responsibilty</h1>
+
+                <p>"Welcome to BeBop, your professional hub for networking, career growth, and skill showcase. Connect with professionals, build your digital resume, and explore opportunities in a vibrant community. Elevate your career journey with us!"</p>
               </div>
             </motion.div>
             <motion.div className="flex items-center p-4 animate__animated animate__fadeInLeft">
               <div className="flex-1">
-                <h2 className="text-xl mb-4">
+            <h1 className="text-6xl	">Video Chat</h1>
+                <p className="text-xl mb-4">
                   Connect face-to-face effortlessly with our Video Chat feature. Seamlessly conduct virtual meetings, interviews, or networking sessions. Experience the power of real-time communication, fostering meaningful connections in a digital world.
-                </h2>
-                <p>Data 3: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </p>
               </div>
               <motion.img
                 ref={ref2}
@@ -125,7 +126,7 @@ const Home2 = () => {
             <motion.div className="flex items-center p-4 animate__animated animate__fadeInRight">
               <motion.img
                 ref={ref3}
-                src={img1}
+                src={img3}
                 alt="Image 3"
                 className="w-2/5 rounded-lg mr-4"
                 initial={{ opacity: 0, x: 50 }}
@@ -133,14 +134,25 @@ const Home2 = () => {
                 transition={{ duration: 1 }}
               />
               <div className="flex-1">
-                <p>Data 4: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                <p>Data 5: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <h1 className="text-6xl	">Resume Builder</h1>
+
+                <p>                  Build your professional narrative seamlessly with our Resume Builder. Craft customized resumes, showcase your skills, and make a lasting impression. Elevate your career journey with ease and precision using our intuitive and powerful resume-building feature.
+</p>
               </div>
             </motion.div>
           </div>
         </div>
       </div>
     </Element>
+   
+    <div style={{ padding: '10vh' }}>
+  <About />
+</div>
+<div style={{ padding: '10vh' }}>
+  <Footer />
+</div>
+
+    </>
   );
 };
 

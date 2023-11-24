@@ -13,6 +13,7 @@ import Otherusers from "./Otherusers";
 import Pending from "./Pending";
 import Persist from "./Persist";
 import AboutUs from "./AboutUs";
+import Footer from "./Footer";
 export default function Container1(){
     return(<>
     <Persist/>
@@ -23,6 +24,7 @@ export default function Container1(){
           <Route path="/otp" element={<><Otp/></>} />
           <Route path="/home2" element={<><Home2/></>} />
           <Route path="/about" element={<><AboutUs/></>} />
+          <Route path="/footer" element={<><Footer/></>} />
 
     </Routes>
 
