@@ -39,8 +39,12 @@ const Formsubmit = () => {
   return (
     <div className="flex items-center justify-center h-full mt-10">
       {myapp.map((applicant, index) => (
-        <div key={index} className="max-w-lg mx-auto bg-white rounded-md overflow-hidden shadow-md my-4">
-          <div className="bg-cyan p-4">
+        <div
+    key={index}
+    className={`max-w-lg mx-auto rounded-md overflow-hidden shadow-md my-4 ${
+      applicant.accepted==true ? 'bg-green-300' : 'bg-cyan-300'
+    }`}
+  >          <div className="bg-cyan p-4">
             <h3 className="text-lg font-semibold mb-2">Name: {applicant.name}</h3>
             <p>Email: {applicant.email}</p>
             <p>Phone: {applicant.phone}</p>

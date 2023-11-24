@@ -41,7 +41,10 @@ const profileSchema = new Schema({
         ref: 'job'
       },
 
-      
+      accepted: {
+        type: Boolean,
+        default: false,
+      },
       userID:{
         type:String
       }

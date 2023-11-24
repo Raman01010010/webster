@@ -39,6 +39,8 @@ const englishlevel=[
 const Application = () => {
   const { jobId } = useParams();
   const [myapp, setMyapp] = useState([]);
+    const [acceptedApplicants, setAcceptedApplicants] = useState([]);
+
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   const [data,setData]=useState({
     skill:[],
@@ -100,6 +102,37 @@ const Application = () => {
       alert("Failed to post job or send email. Please try again.");
     }
   };
+  const handleAcceptanceToggle = async (applicationId) => {
+    try {
+      const response = await axios.post("/job/accept", {
+        applicationId: applicationId,
+        jobid: jobId,
+      });
+  
+      // Check the status code of the response
+      if (response.status === 200) {
+        // Successful acceptance
+        console.log("Candidate accepted successfully");
+        // You can display a success message or perform other actions
+      } else {
+        // Handle other status codes (e.g., 400, 404, 500)
+        console.error(`Error accepting candidate. Status: ${response.status}`);
+        // Display an error message or take appropriate actions
+      }
+    } catch (error) {
+      console.error("Error accepting the candidate: ", error);
+      // Display an error message or take appropriate actions
+    }
+  };
+  const handleAcceptAll = async () => {
+    // Traverse the myapp array
+    myapp.forEach(async (applicant) => {
+      // Call handleAcceptanceToggle for each applicant
+      await handleAcceptanceToggle(applicant._id);
+    });
+  };
+  
+  console.log("viv");
   return (
     <>
       <button onClick={handleShowResume} style={{ color: '#1EB9E5', display: 'flex', alignItems: 'center',marginTop:'100px' }}>
@@ -118,13 +151,25 @@ const Application = () => {
       >
         <i class="fa-solid fa-filter"></i>
       </Fab>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-hidden">
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={handleAcceptAll}
+        sx={{
+          position: "fixed",
+          top: "60px", // Adjust the bottom value as needed
+          right: "20px", // Adjust the right value as needed
+        }}
+      >
+        Accept All
+      </Fab>
+      <div className="flex items-center justify-center h-full mt-10">
     
         {myapp.map((applicant, index) => (
           <div
             key={index}
             id={`card-${applicant._id}`}
-            className={`card transition-transform transform bg-yellow-300`}
+            className={`card transition-transform transform bg-cyan-300`}
             style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
           >
             <div className="bg-cyan p-4 rounded-lg shadow-md">
@@ -156,10 +201,32 @@ const Application = () => {
               <input
                 type="text"
                 id="location"
-                className="border p-2 mt-2 focus:outline-none"
+                className="border p-2 mt-2 focus:outline-none w-full"
+                placeholder="Add a comment..."
               />
               </Link>
             </div>
+            <button
+          onClick={() => handleAcceptanceToggle(applicant._id)}
+          className={`bg-green-500 px-4 py-2 rounded-md ${
+            acceptedApplicants.includes(applicant._id)
+              ? 'text-white' // Apply styles for accepted applicants
+              : 'text-black' // Apply styles for non-accepted applicants
+          }`}
+        >
+          {
+  applicant.accepted ? (
+    <button onClick={() => handleAcceptanceToggle(applicant._id)}>
+      Accepted
+    </button>
+  ) : (
+    <button onClick={() => handleAcceptanceToggle(applicant._id)}>
+      Accept
+    </button>
+  )
+}
+
+        </button>
           </div>
         ))}
       </div>
