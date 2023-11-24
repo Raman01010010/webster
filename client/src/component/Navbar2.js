@@ -62,7 +62,7 @@ async function handleLogout() {
   // Perform any additional logout logic if needed
 
   // Clear all cookies
-  clearAllCookies();
+  //clearAllCookies();
   console.log(newUser.userid)
   try {
     
