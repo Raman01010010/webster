@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useState, useEffect, useContext ,useRef} from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
-
+import VideoChatIcon from '@mui/icons-material/VideoChat';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -428,12 +428,12 @@ fetch()
                                             </div>
                                         </div>
                                         <div className="relative mb-4">
-
+                                        <p className='flex'>
                                         <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()} className="dropzone">
             <input {...getInputProps()} />
-            <p></p>
+            
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
       <Fab color="primary" aria-label="add">
         <ImageIcon />
@@ -450,8 +450,15 @@ fetch()
           <button onClick={handleUpload}>Upload</button>
         </div>
       )}
-                                    
-                                            <label htmlFor="email" className="leading-7 text-sm text-gray-400">
+      <a href={`/videoc/${id}/1`}>
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+      <Fab color="primary" aria-label="add">
+        <VideoChatIcon />
+      </Fab>
+     
+    </Box>
+    </a>
+    </p>                                       <label htmlFor="email" className="leading-7 text-sm text-gray-400">
                                                 Message
                                             </label>
 
