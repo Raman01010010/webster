@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const dotenv = require('dotenv');
 dotenv.config(); // Load environment variables from .env file
-
+const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../model/User');
 
@@ -14,7 +14,11 @@ async function getUserData({access_token,refreshToken}) {
 
 
   const dataEmail = data?.email; // Assuming data is an object with an email property
-
+  const rtk = jwt.sign(
+    { "email": dataEmail },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: '1d' }
+);
   // Try to find a user with the given email
   const existingUser = await User.findOne({ email: dataEmail });
   
@@ -23,27 +27,25 @@ async function getUserData({access_token,refreshToken}) {
     const newUser = new User({
       name: data?.name,
       email: dataEmail,
-      username: dataEmail,
+      username: data?.email,
       picture: data?.picture,
       pwd: access_token,
-      refreshToken: refreshToken
+      refreshToken: rtk,
     });
   
     await newUser.save();
     console.log('New user created:', newUser);
   
     // Store the user ID in the cookie
-    res.cookie('useri', newUser._id, { maxAge: 900000 });
+  
   } else {
     // If the user exists, update the user's information
     const updatedUser = await User.findOneAndUpdate(
       { email: dataEmail },
       {
         $set: {
-          name: data?.name,
-          picture: data?.picture,
-          pwd: existingUser.pwd,
-          refreshToken: refreshToken
+          
+          refreshToken: rtk,
         }
       },
       { new: true } // Return the updated user, not the original user
@@ -54,6 +56,7 @@ async function getUserData({access_token,refreshToken}) {
     // Store the user ID in the cookie
    // res.cookie('useri', updatedUser._id, { maxAge: 900000 });
   }
+  return rtk;
   
 }
 
@@ -88,9 +91,11 @@ router.get('/', async function (req, res, next) {
  
   const r1= await getUserData({access_token:oAuth2Client.credentials.access_token,refreshToken:oAuth2Client.credentials.refresh_token});
     console.log('raman',r1)
+    console.log(r1)
    // res.cookie('gwt',oAuth2Client.credentials.access_token , { maxAge: 900000, httpOnly: true }); // Adjust options as needed
-  res.cookie('gwtr',oAuth2Client.credentials.refesh_token , { maxAge: 900000, httpOnly: true });
-  res.redirect(303,`http://localhost:3000/google/${oAuth2Client.credentials.access_token}`);
+   res.cookie('jwt',r1, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
+   res.redirect(303, `http://127.0.0.1:3000/post/`);
+   
   } catch (err) {
     console.log('Error logging in with OAuth2 user', err);
   }

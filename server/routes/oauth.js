@@ -10,7 +10,7 @@ const User = require('../model/User');
 
 /* GET users listing. */
 router.post('/', async function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
+  res.header("Access-Control-Allow-Origin", 'http://127.0.0.1:3000');
   res.header("Access-Control-Allow-Credentials", 'true');
   res.header("Referrer-Policy","no-referrer-when-downgrade");
   const redirectURL = 'http://127.0.0.1:3500/oauth';
@@ -36,7 +36,7 @@ console.log(authorizeUrl)
 router.post('/get',async(req,res)=>{
     const refreshToken = req.body.refreshToken;
     console.log(refreshToken)
-    const re=await User.find({pwd:refreshToken})
+    const re=await User.find({refreshToken:refreshToken})
     res.status(200).send(re[0])
     console.log(re)
 })
