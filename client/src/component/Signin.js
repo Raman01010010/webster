@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth';
 import { addClient, addUser, getEmp, verifyUser } from "../api/api"
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Loader from "./Loader";
+import Google from "./Google";
 export default function Signin(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -119,6 +120,7 @@ const axiosPrivate=useAxiosPrivate()
       <button onClick={hand}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Sign In
       </button>
+      <Google/>
       <p className="text-xs mt-3">
         Literally you probably haven't heard of them jean shorts.
       </p>

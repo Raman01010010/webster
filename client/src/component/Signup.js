@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import { useNavigate } from 'react-router-dom';
 
 import { addClient, addUser } from "../api/api"
+import Google from "./Google";
 export default function Signup(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -142,6 +143,7 @@ check();
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Button
       </button>
+      <Google/>
       {load&&<Loader/>}
       <div>{stat}</div>
       <p className="text-xs mt-3">

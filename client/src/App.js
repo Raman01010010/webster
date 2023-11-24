@@ -18,6 +18,7 @@ import YourMainComponent from './component/AllPost2';
 import Test1 from './component/Test1';
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import Google from './component/Google'
 function App() {
   useEffect(()=>{
     Aos.init()
@@ -85,7 +86,7 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   
+   <Google/>
  
    
       </Router>
