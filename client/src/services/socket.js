@@ -1,6 +1,6 @@
 // socketService.js
 import io from 'socket.io-client';
 
-const socket = io('http://raman20223177.ftp.evennode.com');
+const socket = io('raman20223177.ap-1.evennode.com');
 
 export default socket;

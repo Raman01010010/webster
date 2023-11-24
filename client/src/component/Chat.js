@@ -13,7 +13,7 @@ import Loader from "./Loader";
 import { useParams,useNavigate } from 'react-router-dom';   
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddIcon from '@mui/icons-material/Add';
-const socket = io('http://raman20223177.ftp.evennode.com/');
+const socket = io('raman20223177.ap-1.evennode.com');
 
 export default function Chat() {
     let { id } = useParams();
