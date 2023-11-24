@@ -4,11 +4,11 @@ import axios from "../api/axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Otherusers = () => {
   const { newUser } = useContext(User);
   // console.log(newUser);
-
+  const axiosPrivate=useAxiosPrivate()
   const [otheruser, setOtheruser] = useState([]);
 
   const handleConnect = async (newUser, otheruser) => {
@@ -17,7 +17,7 @@ const Otherusers = () => {
         newUser: newUser,
         otheruser: otheruser,
       };
-      const res = await axios.post("/connect/api/sendconnect", data);
+      const res = await axiosPrivate.post("/connect/api/sendconnect", data);
       toast.success("Connection request sent successfully");
     } catch (error) {
       // Handle errors
@@ -32,7 +32,7 @@ const Otherusers = () => {
         otheruser: otheruser,
       };
 
-      const res = await axios.post("/connect/api/senddelete", data);
+      const res = await axiosPrivate.post("/connect/api/senddelete", data);
       toast.success("Delete Connection request sent successfully");
     } catch (error) {
       // Handle errors
@@ -47,7 +47,7 @@ const Otherusers = () => {
         newUser: newUser,
         otheruser: otheruser,
       };
-      const res = await axios.post("/connect/api/sendMessageRequest", data);
+      const res = await axiosPrivate.post("/connect/api/sendMessageRequest", data);
       toast.success("Message request sent successfully");
     } catch (error) {
       // Handle errors
@@ -62,7 +62,7 @@ const Otherusers = () => {
         const d = {
           email:newUser.email
         }
-        const res = await axios.post("/connect/getuser",d);
+        const res = await axiosPrivate.post("/connect/getuser",d);
         setOtheruser(res.data);
       } catch (error) {
         console.error("Error fetching users:", error);

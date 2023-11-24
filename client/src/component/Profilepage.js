@@ -107,7 +107,7 @@ const [alert,setAlert]=useState([]);
     // Assuming userEmail is defined somewhere
 
     try {
-      const response = await axios.post(
+      const response = await axiosPrivate.post(
         "/connect/image",
         formData,
         { email: newUser.email },

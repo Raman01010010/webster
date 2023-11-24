@@ -2,16 +2,17 @@ import React, { useEffect, useState, useContext } from "react";
 import { User } from "../context/User";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 export default function Connections() {
   const [connecteduser, setConnecteduser] = useState([]);
   const { newUser } = useContext(User);
+  const axiosPrivate=useAxiosPrivate()
   useEffect(() => {
     const fun = async () => {
       const data = {
         newUser: newUser.email,
       };
-      const res = await axios.post("/connect/connections", data);
+      const res = await axiosPrivate.post("/connect/connections", data);
       // const connectionArray = Object.values(res.data);
       setConnecteduser(res.data);
       // console.log(connectionArray)

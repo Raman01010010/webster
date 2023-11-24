@@ -9,8 +9,8 @@ const AddEducation = () => {
   const currentYear = new Date().getFullYear();
 
   const { email } = useParams();
-  const axiosPrivate=useAxiosPrivate()
-  const [institute, setInstitute] = useState('');
+  const axiosPrivate=useAxiosPrivate();
+    const [institute, setInstitute] = useState('');
   const [degree, setDegree] = useState('');
   const [year, setYear] = useState('');
 

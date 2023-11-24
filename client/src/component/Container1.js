@@ -27,8 +27,6 @@ export default function Container1(){
           <Route path="/home2" element={<><Home2/></>} />
           <Route path="/about" element={<><AboutUs/></>} />
           <Route path="/footer" element={<><Footer/></>} />
-
-
     </Routes>
 
     </>)

@@ -5,8 +5,9 @@ import Stack from '@mui/material/Stack';
 import axios from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Pending = () => {
+  const axiosPrivate=useAxiosPrivate()
   const [pending, setPending] = useState([]);
   const [accepted, setAccepted] = useState(false); // New state for tracking accepted requests
   const { newUser } = useContext(User);
@@ -17,7 +18,7 @@ const Pending = () => {
         newUser: newUser.email,
       };
       try {
-        const res = await axios.post('/connect/getpending', data);
+        const res = await axiosPrivate.post('/connect/getpending', data);
         // Convert the object values into an array
         console.log('xkjdfhshdfushdfi', res.data);
         const pendingArray = Object.values(res.data);
@@ -34,7 +35,7 @@ const Pending = () => {
       receiverEmail: newUser,
       senderEmail: senderEmail,
     };
-    await axios.post('/connect/acceptrequest', data);
+    await axiosPrivate.post('/connect/acceptrequest', data);
 
     // Display a success toast
     toast.success('You both are now connected to each other', {

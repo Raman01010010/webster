@@ -3,18 +3,18 @@ import { User } from "../context/User";
 import { Card, CardContent, Typography, Button, Box, Chip, Divider, Paper } from '@mui/material';
 import axios from "../api/axios";
 import {Link } from 'react-router-dom';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Managejob = () => {
   const [Myjob, setMyjob] = useState([]);
   const { newUser } = useContext(User);
-  
+  const axiosPrivate=useAxiosPrivate()
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data={
             jobberid: newUser.userid
         }
-        const response = await axios.post('/job/myjob',data);
+        const response = await axiosPrivate.post('/job/myjob',data);
         setMyjob(response.data);
       } catch (error) {
         console.error('Error fetching job data: ', error);

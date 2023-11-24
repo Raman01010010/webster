@@ -3,11 +3,11 @@ import { Card, CardContent, Typography, Button, Box, Chip, Divider, Paper } from
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 import {Link } from 'react-router-dom';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const ParticularJob = () => {
   const [jobData, setJobData] = useState([]);
   const {email} = useParams()
-
+  const axiosPrivate=useAxiosPrivate()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,7 +15,7 @@ const ParticularJob = () => {
             email:email
         }
         //step4
-        const response = await axios.post('/connect/getparticularjob',d);
+        const response = await axiosPrivate.post('/connect/getparticularjob',d);
         setJobData(response.data);
         console.log(response.data);
       } catch (error) {

@@ -18,6 +18,7 @@ import Vreview from "./Vreview.js";
 import { useContext } from "react";
 import { User } from "../context/User";
 import axios from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 // import { post } from "../../../server/routes/jobRoutes.js";
     
 function Createjob() {
@@ -37,6 +38,7 @@ function Createjob() {
 const steps = ["Company profile", "Skills required", "Review "];
 
 export default function Checkout() {
+  const axiosPrivate=useAxiosPrivate()
   const {newUser}=useContext(User)
   console.log(newUser)
   const [activeStep, setActiveStep] = useState(0);
@@ -79,7 +81,7 @@ export default function Checkout() {
   const PostJob = async () => {
 
     try {
-      const res = await axios.post("/job/create", comp);
+      const res = await axiosPrivate.post("/job/create", comp);
       console.log("posting")
       setComp({
         titles: "",
@@ -142,7 +144,7 @@ export default function Checkout() {
 
 //   const handleSendEmail = async () => {
 //     try {
-//         const response = await axios.post('/job/mail', {
+//         const response = await axiosPrivate.post('/job/mail', {
 //             recipientEmail,
 //             messageContent,
 //         });

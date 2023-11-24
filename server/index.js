@@ -33,12 +33,19 @@ app.use(cookieParser());
 app.use("/user", require("./routes/user"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
+app.use("/google", require("./routes/oauth"));
+app.use('/oauth',  require("./routes/oauth2"));
 app.use("/upload", require("./routes/uploadPost"));
+app.use("/chat", require("./routes/chat"));
+app.use(verifyJWT);
+
+
+
 app.use('/videoc',require('./routes/Video'))
 app.use("/job", require("./routes/jobRoutes"));
 
 app.use("/user1", require("./routes/userUpdate"));
-app.use("/chat", require("./routes/chat"));
+
 
 app.use("/notif", require("./routes/notif"));
 
@@ -47,10 +54,7 @@ app.use("/api", require("./routes/api"));
 
 app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));
-app.use("/google", require("./routes/oauth"));
-app.use('/oauth',  require("./routes/oauth2"));
 app.use(express.static("uploads"));
-app.use(verifyJWT);
 
 app.all("/*", (req, res) => {
   res.status(404);

@@ -23,11 +23,14 @@ const getAll = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const f1 = await post.find({
-      $or: [{ email: { $in: cn } }, { email: email }],
-    })
-      .skip(skip)
-      .limit(limit);
+    const f1 = await post
+  .find({
+    $or: [{ email: { $in: cn } }, { email: email }],
+  })
+  .sort({ time: -1 }) // Replace 'timestampField' with the actual field you want to use for sorting
+  .skip(skip)
+  .limit(limit);
+
 
     if (f1.length > 0) {
       res.status(200).send(f1);

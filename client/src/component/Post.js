@@ -1,4 +1,5 @@
 import axios from '../api/axios';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import React, { useState ,useContext} from 'react';
 import { User } from '../context/User';
 export default function Post1() {
@@ -6,7 +7,7 @@ export default function Post1() {
     const [image, setImage] = useState('https://preview.cruip.com/open-pro/images/blog-post-01.jpg');
     const [postData, setPostdata] = useState({ "email":newUser.email,"head": "Heading", "content": "Content of the post", "hashtag": "" })
     const hashtagRegex = /#[a-zA-Z0-9_]+/g; 
- 
+    const axiosPrivate=useAxiosPrivate()
 //    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
  //     const extractedHashtags = text.match(hashtagRegex);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -63,7 +64,7 @@ setPostdata(old=>{
     
         formData.append('json',JSON.stringify(postData))
     console.log(formData)
-        axios
+        axiosPrivate
           .post('/upload/multiple', formData,postData, {
             headers: {
               'Content-Type': 'multipart/form-data',

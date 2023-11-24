@@ -133,6 +133,8 @@ const showjob = async (req, res) => {
 
 const myjob = async (req, res) => {
     try {
+
+     
       const jobberId = req.body.jobberid; // Access jobberid from the request body
       // console.log("vivekdmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm5");
     
@@ -233,7 +235,8 @@ const filterskill = async (req, res) => {
 
 const myjobapplication = async (req, res) => {
   try {
-    const userId = req.body.userid; 
+
+    const userId = req.userid; 
     
     // Find all job applications made by the user
     const jobApplications = await profile.find({ userID: userId });
@@ -257,7 +260,7 @@ const myjobapplication = async (req, res) => {
 const FormSubmitted = async (req, res) => {
   try {
     const  jobId = req.body.jobid; // Access jobid and userid from the request body
-    const   userId = req.body.userid; 
+    const   userId = req.userid; 
 
     const jobs = await profile.find({ jobid: jobId, userID: userId }); 
     // console.log(jobs);
@@ -336,7 +339,7 @@ const getJobComments = async (req, res) => {
 };
 const Singlejob = async (req, res) => {
   const jobId = req.body.jobId;
-  const userId=req.body.userId;
+  const userId=req.userId;
 console.log(jobId)
   try {
     // Assuming you have a Job model or a database query to retrieve job data

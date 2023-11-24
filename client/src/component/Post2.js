@@ -3,7 +3,10 @@ import React, { useState, useContext } from 'react';
 import { User } from '../context/User';
 import { useDropzone } from 'react-dropzone';
 import Loader from "./Loader";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 const PostForm = () => {
+  const axiosPrivate=useAxiosPrivate()
   const [load, setLoad] = React.useState(0)
   const [stat, setStat] = React.useState('')
 

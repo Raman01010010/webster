@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { User } from "../context/User";
 import axios from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {
   Card,
   CardContent,
@@ -16,12 +17,12 @@ import { Link } from "react-router-dom";
 const Jobsapplied = () => {
   const [data, setData] = useState([]);
   const { newUser } = useContext(User);
-
+  const axiosPrivate=useAxiosPrivate()
   useEffect(() => {
     const fetchData = async () => {
       try {
         const useriD = newUser.userid;
-const response = await axios.post("/job/jobapplication", { userid: useriD });
+const response = await axiosPrivate.post("/job/jobapplication", { userid: useriD });
 
         setData(response.data); // Assuming the response is an array of jobs
         

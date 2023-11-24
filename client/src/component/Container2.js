@@ -51,7 +51,7 @@ export default function Container1(){
         
       
           <Route path="/post1/:id" element={<>            
-     <SinglePost/></>} />
+          <SinglePost/></>} />
         
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat/:id" element={<><Chat/></>} />

@@ -6,6 +6,7 @@ import { User } from "../context/User";
 import Accordion from "@mui/material/Accordion";
 import Typography from "@mui/material/Typography";
 import axios from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -13,7 +14,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 const Preview2 = () => {
   const componentRef = useRef();
   const { newUser } = useContext(User);
-
+  const axiosPrivate=useAxiosPrivate()
   const { inputValues, setInputValues } = useContext(User);
   const { accordionItems, setAccordionItems } = useContext(User);
   const { accordionItems2, setAccordionItems2 } = useContext(User);
@@ -30,7 +31,7 @@ const Preview2 = () => {
         const d = {
           email: email,
         };
-        const res = await axios.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/fetchingdata", d);
         
         setData(res.data);
         console.log(res.data)

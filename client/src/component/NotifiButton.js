@@ -1,15 +1,16 @@
 import { useEffect,useState,useContext } from "react"
 import { User } from "../context/User"
 import axios from '../api/axios'
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 export default function NotifiButton() {
 const {newUser,notifications, setNotifications,sh,setSh}=useContext(User)
-
+const axiosPrivate=useAxiosPrivate()
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   const fetchNotifications = async () => {
     try {
-      const response = await axios.post('notif/get', {
+      const response = await axiosPrivate.post('notif/get', {
         userid: newUser.userid, // Replace with the actual user ID or get it dynamically
       });
 

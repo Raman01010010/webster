@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from '../api/axios';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 function FileUpload() {
+  const axiosPrivate=useAxiosPrivate()
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (e) => {
@@ -15,7 +16,7 @@ function FileUpload() {
     }
 
     try {
-    const res=  await axios.post('/upload/multiple', formData);
+    const res=  await axiosPrivate.post('/upload/multiple', formData);
     console.log(res)
       console.log('Files uploaded successfully');
     } catch (error) {

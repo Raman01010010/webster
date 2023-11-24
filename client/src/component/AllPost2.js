@@ -63,7 +63,7 @@ const YourMainComponent = () => {
   //  console.log(re)
   
   
-    const res=await axios.post('/post/react',like)
+    const res=await axiosPrivate.post('/post/react',like)
     console.log(res)
     console.log(like)
     // setShow(old=>{

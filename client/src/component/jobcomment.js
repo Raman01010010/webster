@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { User } from "../context/User";
 import { useParams } from "react-router-dom";
 import axios from "../api/axios";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Jobcomment = () => {
   const { secondId, jobId } = useParams();
   const { newUser } = useContext(User);
   const userid = newUser.userid;
-
+  const axiosPrivate=useAxiosPrivate()
   const [data, setData] = useState({
     text: "",
     senderid: userid,
@@ -27,7 +27,7 @@ const Jobcomment = () => {
 
     try {
       // Send the message to your backend API
-      const response = await axios.post("/job/jobcomment", data);
+      const response = await axiosPrivate.post("/job/jobcomment", data);
       console.log("Message sent:", response.data);
 
       // Check if the response has the expected structure
@@ -50,7 +50,7 @@ const Jobcomment = () => {
       try {
         console.log("called");
         // Fetch initial messages from your backend API
-        const response = await axios.get(
+        const response = await axiosPrivate.get(
           `/job/jobcomment2/${userid}/${secondId}/${jobId}`
         );
 
