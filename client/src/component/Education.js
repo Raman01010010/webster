@@ -4,10 +4,10 @@ import {useContext } from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import axios from "../api/axios";
 import { User } from "../context/User";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Education = () => {
   const [educationData, setEducationData] = useState([]);
-
+  const axiosPrivate=useAxiosPrivate()
   const { email } = useParams();
   const { newUser } = useContext(User);
 
@@ -17,7 +17,7 @@ const Education = () => {
         const d = {
             email:email
         }
-        const responce = await axios.post('/connect/geteducation',d);
+        const responce = await axiosPrivate.post('/connect/geteducation',d);
         setEducationData(responce.data);
 
     }

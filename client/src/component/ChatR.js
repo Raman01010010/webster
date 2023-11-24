@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useState, useEffect, useContext } from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -19,6 +19,7 @@ const socket = io('ws://localhost:3500/');
 export default function Chat() {
     let { id } = useParams();
     console.log(id)
+    const axiosPrivate=useAxiosPrivate()
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
     const { newUser } = useContext(User)
 
@@ -43,7 +44,7 @@ export default function Chat() {
         formData.append('json',JSON.stringify(message))
         setLoad(1)
         try {
-          const response = await axios.post("/chat/img", formData, {
+          const response = await axiosPrivate.post("/chat/img", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
     
@@ -122,7 +123,7 @@ const fetch=async()=>{
     })
    // setLoad(1)
     try{
-        const res1 = await axios.post('/chat', { "room": uniqueRoomID });
+        const res1 = await axiosPrivate.post('/chat', { "room": uniqueRoomID });
         console.log(res1);
         setMessages(old=>{
             return(
@@ -155,7 +156,7 @@ fetch()
             const uniqueRoomID = sortedUserIds.join('_'); 
         //    setLoad(1)
             try {
-                const res = await axios.post('/chat/req', { "email": newUser.email,'userid':newUser.userid });
+                const res = await axiosPrivate.post('/chat/req', { "email": newUser.email,'userid':newUser.userid });
                 console.log(res);
                 setConn(res?.data);
             } catch (error) {
@@ -198,7 +199,7 @@ fetch()
             })
         })
         try{
-        const response = await axios.post('/chat/create', {"room": message.room, "name": newUser.userid});
+        const response = await axiosPrivate.post('/chat/create', {"room": message.room, "name": newUser.userid});
     }catch(error){  
         console.log(error)
     }

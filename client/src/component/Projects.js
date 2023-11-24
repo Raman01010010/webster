@@ -4,8 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "../api/axios";
 import { User } from "../context/User";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Projects = () => {
+  const axiosPrivate=useAxiosPrivate()
   const { email } = useParams();
   const [projectData, setProjectData] = useState([]);
  
@@ -16,7 +17,7 @@ const Projects = () => {
       const d = {
         email: email,
       };
-      const response = await axios.post("/connect/getproject", d);
+      const response = await axiosPrivate.post("/connect/getproject", d);
       setProjectData(response.data);
     };
     fetchData();

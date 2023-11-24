@@ -36,7 +36,6 @@ const FilePreview = ({ fileList }) => {
 };
 
 const ParticularPost = () => {
-
 //step2
   const axiosPrivate=useAxiosPrivate()
   const {email} = useParams()

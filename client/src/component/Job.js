@@ -4,7 +4,7 @@ import { User } from "../context/User";
 import Box from "@mui/material/Box";
 import swal from 'sweetalert';
 import { TailSpin } from 'react-loader-spinner';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -40,7 +40,7 @@ const steps = [
 ];
 export default function Job() {
   const [loading, setLoading] = useState(false);
-
+  const axiosPrivate=useAxiosPrivate()
   const { jobId } = useParams();
   const { newUser } = useContext(User);
   const userid=newUser.userid;
@@ -145,7 +145,7 @@ export default function Job() {
   const Submit = async () => {
   try {
     setLoading(true);
-    const res = await axios.post("/job/profile", responses);
+    const res = await axiosPrivate.post("/job/profile", responses);
     console.log(res);
     swal({
       title: "Successfully added",

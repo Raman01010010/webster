@@ -50,12 +50,11 @@ const employmentTypes = [
 ];
 
 const Showjob = () => {
-  const axiosPrivate=useAxiosPrivate()
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
   const [currentPage, setCurrentPage] = useState(1);
   const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
 
-  
+  const axiosPrivate=useAxiosPrivate()
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -77,10 +76,10 @@ const [loading, setLoading] = useState(false);
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
-    // Fetch data from the backend using axios or your preferred method
+    // Fetch data from the backend using axiosPrivate or your preferred method
     const fetchData = async () => {
       try {
-        const response = await axios.get("/job/getloc");
+        const response = await axiosPrivate.get("/job/getloc");
         // Assuming the array is present in the 'data' property of the response
         setLoca(response.data);
         console.log(loca);
@@ -94,10 +93,10 @@ const [loading, setLoading] = useState(false);
   }, []);
 
   useEffect(() => {
-    // Fetch data from the backend using axios or your preferred method
+    // Fetch data from the backend using axiosPrivate or your preferred method
     const fetchData = async () => {
       try {
-        const response = await axios.get("/job/getcompa");
+        const response = await axiosPrivate.get("/job/getcompa");
         // Assuming the array is present in the 'data' property of the response
         setCompa(response.data);
         // console.log(compa);
@@ -109,10 +108,10 @@ const [loading, setLoading] = useState(false);
     fetchData();
   }, []);
   useEffect(() => {
-    // Fetch data from the backend using axios or your preferred method
+    // Fetch data from the backend using axiosPrivate or your preferred method
     const fetchData = async () => {
       try {
-        const response = await axios.get("/job/getskill");
+        const response = await axiosPrivate.get("/job/getskill");
         // Assuming the array is present in the 'data' property of the response
         setSki(response.data);
         console.log(ski);
@@ -151,7 +150,7 @@ const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("/job/showjob", {
+        const response = await axiosPrivate.post("/job/showjob", {
           ...data,
           page: currentPage,
         });

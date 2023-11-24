@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
 import { User } from '../context/User';
-import axios, { axiosPrivate } from '../api/axios';
+import axios  from '../api/axios';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import socket from '../services/socket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faMicrophone, faDesktop, faPhone, faVideoSlash } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +12,7 @@ import { faVideo, faMicrophone, faDesktop, faPhone, faVideoSlash } from '@fortaw
 function App() {
   const { vdata, setVdata, newUser } = useContext(User);
   const { aid,cid } = useParams();
-
+  const axiosPrivate=useAxiosPrivate()
   const [peer, setPeer] = useState(null);
   const [myStream, setMyStream] = useState();
   const [screenStream, setScreenStream] = useState();
@@ -147,7 +148,7 @@ const [scr,setScr]=useState(1)
 
   async function kall() {
     try {
-      const re = await axios.post('/videoc/call', {
+      const re = await axiosPrivate.post('/videoc/call', {
         myid: newUser.userid,
         userid: aid,
         callid: vdata.myid,
@@ -162,7 +163,7 @@ const [scr,setScr]=useState(1)
     
     socket.emit('call', { myid: newUser.userid, callid: myPeerId, remote: aid });
     try{
-      const re=await axios.post('/videoc/call', {"userid":aid,"callid":myPeerId,"myid":newUser.userid})
+      const re=await axiosPrivate.post('/videoc/call', {"userid":aid,"callid":myPeerId,"myid":newUser.userid})
       console.log(re)
           }catch(error){
             console.log(error)

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Endorse = () => {
   const location = useLocation();
   const { state } = location;
-
+  const axiosPrivate=useAxiosPrivate()
   // Check if data is defined and is an array
   const data = Array.isArray(state?.param1) ? state.param1 : [];
 

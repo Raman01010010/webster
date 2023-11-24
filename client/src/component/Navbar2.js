@@ -25,7 +25,7 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -44,6 +44,7 @@ const Navbar2 = () => {
   const [searchInput, setSearchInput] = useState([]); // New state for search input
   const [name, setName] = useState(null);
   const location = useLocation();
+  const axiosPrivate=useAxiosPrivate()
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 // Assuming you are using the document.cookie API to manage cookies
 
@@ -66,7 +67,7 @@ async function handleLogout() {
   console.log(newUser.userid)
   try {
     
-    const response = await axios.post("/api/logout", {
+    const response = await axiosPrivate.post("/api/logout", {
       userid: newUser.userid,
     });
 
@@ -80,7 +81,7 @@ async function handleLogout() {
       // Optionally, handle the error, show a message, or take appropriate action
     }
   } catch (error) {
-    // Error occurred during the axios request
+    // Error occurred during the axiosPrivate request
     console.error("Failed to logout on the server:", error);
     // Optionally, handle the error, show a message, or take appropriate action
   }
@@ -136,7 +137,7 @@ async function handleLogout() {
     const fetchData = async () => {
       try {
         console.log(searchInput);
-        const response = await axios.post("/connect/searchname", {
+        const response = await axiosPrivate.post("/connect/searchname", {
           searchInput,
         });
 

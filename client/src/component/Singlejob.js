@@ -37,8 +37,9 @@ import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Hidden } from "@mui/material";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Singlejob = () => {
+  const axiosPrivate=useAxiosPrivate()
   const { jobId } = useParams();
   const [job, setJob] = useState({}); // Change the initial state to an empty object
   const { newUser } = useContext(User);
@@ -46,7 +47,7 @@ const Singlejob = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("/job/singlejob", {
+        const response = await axiosPrivate.post("/job/singlejob", {
           jobId: jobId,
           userId: newUser.userid,
         });

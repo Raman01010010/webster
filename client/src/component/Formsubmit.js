@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Formsubmit = () => {
   const { newUser } = useContext(User);
   const { jobId, jobberId } = useParams();
   const [myapp, setMyapp] = useState([]);
+  const axiosPrivate=useAxiosPrivate()
   const [showResume, setShowResume] = useState(false);
   const [serverResponse, setServerResponse] = useState({ data: null, error: null });
 
@@ -20,7 +21,7 @@ const Formsubmit = () => {
           jobid: jobId,
           userid: newUser.userid,
         };
-        const response = await axios.post('/job/form', data);
+        const response = await axiosPrivate.post('/job/form', data);
         setMyapp(response.data);
         console.log("vivek");
         // The state update is asynchronous, so myapp might not be immediately updated

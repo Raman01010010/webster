@@ -10,13 +10,14 @@ import NotifiButton from './NotifiButton';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import notificationSound from './notifications-sound-127856.mp3';
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 
 function Notification() {
+  const axiosPrivate=useAxiosPrivate()
     const {newUser,notifications,setNotifications,vdata,setVdata}=useContext(User)
  // const [notifications, setNotifications] = useState([]);
   const [show,setShow]=useState(1)

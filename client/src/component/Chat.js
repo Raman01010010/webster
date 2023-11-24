@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import { useState, useEffect, useContext ,useRef} from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 import VideoChatIcon from '@mui/icons-material/VideoChat';
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -20,7 +22,7 @@ export default function Chat() {
     console.log(id)
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
     const { newUser } = useContext(User)
-
+    const axiosPrivate=useAxiosPrivate()
     const [message, setMessage] = useState({ "sender": newUser.userid, "receiver": "6548fae8ee9562f6a060844e", "content": "", "room": "" })
     const [messages, setMessages] = useState([[{ "name": "Raman", "content": "helllo" }]])
     const [user2Id,setUser2id]= useState(''+id)
@@ -95,7 +97,7 @@ export default function Chat() {
                 const uniqueRoomID = sortedUserIds.join('_');
                 console.log(uniqueRoomID);
     
-                const response = await axios.post('/chat/create', {"room": uniqueRoomID, "name": newUser.userid});
+                const response = await axiosPrivate.post('/chat/create', {"room": uniqueRoomID, "name": newUser.userid});
     console.log(response)
                 // Check if the response status is successful (you can customize this condition based on your API)
                 if (response.status === 200) {
@@ -140,7 +142,7 @@ const fetch=async()=>{
     })
    // setLoad(1)
     try{
-        const res1 = await axios.post('/chat', { "room": uniqueRoomID });
+        const res1 = await axiosPrivate.post('/chat', { "room": uniqueRoomID });
         console.log(res1);
         setMessages(old=>{
             return(
@@ -173,7 +175,7 @@ fetch()
             const uniqueRoomID = sortedUserIds.join('_'); 
         //    setLoad(1)
             try {
-                const res = await axios.post('/chat/main', { "email": newUser.email,'userid':newUser.userid });
+                const res = await axiosPrivate.post('/chat/main', { "email": newUser.email,'userid':newUser.userid });
                 console.log(res);
                 setConn(res?.data);
             } catch (error) {

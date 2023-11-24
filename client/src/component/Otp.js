@@ -27,7 +27,7 @@ setLoad(0)
    if(res?.response?.status===401||res?.response?.status===404){
     setStat(res?.response?.data)
    }else
-   if(res.status===201||res.status===202){
+   if(res.status===201||res.status===202||res.status===200){
     console.log("success")
 navigate('../signin')
   }}

@@ -6,11 +6,12 @@ import { User } from "../context/User";
 import Accordion from "@mui/material/Accordion";
 import Typography from "@mui/material/Typography";
 import axios from "../api/axios";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 
 const Previewresume = () => {
+  const axiosPrivate=useAxiosPrivate()
   const componentRef = useRef();
   const { newUser } = useContext(User);
 
@@ -30,7 +31,7 @@ const Previewresume = () => {
         const d = {
           email: email,
         };
-        const res = await axios.post("/fetchingdata", d);
+        const res = await axiosPrivate.post("/fetchingdata", d);
         
         setData(res.data);
         console.log(res.data)

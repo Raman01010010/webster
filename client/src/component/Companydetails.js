@@ -11,7 +11,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useContext } from "react";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { User } from "../context/User";
 import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -23,6 +23,7 @@ export default function Companydetails() {
   const { comp, setComp } = useContext(User);
   const [locationSuggestions, setLocationSuggestions] = useState([]);
 /////
+const axiosPrivate=useAxiosPrivate()
   const updateLocationSuggestions = async (query) => {
     const apiKey = "55810e9a0db5484fae278428320f9add";
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 import {
   
@@ -37,6 +38,8 @@ const englishlevel=[
   'Native or bilingual'
 ]
 const Application = () => {
+  const axiosPrivate=useAxiosPrivate()
+
   const { jobId } = useParams();
   const [myapp, setMyapp] = useState([]);
     const [acceptedApplicants, setAcceptedApplicants] = useState([]);
@@ -53,7 +56,7 @@ const Application = () => {
     const fetchData = async () => {
       try {
        
-        const response = await axios.post("/job/app", data);
+        const response = await axiosPrivate.post("/job/app", data);
         setMyapp(response.data);
       } catch (error) {
         console.error("Error fetching application data: ", error);
@@ -83,7 +86,7 @@ const Application = () => {
   const PostJob = async () => {
     try {
     
-      const response = await axios.post("/job/app", data);
+      const response = await axiosPrivate.post("/job/app", data);
       setMyapp(response.data);
     } catch (error) {
       console.error("Error fetching application data: ", error);
@@ -104,7 +107,7 @@ const Application = () => {
   };
   const handleAcceptanceToggle = async (applicationId) => {
     try {
-      const response = await axios.post("/job/accept", {
+      const response = await axiosPrivate.post("/job/accept", {
         applicationId: applicationId,
         jobid: jobId,
       });

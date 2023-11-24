@@ -19,7 +19,6 @@ import Test1 from './component/Test1';
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import Google from './component/Google'
-import Testtt from './component/Testtt';
 function App() {
   useEffect(()=>{
     Aos.init()
