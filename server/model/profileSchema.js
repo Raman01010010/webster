@@ -40,6 +40,11 @@ const profileSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'job'
       },
+
+      accepted: {
+        type: Boolean,
+        default: false,
+      },
       userID:{
         type:String
       },

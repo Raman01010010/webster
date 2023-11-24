@@ -43,6 +43,7 @@ app.use("/chat", require("./routes/chat"));
 app.use("/notif", require("./routes/notif"));
 
 app.use("/post", require("./routes/post"));
+app.use("/api", require("./routes/api"));
 
 app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));

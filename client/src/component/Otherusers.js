@@ -17,7 +17,6 @@ const Otherusers = () => {
         newUser: newUser,
         otheruser: otheruser,
       };
-
       const res = await axios.post("/connect/api/sendconnect", data);
       toast.success("Connection request sent successfully");
     } catch (error) {
@@ -26,7 +25,6 @@ const Otherusers = () => {
       toast.error("Error sending connection request");
     }
   };
-
   const deleteConnection = async (newUser, otheruser) => {
     try {
       const data = {
@@ -49,7 +47,6 @@ const Otherusers = () => {
         newUser: newUser,
         otheruser: otheruser,
       };
-
       const res = await axios.post("/connect/api/sendMessageRequest", data);
       toast.success("Message request sent successfully");
     } catch (error) {
@@ -88,7 +85,9 @@ const Otherusers = () => {
                     <Link to={`/profilepage/${element.email}`} className="flex">
                       <img
                         className="lg:h-48 md:h-36 w-full object-cover object-center"
-                        src="https://dummyimage.com/720x400"
+                        src={element.picture.startsWith('https')
+                         ? element.picture
+                         : `http://localhost:3500/${element.picture}`}
                         alt="blog"
                       />
                         </Link>

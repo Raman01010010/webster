@@ -33,7 +33,6 @@ const response = await axios.post("/job/jobapplication", { userid: useriD });
   }, [newUser.userid]);
 
   return (
-    <div className="min-h-screen flex flex-row">
       <div className="flex-grow flex flex-col items-center justify-center">
         {data.map((e, index) => (
           <Card
@@ -158,7 +157,6 @@ const response = await axios.post("/job/jobapplication", { userid: useriD });
           </Card>
         ))}
       </div>
-    </div>
   );
 };
 

@@ -24,6 +24,8 @@ import {
   faBell,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -43,6 +45,50 @@ const Navbar2 = () => {
   const [name, setName] = useState(null);
   const location = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+// Assuming you are using the document.cookie API to manage cookies
+
+// Function to clear all cookies
+function clearAllCookies() {
+  document.cookie.split(";").forEach((c) => {
+    document.cookie = c
+      .replace(/^ +/, "")
+      .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  });
+}
+console.log(newUser.userid);
+// Example usage in a logout function
+
+async function handleLogout() {
+  // Perform any additional logout logic if needed
+
+  // Clear all cookies
+  clearAllCookies();
+  console.log(newUser.userid)
+  try {
+    
+    const response = await axios.post("/api/logout", {
+      userid: newUser.userid,
+    });
+
+    if (response.status === 200) {
+      // Successful logout on the server
+      // Redirect to the login page or perform any other client-side cleanup
+      window.location.href = "/signin";
+    } else {
+      // Server responded with an error status
+      console.error("Failed to logout on the server:", response.statusText);
+      // Optionally, handle the error, show a message, or take appropriate action
+    }
+  } catch (error) {
+    // Error occurred during the axios request
+    console.error("Failed to logout on the server:", error);
+    // Optionally, handle the error, show a message, or take appropriate action
+  }
+}
+
+
+// In your component, you might have a logout button or link that triggers the handleLogout function
+// <button onClick={handleLogout}>Logout</button>
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,27 +135,26 @@ const Navbar2 = () => {
     // Fetch data from the backend using axios or your preferred method
     const fetchData = async () => {
       try {
-        console.log(searchInput)
+        console.log(searchInput);
         const response = await axios.post("/connect/searchname", {
-          searchInput
+          searchInput,
         });
-  
+
         // Access the data property of the response
         const responseData = response.data;
-  
+
         // Access the matchedUsernames property from the data
         const matchedUsernames = responseData.matchedUsernames;
-  
+
         // Assuming setName is a state update function
         setName(matchedUsernames);
       } catch (error) {
         console.error("Error fetching data from the backend:", error);
       }
     };
-  
+
     // Call the fetchData function
-   
-  
+
     // Call the fetchData function
     fetchData();
   }, [searchInput]);
@@ -125,7 +170,7 @@ const Navbar2 = () => {
   const handleChange = (event, value) => {
     setSearchInput(value);
   };
-console.log(name);
+  console.log(name);
   return (
     <>
       <AppBar position="fixed">
@@ -275,6 +320,14 @@ console.log(name);
                 <FontAwesomeIcon icon={faUser} style={{ marginRight: "5px" }} />
                 My Profile
               </Button>
+              <IconButton
+                onClick={handleLogout}
+                color="inherit"
+                style={{ marginRight: "20px" }}
+                component={Link}
+              >
+        <FontAwesomeIcon icon={faRightFromBracket} />{" "}
+              </IconButton>
             </>
           ) : (
             <>
@@ -405,42 +458,45 @@ console.log(name);
             </>
           )}
 
-          <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
-  <DialogTitle>Search Modal</DialogTitle>
-  <Stack spacing={2}>
-    {name && name.length > 0 && (
-      <Autocomplete
-  freeSolo
-  id="free-solo-2-demo"
-  disableClearable
-  options={name.map((option) => ({
-    label: option.username,
-    link: `/profilepage/${option.email}`,
-  }))}
-  renderInput={(params) => (
-    <TextField
-      {...params}
-      label="Search input"
-      value={searchInput}
-      onChange={(e) => setSearchInput(e.target.value)}
-      InputProps={{
-        ...params.InputProps,
-        type: "search",
-      }}
-    />
-  )}
-  getOptionLabel={(option) => option.label}
-  renderOption={(props, option) => (
-    <Link to={option.link} {...props}>
-      {option.label}
-    </Link>
-  )}
-/>
-
-    )}
-  </Stack>
-</Dialog>
-
+          <Dialog
+            open={isModalOpen}
+            onClose={handleCloseModal}
+            fullWidth
+            maxWidth="sm"
+          >
+            <DialogTitle>Search People</DialogTitle>
+            <Stack spacing={2}>
+              {name && name.length > 0 && (
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={name.map((option) => ({
+                    label: option.username,
+                    link: `/profilepage/${option.email}`,
+                  }))}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search input"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
+                      InputProps={{
+                        ...params.InputProps,
+                        type: "search",
+                      }}
+                    />
+                  )}
+                  getOptionLabel={(option) => option.label}
+                  renderOption={(props, option) => (
+                    <Link to={option.link} {...props}>
+                      {option.label}
+                    </Link>
+                  )}
+                />
+              )}
+            </Stack>
+          </Dialog>
         </Toolbar>
       </AppBar>
 
