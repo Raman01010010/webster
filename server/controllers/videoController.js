@@ -11,13 +11,13 @@ const call = async (req, res) => {
         const { userid, callid, myid } = req.body;
 
         if (!userid || !callid || !myid) {
-            return res.status(400).json({ error: 'Missing required parameters' });
+            return res1.status(400).json({ error: 'Missing required parameters' });
         }
-        const res=await User.findOne({_id:userid})
+        const res1=await User.findOne({_id:userid})
 
         // Handle different cases based o
             // Case 1
-            await notifController.sendNotification(userid, `${res?.username} is calling you`, `/videoc/${myid}/${callid}`,'call', res);
+            await notifController.sendNotification(userid, `${res1?.username} is calling you`, `/videoc/${myid}/${callid}`,'call', res);
             // Additional logic specific to Case 1
         
         // You can add more conditions here if needed, but there won't be an "else if" structure
