@@ -7,7 +7,6 @@ export default function Dashboard(){
     console.log(newUser)
    async function handleClick(){
         console.log("clciked")
- 
         try{
 const res=await axiosPrivate.put('user1/update',{"email":""})
 console.log(res)
@@ -15,7 +14,9 @@ console.log(res)
             console.log(error)
         }
     }
-    return(<>
+
+  return(
+    <>
     <section className="text-gray-400 bg-gray-900 body-font">
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 md:mb-0 mb-10">

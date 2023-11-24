@@ -2,7 +2,7 @@ import axios from "../api/axios";
 import React, { useState, useEffect, useContext } from "react";
 import { Reactions, Counter } from "./Reactions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-
+import { Link } from "react-router-dom";
 import NavigationIcon from "@mui/icons-material/Navigation";
 //const url="http://localhost:3500/"
 import { SlackCounter } from "@charkour/react-reactions";
@@ -12,6 +12,7 @@ import { User } from "../context/User";
 import Loader from "./Loader";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+
 const url = "http://localhost:3500/";
 //const url="http://172.29.50.69:3500/"
 const FilePreview = ({ fileList }) => {
@@ -141,6 +142,19 @@ export default function AllPost() {
     <>
       <section className="text-gray-400 bg-gray-900 body-font">
         <div className="container px-5 py-24 mx-auto">
+        <Link to="/cpost">
+        <Fab
+        color="primary"
+        aria-label="add"
+        // onClick={handleFilterDialogOpen}
+        sx={{
+          position: "fixed",
+          bottom: "20px", // Adjust the bottom value as needed
+          left: "20px", // Adjust the right value as needed
+        }}
+      >
+<i class="fa-solid fa-plus"></i>      </Fab>
+      </Link>
           <div
             style={{ width: "100vh" }}
             className="flex flex-wrap mr-auto ml-auto  -m-4"

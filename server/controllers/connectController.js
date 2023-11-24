@@ -41,7 +41,7 @@ exports.acceptrequest = async (req, res) => {
     await sendNotification(
       senderUser._id,
       `${receiverUser.username} accepted your connection request`,
-      "",
+      `/profilepage/${receiverEmail}`,
       "connect",
       res
     );
@@ -146,6 +146,7 @@ exports.connection = async (req, res) => {
   console.log(data);
   res.status(200).json(data);
 
+
   const newUser = data.newUser;
   const otheruser = data.otheruser;
   const receiver = await User.findOne({ email: otheruser });
@@ -176,7 +177,7 @@ exports.connection = async (req, res) => {
     await sendNotification(
       receiverid,
       `${sender.username} sent you a friend request`,
-      "",
+      `/pending`,
       "connect",
       res
     );
