@@ -14,7 +14,7 @@ import Loader from "./Loader";
 
 import { useParams,useNavigate } from 'react-router-dom';   
 
-const socket = io('ws://localhost:3500/');
+const socket = io('http://raman20223177.ftp.evennode.com');
 
 export default function Chat() {
     let { id } = useParams();
