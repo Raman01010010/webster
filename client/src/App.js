@@ -86,7 +86,7 @@ function App() {
       <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-   <Google/>
+
  
    
       </Router>
