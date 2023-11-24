@@ -38,7 +38,7 @@ import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Hidden } from "@mui/material";
 import { User } from "../context/User";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const locationTypes = ["On-site", "Hybrid", "Remote"];
 const employmentTypes = [
   "Full-time",
@@ -50,6 +50,7 @@ const employmentTypes = [
 ];
 
 const Showjob = () => {
+  const axiosPrivate=useAxiosPrivate()
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
   const [currentPage, setCurrentPage] = useState(1);
   const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
