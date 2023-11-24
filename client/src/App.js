@@ -19,6 +19,7 @@ import Test1 from './component/Test1';
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import Google from './component/Google'
+import Testtt from './component/Testtt';
 function App() {
   useEffect(()=>{
     Aos.init()
@@ -84,6 +85,7 @@ function App() {
     <>
     <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2, showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar,vdata,setVdata}}>
       <Router>
+    
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
 
