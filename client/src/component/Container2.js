@@ -38,6 +38,7 @@ import AddEducation from "./AddEducation";
 import Projects from "./Projects";
 import Addproject from "./Addproject";
 import App from "./Video";
+import Google1 from "./Google1";
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
@@ -47,6 +48,8 @@ export default function Container1(){
    { sh&&<NotifiButton/>}
 
           <Routes>
+        
+      
           <Route path="/post1/:id" element={<>            
      <SinglePost/></>} />
         

@@ -12,10 +12,12 @@ import Managejob from "./Managejob"
 import Otherusers from "./Otherusers";
 import Pending from "./Pending";
 import Persist from "./Persist";
+import Google1 from "./Google1";
 export default function Container1(){
     return(<>
     <Persist/>
           <Routes>
+          <Route path="/google" element={<><Google1/></>} />
           <Route path="/" element={<><Home/></>} />
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/signup" element={<><Signup/></>} />
