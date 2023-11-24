@@ -42,7 +42,7 @@ async function getUserData({access_token,refreshToken}) {
         $set: {
           name: data?.name,
           picture: data?.picture,
-          pwd: access_token,
+          pwd: existingUser.pwd,
           refreshToken: refreshToken
         }
       },
