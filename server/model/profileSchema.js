@@ -40,6 +40,8 @@ const profileSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'job'
       },
+
+      
       userID:{
         type:String
       }
