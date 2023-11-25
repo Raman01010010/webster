@@ -11,7 +11,7 @@ import NavigationIcon from '@mui/icons-material/Navigation'
 import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
 import Loader from "./Loader";
-
+import pic from './profile.jpg'
 import { useParams,useNavigate } from 'react-router-dom';   
 
 const socket = io('ws://localhost:3500/');
@@ -268,7 +268,7 @@ fetch()
                                                             <div className="flex flex-row">
                                                                 <div>
                                                                     <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                        src={pic}
                                                                         alt="avatar"
                                                                         className="flex self-center me-3"
                                                                         width={60}
@@ -368,7 +368,7 @@ fetch()
                                                                 </p>
                                                             </div>
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
@@ -384,7 +384,7 @@ fetch()
                                                                 </p>
                                                             </div>
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
