@@ -39,7 +39,6 @@ const englishlevel=[
 const Application = () => {
   const { jobId } = useParams();
   const [myapp, setMyapp] = useState([]);
-    const [acceptedApplicants, setAcceptedApplicants] = useState([]);
 
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   const [data,setData]=useState({
@@ -166,6 +165,7 @@ const Application = () => {
       <div className="flex items-center justify-center h-full mt-10">
     
         {myapp.map((applicant, index) => (
+          
           <div
             key={index}
             id={`card-${applicant._id}`}
@@ -207,26 +207,20 @@ const Application = () => {
               </Link>
             </div>
             <button
-          onClick={() => handleAcceptanceToggle(applicant._id)}
-          className={`bg-green-500 px-4 py-2 rounded-md ${
-            acceptedApplicants.includes(applicant._id)
-              ? 'text-white' // Apply styles for accepted applicants
-              : 'text-black' // Apply styles for non-accepted applicants
-          }`}
-        >
-          {
-  applicant.accepted ? (
-    <button onClick={() => handleAcceptanceToggle(applicant._id)}>
-      Accepted
-    </button>
-  ) : (
-    <button onClick={() => handleAcceptanceToggle(applicant._id)}>
-      Accept
-    </button>
-  )
-}
+                onClick={() => handleAcceptanceToggle(applicant._id)}
+                className={`bg-green-500 px-4 py-2 rounded-md ${
+                  applicant.accepted
+                    ? 'text-white'
+                    : 'text-black'
+                }`}
+              >
+                {applicant.accepted ? (
+                  <>Accepted</>
+                ) : (
+                  <>Accept</>
+                )}
+              </button>
 
-        </button>
           </div>
         ))}
       </div>

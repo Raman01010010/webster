@@ -54,7 +54,8 @@ const Showjob = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
 
-  
+  const [hasMoreData, setHasMoreData] = useState(true);
+
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -147,30 +148,6 @@ const [loading, setLoading] = useState(false);
   
   
   console.log("showjob"+newUser.userid);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post("/job/showjob", {
-          ...data,
-          page: currentPage,
-        });
-  
-        const jobsWithApplied = response.data.data.map((job) => ({
-          ...job,
-          hasApplied: job.hasApplied,
-        }));
-  
-        // If it's the first page, replace the existing data; otherwise, append the new data
-        setJobData((prevData) =>
-          currentPage === 1 ? jobsWithApplied : [...prevData, ...jobsWithApplied]
-        );
-      } catch (error) {
-        console.error("Error fetching job data: ", error);
-      }
-    };
-  
-    fetchData();
-  }, [data, currentPage]);
   const handleScroll = () => {
     const windowHeight =
       "innerHeight" in window
@@ -194,6 +171,39 @@ const [loading, setLoading] = useState(false);
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true); // Set loading to true when fetching data
+
+        const response = await axios.post("/job/showjob", {
+          ...data,
+          page: currentPage,
+        });
+
+        const jobsWithApplied = response.data.data.map((job) => ({
+          ...job,
+          hasApplied: job.hasApplied,
+        }));
+
+        // If it's the first page, replace the existing data; otherwise, append the new data
+        setJobData((prevData) =>
+          currentPage === 1 ? jobsWithApplied : [...prevData, ...jobsWithApplied]
+        );
+
+        // Check if there is more data to load
+        setHasMoreData(response.data.data.length > 0);
+
+        setLoading(false); // Set loading back to false after fetching data
+      } catch (error) {
+        console.error("Error fetching job data: ", error);
+        setLoading(false); // Set loading back to false in case of an error
+      }
+    };
+
+    fetchData();
+  }, [data, currentPage]);
   
   const handleShareOnWhatsApp = (jobId) => {
     

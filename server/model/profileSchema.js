@@ -48,9 +48,5 @@ const profileSchema = new Schema({
       userID:{
         type:String
       },
-      accepted:{
-        type:String,
-        default:"Applied",
-      }
 });
 module.exports = mongoose.model('profile', profileSchema);

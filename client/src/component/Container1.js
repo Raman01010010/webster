@@ -20,7 +20,7 @@ export default function Container1(){
     <Persist/>
           <Routes>
           <Route path="/google" element={<><Google1/></>} />
-          <Route path="/" element={<><Home/></>} />
+          <Route path="/" element={<><Home2/></>} />
           <Route path="/signin" element={<><Signin/></>} />
           <Route path="/signup" element={<><Signup/></>} />
           <Route path="/otp" element={<><Otp/></>} />

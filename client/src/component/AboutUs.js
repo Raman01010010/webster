@@ -119,11 +119,11 @@ const SingleCard = () => {
         <div className="card">
           <div className="card-info">
             <img
-              src="https://placekitten.com/240/320"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1SPQMvARWTqmyuARzk3vTwcVj7lLmxqdadQ&usqp=CAU"
               alt="Sample Person"
               style={{ width: '100%', height: '100%', borderRadius: '6px' }}
             />
-            <h1>John Doe</h1>
+            <h1>Raman Prajapati</h1>
             <p>Full Stack Developer</p>
           </div>
         </div>
@@ -131,29 +131,27 @@ const SingleCard = () => {
         <div className="card">
           <div className="card-info">
             <img
-              src="https://placekitten.com/240/320"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQI2BrJdpBvQR7YkfQCs9f_Igzplk6FOaeKA&usqp=CAU"
               alt="Sample Person"
               style={{ width: '100%', height: '100%', borderRadius: '6px' }}
             />
-            <h1>John Doe</h1>
+            <h1>Vivek Chaudhary</h1>
             <p>Full Stack Developer</p>
           </div>
         </div>
         <div className="card">
           <div className="card-info">
             <img
-              src="https://placekitten.com/240/320"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mUZ5yEavsXhRNe1ZKGWdpS6xsX3rCYi-bA&usqp=CAU"
               alt="Sample Person"
               style={{ width: '100%', height: '100%', borderRadius: '6px' }}
             />
-            <h1>John Doe</h1>
+            <h1>Priyanshu Singh</h1>
             <p>Full Stack Developer</p>
           </div>
         </div>
       </div>
-      <a href="https://mythrillfiction.com/" target="_blank" rel="noopener noreferrer">
-        Visit Mythrill
-      </a>
+     
        
     </>
   );
