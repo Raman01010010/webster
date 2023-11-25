@@ -99,7 +99,7 @@ const showjob = async (req, res) => {
     } else {
       // Fetch paginated jobs without sorting
       const startIndex = (page - 1) * pageSize;
-      sortedJobs = await job.find(filter).sort({ /* your sorting criteria */ }).skip(startIndex).limit(pageSize);
+      sortedJobs = await job.find(filter).sort({ /* your sorting criteria */ }).skip(startIndex)//.limit(pageSize);
     }
 
     // Find jobs in trending

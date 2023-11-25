@@ -168,7 +168,7 @@ const [loading, setLoading] = useState(false);
   
     if (windowBottom >= docHeight - 1) {
       // You can adjust the threshold (e.g., docHeight - 100) to start fetching data a bit earlier
-      setCurrentPage((prevPage) => prevPage + 1);
+     // setCurrentPage((prevPage) => prevPage + 1);
     }
   };
   
@@ -189,7 +189,7 @@ const [loading, setLoading] = useState(false);
 
         // If it's the first page, replace the existing data; otherwise, append the new data
         setJobData((prevData) =>
-          currentPage === 1 ? jobsWithApplied : [...prevData, ...jobsWithApplied]
+          currentPage === 1 ? jobsWithApplied : jobsWithApplied
         );
 
         // Check if there is more data to load

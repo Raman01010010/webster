@@ -6,7 +6,7 @@ const allowedOrigin = require('./config/allowedOrigin')
 const Notification = require('./model/notifiSchema');
 const { areUsersConnected } = require("./controllers/chatController");
 const roomSchema = require("./model/roomSchema");
-const chatRSchema = require("./model/chatRSchema");
+// const chatRSchema = require("./model/chatRSchema");
 const notifiSchema = require("./model/notifiSchema");
 
 let io
