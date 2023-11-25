@@ -73,7 +73,7 @@ async function handleLogout() {
     if (response.status === 200) {
       // Successful logout on the server
       // Redirect to the login page or perform any other client-side cleanup
-      window.location.href = "/signin";
+      window.location.href = "/home2";
     } else {
       // Server responded with an error status
       console.error("Failed to logout on the server:", response.statusText);
@@ -186,7 +186,7 @@ async function handleLogout() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Navbar
+              Connexa
               </Typography>
 
               <Button color="inherit" onClick={handleOpenModal}>
