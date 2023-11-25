@@ -13,6 +13,7 @@ import Loader from "./Loader";
 import { useParams,useNavigate } from 'react-router-dom';   
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddIcon from '@mui/icons-material/Add';
+import pic from './profile.jpg'
 const socket = io('ws://localhost:3500/');
 
 export default function Chat() {
@@ -290,7 +291,7 @@ fetch()
                                                             <div className="flex flex-row">
                                                                 <div>
                                                                     <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                        src={pic}
                                                                         alt="avatar"
                                                                         className="flex self-center me-3"
                                                                         width={60}
@@ -341,7 +342,7 @@ fetch()
                                                         <>
                                                         <div className="flex flex-row justify-start">
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
@@ -360,7 +361,7 @@ fetch()
                                                     { item?.other?.link&&item?.other?.des=='jpg'&&   <div className="flex flex-row justify-start">
 
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
@@ -391,7 +392,7 @@ fetch()
                                                                 </p>
                                                             </div>
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
@@ -407,7 +408,7 @@ fetch()
                                                                 </p>
                                                             </div>
                                                             <img
-                                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                                src={pic}
                                                                 alt="avatar 1"
                                                                 style={{ width: 45, height: "100%" }}
                                                             />
