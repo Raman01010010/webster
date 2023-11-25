@@ -21,7 +21,7 @@ const sendEmail = async (subject, message, send_to, send_from, reply_to) => {
             from: "collegeconnect121@gmail.com",
             to: send_to,
             replyTo: reply_to,
-            subject: "New Job Posted on College Connect",
+            subject: "New Job Posted on Connexa",
             html: `<h1>New Job Posted!</h1>
                 <p>you have posted a new job!</p>
                 <p>${message}</p>`
