@@ -120,7 +120,7 @@ const Otherusers = () => {
                               ? "Connected"
                               : "Send Request"}
                           </button>
-                          <a href={`/chat/${element._id}`}>
+                          <Link to={`/chat/${element._id}`}>
                           <button
                             // onClick={() =>
                             //   handleMessageRequest(newUser.email, element.email)
@@ -129,7 +129,7 @@ const Otherusers = () => {
                           >
                             Send Message
                           </button>  
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>

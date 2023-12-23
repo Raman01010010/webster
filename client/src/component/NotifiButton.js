@@ -1,6 +1,7 @@
 import { useEffect,useState,useContext } from "react"
 import { User } from "../context/User"
 import axios from '../api/axios'
+import { Link } from "react-router-dom";
 export default function NotifiButton() {
 const {newUser,notifications, setNotifications,sh,setSh}=useContext(User)
 
@@ -98,7 +99,7 @@ function fun(){
             
             {notifications.map(item=>{
   return(<>
-  <a href={item.link}>
+  <Link to={item.link}>
   <div className="w-full p-3 mt-4 bg-white rounded flex">
               <div
                 tabIndex={0}
@@ -131,7 +132,7 @@ function fun(){
                 </p>
               </div>
             </div>
-            </a>
+            </Link>
   </>)
 })}
 

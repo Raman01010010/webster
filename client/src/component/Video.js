@@ -40,7 +40,12 @@ const [scr,setScr]=useState(1)
   }, [myPeerId]);
 
   useEffect(() => {
-    const peerInstance = new Peer();
+    const peerInstance = new Peer({
+      config: {'iceServers': [
+        { url: 'stun:stun.l.google.com:19302' },
+        { url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
+      ]} /* Sample servers, please use appropriate ones */
+      });
 
     peerInstance.on('open', (id) => {
       setMyPeerId(id);

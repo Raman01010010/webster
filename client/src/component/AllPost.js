@@ -9,6 +9,7 @@ import { SlackCounter } from "@charkour/react-reactions";
 import { ReactionBarSelector } from "@charkour/react-reactions";
 import Test from "./Test";
 import { User } from "../context/User";
+
 import Loader from "./Loader";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
@@ -164,7 +165,7 @@ export default function AllPost() {
               return (
                 <>
                   <div className=" bg-gray-900 p-4 md:w-full  w-full">
-                    <a href={`/post1/${item._id}`}>
+                    <Link to={`/post1/${item._id}`}>
                       <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
                         <div className=" p-6">
                           <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
@@ -212,7 +213,7 @@ export default function AllPost() {
                           <Test id={item._id} />
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </>
               );

@@ -11,10 +11,11 @@ import NavigationIcon from '@mui/icons-material/Navigation'
 import ImageIcon from '@mui/icons-material/Image';
 import Dropzone from "react-dropzone";
 import Loader from "./Loader";
+import { Link } from "react-router-dom";
 import pic from './profile.jpg'
 import { useParams,useNavigate } from 'react-router-dom';   
 
-const socket = io('ws://localhost:3500/');
+const socket = io('raman20223177.ap-1.evennode.com');
 
 export default function Chat() {
     let { id } = useParams();

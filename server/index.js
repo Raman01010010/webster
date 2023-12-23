@@ -9,7 +9,7 @@ const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credential");
 const { initSocket } = require("./Socs");
-
+app.use(credentials)
 const PORT = 3500;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
