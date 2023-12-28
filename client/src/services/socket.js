@@ -1,6 +1,6 @@
 // socketService.js
 import io from 'socket.io-client';
 
-const socket = io('ws://localhost:3500');
+const socket = io('https://r-m-n-p.azurewebsites.net');
 
 export default socket;

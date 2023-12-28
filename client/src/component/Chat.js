@@ -1,5 +1,6 @@
 
 import io from 'socket.io-client';
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useContext ,useRef} from "react";
 import { User } from '../context/User';
 import axios from '../api/axios';
@@ -14,7 +15,7 @@ import { useParams,useNavigate } from 'react-router-dom';
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddIcon from '@mui/icons-material/Add';
 import pic from './profile.jpg'
-const socket = io('ws://localhost:3500/');
+const socket = io('https://r-m-n-p.azurewebsites.net');
 
 export default function Chat() {
     let { id } = useParams();
@@ -451,14 +452,14 @@ fetch()
           <button onClick={handleUpload}>Upload</button>
         </div>
       )}
-      <a href={`/videoc/${id}/1`}>
+      <Link to={`/videoc/${id}/1`}>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
       <Fab color="primary" aria-label="add">
         <VideoChatIcon />
       </Fab>
      
     </Box>
-    </a>
+    </Link>
     </p>                                       <label htmlFor="email" className="leading-7 text-sm text-gray-400">
                                                 Message
                                             </label>

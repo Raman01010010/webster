@@ -6,6 +6,7 @@ import axios from '../api/axios';
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import { Link, useLocation } from "react-router-dom";
 import Fab from '@mui/material/Fab';
 import NavigationIcon from '@mui/icons-material/Navigation'
 import ImageIcon from '@mui/icons-material/Image';
@@ -14,7 +15,7 @@ import Loader from "./Loader";
 import pic from './profile.jpg'
 import { useParams,useNavigate } from 'react-router-dom';   
 
-const socket = io('ws://localhost:3500/');
+const socket = io('https://r-m-n-p.azurewebsites.net/');
 
 export default function Chat() {
     let { id } = useParams();
