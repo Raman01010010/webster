@@ -4,7 +4,7 @@ import axios from 'axios';
 //Sanskar1751978@
 //const BASE_URL='http://127.0.0.1:3500/'
 //const BASE_URL='http://localhost:3500'
-const BASE_URL='https://r-m-n-p.azurewebsites.net'
+const BASE_URL='https://r-m-n.azurewebsites.net/'
 
 //axios.defaults.withCredentials = true;
 export default axios.create({
