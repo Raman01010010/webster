@@ -7,8 +7,8 @@ const useAxiosPrivate = () => {
     const refresh = useRefreshToken()
     const { auth } = useAuth()
 
-    const {newUser,setNewUser}=React.useContext(User)
-    
+    const { newUser, setNewUser } = React.useContext(User)
+
     console.log(newUser)
     React.useEffect(() => {
         const requestInterceptor = axiosPrivate.interceptors.request.use(
