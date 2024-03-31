@@ -94,17 +94,18 @@ Technologies used in the project:
 * Deployed using GitHub workflow<br>
 * Frontend deployed using Netlify<br>
 * Backend Deployed at Azure Web Services
+
 <h2>Project Screenshots:</h2>
 
-<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_20523d7_avxe6j.png" alt="project-screenshot" width="1000" height="400/">
+<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_20523d7_avxe6j.png" alt="project-screenshot" width="400" height="400/">
 
-<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205623_nqnsjg.png" alt="project-screenshot" width="1000" height="400/">
+<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205623_nqnsjg.png" alt="project-screenshot" width="400" height="400/">
 
-<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205447_eb4eic.png" alt="project-screenshot" width="1000" height="400/">
+<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205447_eb4eic.png" alt="project-screenshot" width="400" height="400/">
 
-<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205350_mytzo2.png" alt="project-screenshot" width="1000" height="400/">
+<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900222/Screenshot_2024-03-31_205350_mytzo2.png" alt="project-screenshot" width="400" height="400/">
 
-<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900221/Screenshot_2024-03-31_205412_gkeoj9.png" alt="project-screenshot" width="1000" height="400/">
+<img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900221/Screenshot_2024-03-31_205412_gkeoj9.png" alt="project-screenshot" width="400" height="400/">
 
 <img src="https://res.cloudinary.com/dd5kr52er/image/upload/v1711900220/Screenshot_2024-03-31_205549_pwjrwo.png" alt="project-screenshot" width="1000" height="400/">
 
