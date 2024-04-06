@@ -39,11 +39,10 @@ import Projects from "./Projects";
 import Addproject from "./Addproject";
 import App from "./Video";
 import Google1 from "./Google1";
+import Connections1 from "./Connections1";
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
-    
-
 
    { sh&&<NotifiButton/>}
 
@@ -52,7 +51,9 @@ export default function Container1(){
       
           <Route path="/post1/:id" element={<>            
      <SinglePost/></>} />
-        
+           
+         <Route path="/connection/:email" element={<><Connections1/></>}/> 
+
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat/:id" element={<><Chat/></>} />
           <Route path="/chatr/:id" element={<><ChatR/></>} />
