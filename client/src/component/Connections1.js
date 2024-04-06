@@ -29,7 +29,7 @@ function Connections1() {
         <div>
 
             <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-auto rounded-xl bg-clip-border">
-                <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700 mt-8">
+                <nav className="flex min-w-[240px] flex-col gap-1 p-2 mt-12 font-sans text-base font-normal text-blue-gray-700 mt-8">
 
                     {data.connection && data.connection.map((element, index) => (
                         <div

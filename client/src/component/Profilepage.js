@@ -441,7 +441,7 @@ const [alert,setAlert]=useState([]);
               href=""
               className="text-gray-900 py-3"
             >
-             Connections
+           <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Connections</button>
             </a>
             </Link>
             <Link to={`/projects/${email}`}>
@@ -449,7 +449,7 @@ const [alert,setAlert]=useState([]);
               href=""
               className="text-gray-900 py-3"
             >
-              Projects
+             <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Projects</button> 
             </a>
             </Link>
             <Link to={`/particularpost/${email}`}>
@@ -457,7 +457,7 @@ const [alert,setAlert]=useState([]);
               href=""
               className="text-gray-900 py-3"
             >
-              Posts
+              <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Posts</button>
             </a>
             </Link>
             <Link to={`/education/${email}`}>
@@ -465,7 +465,7 @@ const [alert,setAlert]=useState([]);
               href=""
               className="text-gray-900 py-3"
             >
-             Education
+             <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Education</button>
             </a>
             </Link>
            
@@ -474,7 +474,7 @@ const [alert,setAlert]=useState([]);
               href=""
               className="text-gray-900 py-3"
             >
-            Skills
+            <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Skills</button>
             </a>
             </Link>
             
