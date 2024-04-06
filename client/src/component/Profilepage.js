@@ -30,7 +30,7 @@ const Profilepage = () => {
 
   const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
-const [alert,setAlert]=useState([]);
+  const [alert, setAlert] = useState([]);
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -123,7 +123,7 @@ const [alert,setAlert]=useState([]);
       console.error("Upload failed:", error);
     }
   };
-  
+
   console.log("viv" + profileImageFilename);
   const fetchingEndorse = async (email, skill) => {
     const d = {
@@ -253,24 +253,24 @@ const [alert,setAlert]=useState([]);
               </div>
             </Link>
             {
-              newUser.email===data.email&&
-<div>
-            {/* File upload */}
-            <Dropzone onDrop={handleDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="dropzone">
-                  <input {...getInputProps()} />
-                  <p>Drop files here or click to select files</p>
-                </div>
-              )}
-            </Dropzone>
-            {file && (
+              newUser.email === data.email &&
               <div>
-                <p>Selected file: {file.name}</p>
-                <button onClick={handleUpload}>Upload</button>
-              </div>
-            )}
-</div>}
+                {/* File upload */}
+                <Dropzone onDrop={handleDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()} className="dropzone">
+                      <input {...getInputProps()} />
+                      <p>Drop files here or click to select files</p>
+                    </div>
+                  )}
+                </Dropzone>
+                {file && (
+                  <div>
+                    <p>Selected file: {file.name}</p>
+                    <button onClick={handleUpload}>Upload</button>
+                  </div>
+                )}
+              </div>}
           </div>
         );
     }
@@ -282,8 +282,8 @@ const [alert,setAlert]=useState([]);
     const fetchingData = async () => {
       try {
         const userId = newUser.userid; // Assuming userid is the user ID, adjust it accordingly
-        const res = await axiosPrivate.post("/connect/getalert", {userId} );
-        console.log("vivv"+res);
+        const res = await axiosPrivate.post("/connect/getalert", { userId });
+        console.log("vivv" + res);
         // Assuming the response structure is { alertingTo: [...array] }
         console.log(res.data)
         setAlert(res.data.alertingTo);
@@ -294,17 +294,17 @@ const [alert,setAlert]=useState([]);
     };
 
     fetchingData();
-  }, []); 
+  }, []);
 
 
   const handleBellClick = async () => {
     try {
-      
+
       const response = await axiosPrivate.post("/connect/bell", {
         userId: newUser.userid, // Assuming userid is the user ID, adjust it accordingly
         userEmail: data.email,
       });
-  
+
       // Check the response if needed
       if (response.data.success) {
         // If the server successfully processed the request
@@ -322,237 +322,240 @@ const [alert,setAlert]=useState([]);
     }
   };
   // console.log(alert);
-  console.log("vivek"+alert);
+  console.log("vivek" + alert);
   console.log(data._id);
 
   return (
-//     <div>
-//       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
-//         <div className="container px-5 py-24 mx-auto">
-//           <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">
-//             {" "}
-//             {/* Updated this line */}
-//             {/* Circular profile icon */}
-//             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-//               <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
-//                 {newUser.picture !== "xx" ? (
-//                   <img
-//                     alt="profile"
-//                     className="object-cover object-center w-full h-full"
-//                     src={t}
-//                   />
-//                 ) : (
-//                   <p>No profile image available</p>
-//                 )}
-//               </div>
+    //     <div>
+    //       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
+    //         <div className="container px-5 py-24 mx-auto">
+    //           <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">
+    //             {" "}
+    //             {/* Updated this line */}
+    //             {/* Circular profile icon */}
+    //             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+    //               <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
+    //                 {newUser.picture !== "xx" ? (
+    //                   <img
+    //                     alt="profile"
+    //                     className="object-cover object-center w-full h-full"
+    //                     src={t}
+    //                   />
+    //                 ) : (
+    //                   <p>No profile image available</p>
+    //                 )}
+    //               </div>
 
-                     
-//               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-//                 {data.username}
-//               </h2>
-//               <Button
-//                 color={buttonColor}
-//                 component={Link}
-//                 onClick={handleBellClick}
-//               >
-//                {
-                
-//                 alert.includes(data._id) ? (
-//   <FontAwesomeIcon icon={solidBell} />
-// ) : (
-//   <FontAwesomeIcon icon={solidBellSlash} />
-// )}
 
-//               </Button>
-             
-//               <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
-//                 {data.name}
-//               </h1>
-//               <div className="flex mb-4">
-//                 <button
-//                   onClick={() => handleTabClick("description")}
-//                   className={`flex-grow text-indigo-500 border-b-2 ${
-//                     activeTab === "description" && "border-indigo-500"
-//                   } py-2 text-lg px-1`}
-//                 >
-//                   Description
-//                 </button>
-//                 <button
+    //               <h2 className="text-sm title-font text-gray-500 tracking-widest">
+    //                 {data.username}
+    //               </h2>
+    //               <Button
+    //                 color={buttonColor}
+    //                 component={Link}
+    //                 onClick={handleBellClick}
+    //               >
+    //                {
 
-//                   onClick={() => handleTabClick("reviews")}
-//                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
-//                     activeTab === "reviews" &&
-//                     "text-indigo-500 border-indigo-500"
-//                   }`}
-//                 >
-//                   Connections
-//                 </button>
-//                 <button
-//                   onClick={() => handleTabClick("details")}
-//                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
-//                     activeTab === "details" &&
-//                     "text-indigo-500 border-indigo-500"
-//                   }`}
-//                 >
-//                   Skills
-//                 </button>
-//               </div>
-//               {renderContent()}
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-//       <ToastContainer />
-//     </div>
-<>
-<div>
-  
-  <div className="container mx-auto my-60">
-    <div>
-      <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-slate-300">
-        <div className="flex justify-center">
-          <img
-            src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-            alt=""
-            className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
-          />
-        </div>
-        <div className="mt-16">
-          <h1 className="font-bold text-center text-3xl text-gray-900">
-            Pantazi Software
-          </h1>
-          <p className="text-center text-sm text-gray-400 font-medium">
-            UI Components Factory
-          </p>
-          <p>
-            <span></span>
-          </p>
-          <div className="my-5 px-6">
-            <a
-              href="#"
-              className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white"
-            >
-              Connect with <span className="font-bold">Proffessionals</span>
-            </a>
-          </div>
-          <div className="flex justify-between items-center my-5 px-6">
-          <Link to={`/connection/${email}`}>
-            <a
-              href=""
-              className="text-gray-900 py-3"
-            >
-           <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Connections</button>
-            </a>
-            </Link>
-            <Link to={`/projects/${email}`}>
-            <a
-              href=""
-              className="text-gray-900 py-3"
-            >
-             <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Projects</button> 
-            </a>
-            </Link>
-            <Link to={`/particularpost/${email}`}>
-            <a
-              href=""
-              className="text-gray-900 py-3"
-            >
-              <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Posts</button>
-            </a>
-            </Link>
-            <Link to={`/education/${email}`}>
-            <a
-              href=""
-              className="text-gray-900 py-3"
-            >
-             <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Education</button>
-            </a>
-            </Link>
-           
-            <Link to={`/skills/${email}`}>
-            <a
-              href=""
-              className="text-gray-900 py-3"
-            >
-            <button className="bg-slate-500 rounded-md px-4 py-2 w-28 text-white">Skills</button>
-            </a>
-            </Link>
-            
-          </div>
-          <div className="w-full">
-            <h3 className="font-medium text-gray-900 text-left px-6">
-              Recent activites
-            </h3>
-            <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
-              <a
-                href="#"
-                className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-              >
+    //                 alert.includes(data._id) ? (
+    //   <FontAwesomeIcon icon={solidBell} />
+    // ) : (
+    //   <FontAwesomeIcon icon={solidBellSlash} />
+    // )}
+
+    //               </Button>
+
+    //               <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+    //                 {data.name}
+    //               </h1>
+    //               <div className="flex mb-4">
+    //                 <button
+    //                   onClick={() => handleTabClick("description")}
+    //                   className={`flex-grow text-indigo-500 border-b-2 ${
+    //                     activeTab === "description" && "border-indigo-500"
+    //                   } py-2 text-lg px-1`}
+    //                 >
+    //                   Description
+    //                 </button>
+    //                 <button
+
+    //                   onClick={() => handleTabClick("reviews")}
+    //                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
+    //                     activeTab === "reviews" &&
+    //                     "text-indigo-500 border-indigo-500"
+    //                   }`}
+    //                 >
+    //                   Connections
+    //                 </button>
+    //                 <button
+    //                   onClick={() => handleTabClick("details")}
+    //                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
+    //                     activeTab === "details" &&
+    //                     "text-indigo-500 border-indigo-500"
+    //                   }`}
+    //                 >
+    //                   Skills
+    //                 </button>
+    //               </div>
+    //               {renderContent()}
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </section>
+    //       <ToastContainer />
+    //     </div>
+    <>
+      <div>
+
+        <div className="container h-[30vh] mt-[16vh] mx-auto ">
+          <div>
+            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-slate-300">
+
+              <div className="flex justify-center">
                 <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                  src={t !== undefined && t !== null ? t : "https://avatars0.githubusercontent.com/u/35900628?v=4"}
                   alt=""
-                  className="rounded-full h-6 shadow-md inline-block mr-2"
+                  className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
                 />
-                Updated his status
-                <span className="text-gray-500 text-xs">24 min ago</span>
-              </a>
-              <a
-                href="#"
-                className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-              >
-                <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                  alt=""
-                  className="rounded-full h-6 shadow-md inline-block mr-2"
-                />
-                Added new profile picture
-                <span className="text-gray-500 text-xs">42 min ago</span>
-              </a>
-              <a
-                href="#"
-                className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-              >
-                <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                  alt=""
-                  className="rounded-full h-6 shadow-md inline-block mr-2"
-                />
-                Posted new article in{" "}
-                <span className="font-bold">#Web Dev</span>
-                <span className="text-gray-500 text-xs">49 min ago</span>
-              </a>
-              <a
-                href="#"
-                className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-              >
-                <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                  alt=""
-                  className="rounded-full h-6 shadow-md inline-block mr-2"
-                />
-                Edited website settings
-                <span className="text-gray-500 text-xs">1 day ago</span>
-              </a>
-              <a
-                href="#"
-                className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 overflow-hidden"
-              >
-                <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                  alt=""
-                  className="rounded-full h-6 shadow-md inline-block mr-2"
-                />
-                Added new rank
-                <span className="text-gray-500 text-xs">5 days ago</span>
-              </a>
+
+              </div>
+              
+              <div className="mt-16">
+                <h1 className="font-bold text-center text-3xl text-gray-900">
+                  {data.username}
+                </h1>
+                <p className="text-center text-sm text-gray-400 font-medium">
+                  Software Engineer
+                </p>
+                <p>
+                  <span></span>
+                </p>
+                <div className="my-5 px-6">
+                  <a
+                    href="#"
+                    className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white"
+                  >
+                    Connect with <span className="font-bold">Proffessionals</span>
+                  </a>
+                </div>
+                <div className="flex flex-wrap justify-between items-center my-5 px-6">
+                  <Link to={`/connection/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 py-2 m-2 w-28 text-white">Connections</button>
+                    </a>
+                  </Link>
+                  <Link to={`/projects/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Projects</button>
+                    </a>
+                  </Link>
+                  <Link to={`/particularpost/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Posts</button>
+                    </a>
+                  </Link>
+                  <Link to={`/education/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Education</button>
+                    </a>
+                  </Link>
+
+                  <Link to={`/skills/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Skills</button>
+                    </a>
+                  </Link>
+
+                </div>
+                <div className="w-full">
+                  <h3 className="font-medium text-gray-900 text-left px-6">
+                    Recent activites
+                  </h3>
+                  <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
+                    <a
+                      href="#"
+                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
+                    >
+                      <img
+                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                        alt=""
+                        className="rounded-full h-6 shadow-md inline-block mr-2"
+                      />
+                      Updated his status
+                      <span className="text-gray-500 text-xs">24 min ago</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
+                    >
+                      <img
+                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                        alt=""
+                        className="rounded-full h-6 shadow-md inline-block mr-2"
+                      />
+                      Added new profile picture
+                      <span className="text-gray-500 text-xs">42 min ago</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
+                    >
+                      <img
+                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                        alt=""
+                        className="rounded-full h-6 shadow-md inline-block mr-2"
+                      />
+                      Posted new article in{" "}
+                      <span className="font-bold">#Web Dev</span>
+                      <span className="text-gray-500 text-xs">49 min ago</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
+                    >
+                      <img
+                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                        alt=""
+                        className="rounded-full h-6 shadow-md inline-block mr-2"
+                      />
+                      Edited website settings
+                      <span className="text-gray-500 text-xs">1 day ago</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 overflow-hidden"
+                    >
+                      <img
+                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                        alt=""
+                        className="rounded-full h-6 shadow-md inline-block mr-2"
+                      />
+                      Added new rank
+                      <span className="text-gray-500 text-xs">5 days ago</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-</>
+    </>
   );
 };
 
