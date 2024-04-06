@@ -15,7 +15,7 @@ import { useParams,useNavigate } from 'react-router-dom';
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddIcon from '@mui/icons-material/Add';
 import pic from './profile.jpg'
-const socket = io('https://r-m-n-p.azurewebsites.net');
+const socket = io('http://localhost:3500');
 
 export default function Chat() {
     let { id } = useParams();

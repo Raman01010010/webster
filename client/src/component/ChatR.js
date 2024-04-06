@@ -15,7 +15,7 @@ import Loader from "./Loader";
 import pic from './profile.jpg'
 import { useParams,useNavigate } from 'react-router-dom';   
 
-const socket = io('https://r-m-n-p.azurewebsites.net/');
+const socket = io('http://localhost:3500');
 
 export default function Chat() {
     let { id } = useParams();
