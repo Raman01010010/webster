@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 
 const connectDB = async () => {
+    console.log("vivek");
     try {
         await mongoose.connect(process.env.DB, {
             // useUnifiedTopology: true,

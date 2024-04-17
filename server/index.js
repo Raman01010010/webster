@@ -13,9 +13,11 @@ const { initSocket } = require("./Socs");
 const PORT = 3500;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
+console.log("shale");
 connectDB();
 let server;
 mongoose.connection.once("open", () => {
+  
   console.log("Connected to MongoDB");
 });
 server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
