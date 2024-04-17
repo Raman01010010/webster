@@ -38,7 +38,5 @@ const chatSchema = new Schema({
 type:String
       },
       current:[String]
-   
 });
-
 module.exports = mongoose.model('chat', chatSchema);

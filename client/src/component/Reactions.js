@@ -8,8 +8,6 @@ export const Reactions = (props) => {
  //console.log(props)
   //console.log(newUser)
   function ram(){
-   
-   
   }
   function handleSelect(key){
    
@@ -23,7 +21,6 @@ export const Reactions = (props) => {
     props.api()
    
   }
- 
   return <ReactionBarSelector onSelect={handleSelect} reactions={[{label: "like", node: <div>👍</div>, key: "like"},{label: "congrats", node: <div>🎉</div>, key: "congrats"},{label: "Celebrate", node: <div>🎊</div>, key: "Celebrate"},{label: "Love", node: <div>💓</div>, key: "Love"}]} />;
 };
 

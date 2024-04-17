@@ -54,16 +54,12 @@ function CustomTabPanel(props) {
 
   const {accordionItems,setAccordionItems}=useContext(User)
   const {accordionItems2,setAccordionItems2}=useContext(User)
-
-
   const handleInputChange = (name, value) => {
-
     setInputValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
-  
   const addAccordion = () => {
     const newAccordion = { id: Date.now(), content: '', isOpen: false };
     setAccordionItems([...accordionItems, newAccordion]);
@@ -154,7 +150,6 @@ console.log(accordionItems[0].company);
           }}
         />
       </Grid>
-
       {/* Right Column */}
       <Grid item xs={6}>
         <TextField
