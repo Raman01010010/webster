@@ -31,7 +31,7 @@ const Profilepage = () => {
   const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState([]);
-  
+
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -408,9 +408,9 @@ const Profilepage = () => {
     <>
       <div>
 
-        <div className="container h-[30vh] mt-[16vh] mx-auto ">
+        <div className="container h-[30vh] mt-[16vh] mx-auto  ">
           <div>
-            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-slate-300">
+            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-slate-300 bg-blue-300	">
 
               <div className="flex justify-center">
                 <img
