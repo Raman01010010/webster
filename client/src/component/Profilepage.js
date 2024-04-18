@@ -31,6 +31,7 @@ const Profilepage = () => {
   const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState([]);
+  
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -62,7 +63,7 @@ const Profilepage = () => {
     }
     setSaveskill(true);
   };
-
+  console.log("dataaaaaaaaa",data);
   const Endorse = async (skill, newUseremail, otheruser) => {
     const d = {
       skill: skill,
