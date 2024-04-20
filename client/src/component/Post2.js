@@ -30,7 +30,6 @@ const PostForm = () => {
     }
   };
   function handleChange(e) {
-
     const newText = e.target.value; // Use innerText instead of textContent
     console.log(newText);
     console.log(postData.content.match(hashtagRegex))
@@ -52,21 +51,13 @@ const PostForm = () => {
     });
     console.log(postData);
   }
-
-
-
-
-
-
   const handleUpload =async (e) => {
     e.preventDefault()
     if (!files) {
       alert('Please select a file to upload.');
       return;
     }
-
     const text = postData.content// Regular expression to match hashtags
-
     const formData = new FormData();
     for (const file of files) {
       formData.append('files', file);
@@ -90,12 +81,8 @@ const PostForm = () => {
         // Handle errors and display an error message to the user
       });
     setLoad(0)
-    console.log(res)
-    
+    console.log(res) 
   };
-
-
-
   const onDrop = (acceptedFiles) => {
     setFiles(
       acceptedFiles.map((file) =>
@@ -105,9 +92,7 @@ const PostForm = () => {
       )
     );
   };
-
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create a Post</h2>

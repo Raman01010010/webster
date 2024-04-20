@@ -1,4 +1,3 @@
-
 import { User } from './context/User';
 import React from 'react';
 import './App.css';
@@ -10,7 +9,6 @@ import Post1 from './component/Post';
 import AllPost from './component/AllPost';
 import Reactions from './component/Reactions';
 import Job from './component/Job';
-
 import { useEffect } from 'react';
 import { getR } from './api/api';
 import PostForm from './component/Post2';
@@ -78,20 +76,15 @@ function App() {
         contact: ["", newUser.email, ""],  // Update contact[1]
       }));
     }, [newUser.userid, newUser.email]);
-    
     // comp.contact[1]=newUser.email
     console.log("111"+newUser)
   return (
     <>
     <User.Provider value={{newUser,setNewUser,comp,setComp,notifications,setNotifications,sh,setSh,inputValues,setInputValues,accordionItems,setAccordionItems,accordionItems2,setAccordionItems2, showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar,vdata,setVdata}}>
-      <Router>
-    
+    <Router>
      {(!newUser.accessToken)&&<Navbar/>}
      {(newUser.accessToken)&&<Navbar2/>}
-
- 
-   
-      </Router>
+    </Router>
 
     </User.Provider>
     </>

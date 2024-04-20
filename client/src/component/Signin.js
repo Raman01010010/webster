@@ -15,8 +15,6 @@ const { setAuth } = useAuth();
   const navigate = useNavigate();
 const [load,setLoad]=React.useState(0)
 const [stat,setStat]=React.useState('')
-
-
 var at;
 const axiosPrivate=useAxiosPrivate()
   async function hand(){
@@ -25,10 +23,6 @@ const axiosPrivate=useAxiosPrivate()
   console.log(res)
   at=res?.data?.accessToken;
   console.log(at)
-
-
-
-
   }
   async function handleSubmit(){
     setLoad(1)

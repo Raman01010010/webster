@@ -12,8 +12,6 @@ app.use(bodyParser.json({ limit: '5mb' }));
 require("dotenv").config();
 var cors=require('cors');
 const cookieParser=require("cookie-parser")
-
-
 //database connection 
 const connectDB = require('./config/dbConn');
 connectDB();
@@ -21,6 +19,9 @@ connectDB();
 
 
 app.use(logger)
+
+
+
 
 //MiddleWare
 app.use(morgan('dev'));

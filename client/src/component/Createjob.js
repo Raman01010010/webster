@@ -40,12 +40,9 @@ export default function Checkout() {
   const {newUser}=useContext(User)
   console.log(newUser)
   const [activeStep, setActiveStep] = useState(0);
-
-
   const { comp, setComp } = useContext(User);
   const [isFormComplete, setIsFormComplete] = useState(false);
   // console.log("vivek"+comp.jobberid);
-
   const checkFormCompletion = () => {
 
     // Replace these conditions with your actual form validation logic

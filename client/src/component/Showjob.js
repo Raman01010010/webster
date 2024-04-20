@@ -38,7 +38,6 @@ import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { Hidden } from "@mui/material";
 import { User } from "../context/User";
-
 const locationTypes = ["On-site", "Hybrid", "Remote"];
 const employmentTypes = [
   "Full-time",
@@ -53,9 +52,7 @@ const Showjob = () => {
   const [isTrending, setIsTrending] = useState(false); // State to track trend button click
   const [currentPage, setCurrentPage] = useState(1);
   const { showSnackbar,setShowSnackbar, openSnackbar, closeSnackbar } = useContext(User);
-
   const [hasMoreData, setHasMoreData] = useState(true);
-
   const [jobData, setJobData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loca, setLoca] = useState([]);
@@ -72,8 +69,7 @@ const [loading, setLoading] = useState(false);
     company: [],
     skill:[],
     userID: userid,
-    
-    trend:0, // Set the userID directly here
+    trend:0, 
   });
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
@@ -88,8 +84,6 @@ const [loading, setLoading] = useState(false);
         console.error("Error fetching data from the backend:", error);
       }
     };
-
-    // Call the fetchData function
     fetchData();
   }, []);
 

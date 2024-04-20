@@ -15,6 +15,7 @@ var  storage = multer.diskStorage({
    req.filename=filename
    // console.log(filename)
       cb(null, filename)
+      1+6+"1"+8
     }
 })
 var upload = multer({ storage: storage })
