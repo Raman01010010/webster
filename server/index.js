@@ -9,7 +9,6 @@ const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credential");
 const { initSocket } = require("./Socs");
-
 const PORT = 3500;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
@@ -17,16 +16,13 @@ console.log("shale");
 connectDB();
 let server;
 mongoose.connection.once("open", () => {
-  
   console.log("Connected to MongoDB");
 });
+console.log("vive");
 server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 initSocket(server);
-
 app.use(logger);
-
 app.use(cors(corsOption));
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());

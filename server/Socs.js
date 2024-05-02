@@ -22,12 +22,9 @@ function initSocket(server) {
       origin: allowedOrigin
     }
   });
-
   io.on('connection', (socket) => {
     console.log(`User ${socket.id} connected`);
-
     // ... Your socket-related logic as shown in your original code ...
-
     socket.on('disconnect', () => {
       console.log("disconnected")
       const ans=myMap2.get(socket.id);
@@ -39,7 +36,6 @@ function initSocket(server) {
       console.log(myMap1)
       // ... Handle user disconnection ...
     });
-
     //Enter room
     socket.on('enterRoom', async({ name, room }) => {
 
@@ -51,20 +47,13 @@ console.log(name,socket.id)
       myMap1.set(name,socket.id);
       myMap2.set(socket.id,name);
       console.log(myMap1.get(name))
- 
       socket.join(room)
-
       // To user who joined 
-
       // To everyone else 
       // socket.broadcast.to(room).emit('message',{"name":"Raman","text":"3424helllo4323"})
-
       // Update user list for room 
-
-
       // Update rooms list for everyone 
-
-    })
+})
     socket.on('joinRoom', (userId) => {
       socket.join(userId);
       console.log(userId, 'ghgh')

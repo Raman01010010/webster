@@ -5,8 +5,6 @@ const morgan=require("morgan");
 const bodyParser = require('body-parser'); // Add this line
 const {logger}=require('./middleware/logEvents')
 const errorHandler=require('./middleware/errorHandler')
-
-
 // Configure body-parser middleware
 app.use(bodyParser.json({ limit: '5mb' }));
 require("dotenv").config();
@@ -40,8 +38,7 @@ app.use(cors());
 //port
 const port=process.env.PORT ||9000
 app.use(errorHandler)
-
-
 app.listen(port,()=>{
+    console.log("hiiiiii")
     console.log(`server running on port ${port}`);
 })
