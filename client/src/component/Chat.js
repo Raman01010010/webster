@@ -462,6 +462,7 @@ export default function Chat() {
                                                             <VideoChatIcon />
                                                         </Fab>
 
+                                                    </Box>
                                                 </Link>
                                             </p> 
                                         </div>
