@@ -17,7 +17,7 @@ export default function Signup(){
 
 
   React.useEffect(() => {
-    const delay = 500; // Adjust the delay as needed
+    const delay = 500; 
     const timerId = setTimeout(() => {
       // Make the API call when the user stops typing
       const check=async ()=>{

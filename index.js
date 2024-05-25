@@ -49,6 +49,8 @@ app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));
 app.use("/google", require("./routes/oauth"));
 app.use('/oauth',  require("./routes/oauth2"));
+
+app.use("/upload",require("./routes/uploadPpic"));
 app.use(express.static("uploads"));
 app.use(verifyJWT);
 
