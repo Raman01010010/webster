@@ -173,7 +173,7 @@ async function handleLogout() {
   console.log(name);
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{background:'#1C1678'}}>
         <Toolbar>
           {isLargeScreen ? (
             <>
@@ -499,8 +499,9 @@ async function handleLogout() {
           </Dialog>
         </Toolbar>
       </AppBar>
-
+<div className="bg-[#A3FFD6] W-[100vw]  mt-[9vh]">
       <Container2 />
+      </div>
     </>
   );
 };

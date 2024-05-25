@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import CommentSection from './Comment';
+import CommentIcon from '@mui/icons-material/Comment';
 export default function Test(props){
 function TranslucentPopup({ onClose, children }) {
   return (
@@ -29,8 +30,9 @@ const closePopup = () => {
 };
 
 return (
-  <div className=" items-center justify-center">
-    <button onClick={openPopup} className="bg-blue-500 text-white p-2 rounded-md">
+  <div className=" items-center  justify-center">
+    <button onClick={openPopup} className="bg-white w-[100%] text-gray-800 ">
+      <CommentIcon fontSize='large'/>
       Comments
     </button>
 
