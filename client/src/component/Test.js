@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import CommentSection from './Comment';
 import CommentIcon from '@mui/icons-material/Comment';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 export default function Test(props){
 function TranslucentPopup({ onClose, children }) {
   return (
