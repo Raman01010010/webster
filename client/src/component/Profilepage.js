@@ -10,8 +10,10 @@ import Dropzone from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell as solidBell } from "@fortawesome/free-solid-svg-icons"; // Import solid bell
 import { faBellSlash as solidBellSlash } from "@fortawesome/free-solid-svg-icons"; // Import solid bell-slash
-
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Button from "@mui/material/Button";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import AttachFile from "@mui/icons-material/AttachFile";
 
 const Profilepage = () => {
   const [file, setFile] = useState(null);
@@ -31,7 +33,6 @@ const Profilepage = () => {
   const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState([]);
-
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -57,13 +58,18 @@ const Profilepage = () => {
       const res = await axiosPrivate.post("/connect/addskill", d);
 
       toast.success("Added Skill Successfully");
+
+
+
+
+
     } catch (err) {
       console.log(err);
       toast.error("Can't Add Skill Due to Some Err");
     }
     setSaveskill(true);
   };
-  console.log("dataaaaaaaaa",data);
+  console.log("dataaaaaaaaa", data);
   const Endorse = async (skill, newUseremail, otheruser) => {
     const d = {
       skill: skill,
@@ -326,6 +332,55 @@ const Profilepage = () => {
   console.log("vivek" + alert);
   console.log(data._id);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const AttachFile = async (e) => {
+    setSelectedFile(e.target.files[0]);
+    console.log(selectedFile);
+  }
+
+  const uploadProfilePic = async () => {
+    if (!selectedFile) {
+      alert('Please select a file');
+      return;
+    }
+
+    try {
+      const data = new FormData();
+      data.append("file", selectedFile);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "piyushproj");
+
+      const response = await fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      const imgUrl = result.url.toString();
+
+      const payload = {
+        imgurl: imgUrl,
+        email: newUser.email
+      };
+
+      try {
+        const res = await axiosPrivate.post("/upload/uploadProfilePic", payload);
+        if (res.status === 200) {
+          console.log('Profile picture uploaded successfully');
+        } else {
+          console.error('Failed to upload profile picture');
+        }
+      } catch (uploadError) {
+        console.error('Error uploading profile picture:', uploadError);
+      }
+
+
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
   return (
     //     <div>
     //       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
@@ -410,17 +465,18 @@ const Profilepage = () => {
 
         <div className="container h-[30vh] mt-[16vh] mx-auto  ">
           <div>
-            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-slate-300 bg-blue-300	">
+            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-emerald-400">
 
               <div className="flex justify-center">
                 <img
-                  src={t !== undefined && t !== null ? t : "https://avatars0.githubusercontent.com/u/35900628?v=4"}
+                  // src={t !== undefined && t !== null ? t : "https://avatars0.githubusercontent.com/u/35900628?v=4"}
+                  src = {data.picture}
                   alt=""
                   className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
                 />
 
               </div>
-              
+
               <div className="mt-16">
                 <h1 className="font-bold text-center text-3xl text-gray-900">
                   {data.username}
@@ -481,6 +537,31 @@ const Profilepage = () => {
                       <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Skills</button>
                     </a>
                   </Link>
+
+
+
+
+                  {newUser.email === data.email && (
+                    <>
+                      <button className="w-12" onClick={uploadProfilePic}>
+                        <CloudUploadIcon />
+                      </button>
+
+                      <div className="mt-4">
+                        <label
+                          htmlFor="id-card"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold"
+                        >
+                        </label>
+                        <input
+                          type="file"
+                          id="id-card"
+                          className="bg-gray-50 border border-gray-300 font-bold text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          onChange={AttachFile}
+                        />
+                      </div>
+                    </>
+                  )}
 
                 </div>
                 <div className="w-full">
