@@ -381,6 +381,10 @@ const Profilepage = () => {
     }
   };
 
+  const fun = () => {
+    navigate('/otherusers')
+  }
+
   return (
     //     <div>
     //       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
@@ -463,14 +467,14 @@ const Profilepage = () => {
     <>
       <div>
 
-        <div className="container h-[30vh] mt-[16vh] mx-auto  ">
+        <div className="container h-[30vh] mt-[30vh] mx-auto  ">
           <div>
-            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-emerald-400">
+            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-violet-400	">
 
               <div className="flex justify-center">
                 <img
                   // src={t !== undefined && t !== null ? t : "https://avatars0.githubusercontent.com/u/35900628?v=4"}
-                  src = {data.picture}
+                  src={data.picture}
                   alt=""
                   className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
                 />
@@ -481,13 +485,12 @@ const Profilepage = () => {
                 <h1 className="font-bold text-center text-3xl text-gray-900">
                   {data.username}
                 </h1>
-                <p className="text-center text-sm text-gray-400 font-medium">
-                  Software Engineer
-                </p>
+
                 <p>
                   <span></span>
                 </p>
-                <div className="my-5 px-6">
+                {/* <button > */}
+                <div onClick={fun} className="my-5 px-6">
                   <a
                     href="#"
                     className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white"
@@ -495,13 +498,14 @@ const Profilepage = () => {
                     Connect with <span className="font-bold">Proffessionals</span>
                   </a>
                 </div>
+                {/* </button> */}
                 <div className="flex flex-wrap justify-between items-center my-5 px-6">
                   <Link to={`/connection/${email}`}>
                     <a
                       href=""
                       className="text-gray-900 py-3"
                     >
-                      <button className="bg-slate-500 rounded-md px-4 py-2 m-2 w-28 text-white">Connections</button>
+                      <button className="bg-slate-500 rounded-md px-4 py-2 m-2 w-28 text-black">Connections</button>
                     </a>
                   </Link>
                   <Link to={`/projects/${email}`}>
@@ -509,7 +513,7 @@ const Profilepage = () => {
                       href=""
                       className="text-gray-900 py-3"
                     >
-                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Projects</button>
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Projects</button>
                     </a>
                   </Link>
                   <Link to={`/particularpost/${email}`}>
@@ -517,7 +521,7 @@ const Profilepage = () => {
                       href=""
                       className="text-gray-900 py-3"
                     >
-                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Posts</button>
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Posts</button>
                     </a>
                   </Link>
                   <Link to={`/education/${email}`}>
@@ -525,7 +529,7 @@ const Profilepage = () => {
                       href=""
                       className="text-gray-900 py-3"
                     >
-                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Education</button>
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Education</button>
                     </a>
                   </Link>
 
@@ -534,17 +538,14 @@ const Profilepage = () => {
                       href=""
                       className="text-gray-900 py-3"
                     >
-                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-white">Skills</button>
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Skills</button>
                     </a>
                   </Link>
 
-
-
-
                   {newUser.email === data.email && (
                     <>
-                      <button className="w-12" onClick={uploadProfilePic}>
-                        <CloudUploadIcon />
+                      <button style={{ width: '80px', height: '80px' }} onClick={uploadProfilePic}>
+                        <CloudUploadIcon style={{ width: '40px', height: '40px' }} />
                       </button>
 
                       <div className="mt-4">
@@ -564,74 +565,7 @@ const Profilepage = () => {
                   )}
 
                 </div>
-                <div className="w-full">
-                  <h3 className="font-medium text-gray-900 text-left px-6">
-                    Recent activites
-                  </h3>
-                  <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
-                    <a
-                      href="#"
-                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                    >
-                      <img
-                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                        alt=""
-                        className="rounded-full h-6 shadow-md inline-block mr-2"
-                      />
-                      Updated his status
-                      <span className="text-gray-500 text-xs">24 min ago</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                    >
-                      <img
-                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                        alt=""
-                        className="rounded-full h-6 shadow-md inline-block mr-2"
-                      />
-                      Added new profile picture
-                      <span className="text-gray-500 text-xs">42 min ago</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                    >
-                      <img
-                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                        alt=""
-                        className="rounded-full h-6 shadow-md inline-block mr-2"
-                      />
-                      Posted new article in{" "}
-                      <span className="font-bold">#Web Dev</span>
-                      <span className="text-gray-500 text-xs">49 min ago</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                    >
-                      <img
-                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                        alt=""
-                        className="rounded-full h-6 shadow-md inline-block mr-2"
-                      />
-                      Edited website settings
-                      <span className="text-gray-500 text-xs">1 day ago</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 overflow-hidden"
-                    >
-                      <img
-                        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                        alt=""
-                        className="rounded-full h-6 shadow-md inline-block mr-2"
-                      />
-                      Added new rank
-                      <span className="text-gray-500 text-xs">5 days ago</span>
-                    </a>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
