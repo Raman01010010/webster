@@ -119,12 +119,34 @@ export default function AllPost() {
     setPosts((old) => {
       return old?.map((it) => {
         if (it._id === item._id) {
-          const updatedReactions = it.react.filter((reaction) => reaction.by !== newUser.email);
-          return { ...it, react: [...updatedReactions, { emoji: key, by: newUser.email }] };
+          // Check if the user has already reacted with the same emoji
+          const existingReactionIndex = it.react.findIndex(reaction => reaction.by === newUser.email && reaction.emoji === key);
+    
+          if (existingReactionIndex !== -1) {
+            // Remove the existing reaction if found
+            const updatedReactions = [...it.react];
+            updatedReactions.splice(existingReactionIndex, 1);
+            return { ...it, react: updatedReactions };
+          } else {
+            // Check if the user has reacted with a different emoji
+            const otherReactionIndex = it.react.findIndex(reaction => reaction.by === newUser.email);
+    
+            if (otherReactionIndex !== -1) {
+              // Remove the existing reaction if found
+              const updatedReactions = [...it.react];
+              updatedReactions.splice(otherReactionIndex, 1);
+              return { ...it, react: [...updatedReactions, { emoji: key, by: newUser.email }] };
+            } else {
+              // Add the new reaction
+              return { ...it, react: [...it.react, { emoji: key, by: newUser.email }] };
+            }
+          }
         }
         return it;
       });
     });
+    
+    
     
     
     console.log(updatedLike);
