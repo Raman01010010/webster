@@ -191,7 +191,7 @@ const Footer = () => {
       </a>
     </li>
   </ul>
-  <p>©2021 Nadine Coelho | All Rights Reserved</p>
+  <p>©{new Date().getFullYear()} Connexa | All Rights Reserved</p>
 </footer>
      
     </div>

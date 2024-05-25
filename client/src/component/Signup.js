@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { addClient, addUser } from "../api/api"
 import Google from "./Google";
+import { ToastContainer, toast } from "react-toastify";
 export default function Signup(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -53,8 +54,12 @@ check();
    console.log(res)
    setStat(res?.response?.data)
    if(res.status==201||res.status==202){
+    toast('Sending OTP.....')
     console.log("success")
-    navigate('/otp')}
+    setTimeout(() => { navigate('/otp')}, 2000);
+   }else{
+    toast(res.response.data)
+   }
   
   }
   async function  handleChange(event){
@@ -146,9 +151,10 @@ check();
       <Google/>
       {load&&<Loader/>}
       <div>{stat}</div>
-      <p className="text-xs mt-3">
-        Literally you probably haven't heard of them jean shorts.
+      <p className="text-l mt-3">
+       Please wait while we let you in!!
       </p>
+      <ToastContainer />
     </div>
   </div>
 </section>
