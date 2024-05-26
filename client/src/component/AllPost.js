@@ -5,7 +5,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
 import NavigationIcon from "@mui/icons-material/Navigation";
 //const url="http://localhost:3500/"
-import { SlackCounter } from "@charkour/react-reactions";
+import { FacebookCounter, GithubCounter, SlackCounter } from "@charkour/react-reactions";
 import { ReactionBarSelector } from "@charkour/react-reactions";
 import Test from "./Test";
 import { User } from "../context/User";
@@ -116,7 +116,39 @@ export default function AllPost() {
       react: { emoji: key, by: newUser.email },
     };
     setLike(updatedLike);
-
+    setPosts((old) => {
+      return old?.map((it) => {
+        if (it._id === item._id) {
+          // Check if the user has already reacted with the same emoji
+          const existingReactionIndex = it.react.findIndex(reaction => reaction.by === newUser.email && reaction.emoji === key);
+    
+          if (existingReactionIndex !== -1) {
+            // Remove the existing reaction if found
+            const updatedReactions = [...it.react];
+            updatedReactions.splice(existingReactionIndex, 1);
+            return { ...it, react: updatedReactions };
+          } else {
+            // Check if the user has reacted with a different emoji
+            const otherReactionIndex = it.react.findIndex(reaction => reaction.by === newUser.email);
+    
+            if (otherReactionIndex !== -1) {
+              // Remove the existing reaction if found
+              const updatedReactions = [...it.react];
+              updatedReactions.splice(otherReactionIndex, 1);
+              return { ...it, react: [...updatedReactions, { emoji: key, by: newUser.email }] };
+            } else {
+              // Add the new reaction
+              return { ...it, react: [...it.react, { emoji: key, by: newUser.email }] };
+            }
+          }
+        }
+        return it;
+      });
+    });
+    
+    
+    
+    
     console.log(updatedLike);
 
     const res = await axiosPrivate.post("/post/react", updatedLike);
@@ -137,38 +169,40 @@ export default function AllPost() {
       console.log(error);
     }
   }
-  
+
   return (
     <>
-      <section className="text-gray-400 bg-gray-900 body-font">
+      <section className="text-gray-400  body-font">
         <div className="container px-5 py-24 mx-auto">
-        <Link to="/cpost">
-        <Fab
-        color="primary"
-        aria-label="add"
-        // onClick={handleFilterDialogOpen}
-        sx={{
-          position: "fixed",
-          bottom: "20px", // Adjust the bottom value as needed
-          left: "20px", // Adjust the right value as needed
-        }}
-      >
-<i class="fa-solid fa-plus"></i>      </Fab>
-      </Link>
+          <Link to="/cpost">
+            <Fab
+              color="primary"
+              aria-label="add"
+              // onClick={handleFilterDialogOpen}
+              sx={{
+                position: "fixed",
+                bottom: "20px", // Adjust the bottom value as needed
+                left: "20px", // Adjust the right value as needed
+              }}
+            >
+              <i class="fa-solid fa-plus"></i>      </Fab>
+          </Link>
           <div
             style={{ width: "100vh" }}
             className="flex flex-wrap mr-auto ml-auto  -m-4"
           >
-            {load && <Loader />}
+            {load===1&& <Loader />}
             {posts.map((item) => {
               return (
                 <>
-                  <div className=" bg-gray-900 p-4 md:w-full  w-full">
-                    <a href={`/post1/${item._id}`}>
-                      <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
+                  <div className="  p-4 md:w-full  w-full">
+                    <a 
+                  //  href={`/post1/${item._id}`}
+                    >
+                      <div className="h-full bg-[#1C1678] border-2 border-gray-800 rounded-lg ">
                         <div className=" p-6">
                           <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
-                            {item.email}
+                          {item.email.split('@')[0]}
                           </h2>
                           <h1 className="title-font text-lg font-medium text-white mb-3">
                             {item.head}
@@ -192,11 +226,18 @@ export default function AllPost() {
                           </ul>
                         </div>
                         <FilePreview fileList={item.file} />
-                        <div className="flex justify-center p-6">
-                          <SlackCounter counters={item.react} />
-                          <br />
+                      
+                        <br />
+                       
+                       
+                        <div className="bg-white  flex justify-between w-[100%] mx-4px">
+                          {" "}
+                         
+                    <div className="mt-[4px]">
+                          <GithubCounter counters={item.react}/>
+                          </div>
                           <ReactionBarSelector
-                            iconSize={15}
+                            iconSize={25}
                             onSelect={(key) => handleSelect(item, key)}
                             reactions={[
                               { label: "👍", node: <div>👍</div>, key: "👍" },
@@ -205,11 +246,12 @@ export default function AllPost() {
                               { label: "💓", node: <div>💓</div>, key: "💓" },
                             ]}
                           />
-                        </div>
-                        <br />
-                        <div className="flex justify-center">
-                          {" "}
                           <Test id={item._id} />
+                          <Link to={`/post1/${item._id}`}>
+                          <button>
+                            View Post
+                          </button>
+                          </Link>
                         </div>
                       </div>
                     </a>

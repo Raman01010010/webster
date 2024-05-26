@@ -76,7 +76,7 @@ const [thresholdRange5, thresholdRange6] = [600, 900];
     <Element name="home2">
       <div style={pageStyle}>
         <div className="text-center text-white p-4">
-          <h1 className="text-6xl mb-8 font-bold">Welcome to the BE Bop</h1>
+          <h1 className="text-6xl mb-8 font-bold">Welcome to the Connexa</h1>
           <div className="space-x-4 mt-8">
             <Link to="/signin" className="text-white">
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">

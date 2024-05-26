@@ -4,7 +4,7 @@ import axios from "../api/axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
-
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const Otherusers = () => {
   const { newUser } = useContext(User);
   // console.log(newUser);
@@ -74,34 +74,35 @@ const Otherusers = () => {
 
   return (
     <>
-      <section className="text-gray-400 bg-gray-900 body-font">
+      <section className="text-gray-400 bg-[#A3FFD6] body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4">
             {otheruser.map((element) => {
               return (
                 <div className="p-4 md:w-1/3" key={element.email}>
                 
-                    <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
-                    <Link to={`/profilepage/${element.email}`} className="flex">
-                      <img
-                        className="lg:h-48 md:h-36 w-full object-cover object-center"
-                        src={element.picture.startsWith('https')
-                         ? element.picture
-                         : `http://localhost:3500/${element.picture}`}
-                        alt="blog"
-                      />
+                    <div className="h-full border-2 bg-cyan-800 border-gray-800 rounded-lg overflow-hidden">
+                    <Link to={`/profilepage/${element.email}`} className="flex justify-center">
+                    {element.picture.startsWith('http')||element.picture==='xx' ? (
+                      <div className="">
+  <AccountBoxIcon sx={{ fontSize: 200 ,color:'white'}} /></div>
+) : (
+  <img
+    className="lg:h-48 md:h-36 w-full object-cover object-center"
+    src={`http://localhost:3500/${element.picture}`}
+    alt="blog"
+  />
+)}
+
                         </Link>
                       <div className="p-6">
-                        <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
+                        <h2 className="tracking-widest text-xs title-font font-medium text-gray-100 mb-1">
                           {element.email}
                         </h2>
                         <h1 className="title-font text-lg font-medium text-white mb-3">
                           {element.username}
                         </h1>
-                        <p className="leading-relaxed mb-3 ">
-                          Photo booth fam kinfolk cold-pressed sriracha leggings
-                          jianbing microdosing tousled waistcoat.
-                        </p>
+                       
                         <div className="flex justify-between">
                           <button
                             onClick={() =>
@@ -112,9 +113,9 @@ const Otherusers = () => {
                             }
                             className={`${
                               element.connection.includes(newUser.email)
-                                ? "bg-lime-800 text-white"
-                                : "bg-blue-500 hover:bg-blue-700 text-white"
-                            } rounded-full p-2`}
+                                ? "bg-[#FFEAE3] text-black"
+                                : "bg-[#FFB1B1] hover:bg-blue-700 text-black"
+                            } rounded-md p-2`}
                           >
                             {element.connection.includes(newUser.email)
                               ? "Connected"

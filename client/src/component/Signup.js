@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { addClient, addUser } from "../api/api"
 import Google from "./Google";
+import { ToastContainer, toast } from "react-toastify";
 export default function Signup(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -16,7 +17,7 @@ export default function Signup(){
 
 
   React.useEffect(() => {
-    const delay = 500; // Adjust the delay as needed
+    const delay = 500; 
     const timerId = setTimeout(() => {
       // Make the API call when the user stops typing
       const check=async ()=>{
@@ -53,8 +54,12 @@ check();
    console.log(res)
    setStat(res?.response?.data)
    if(res.status==201||res.status==202){
+    toast('Sending OTP.....')
     console.log("success")
-    navigate('/otp')}
+    setTimeout(() => { navigate('/otp')}, 2000);
+   }else{
+    toast(res.response.data)
+   }
   
   }
   async function  handleChange(event){
@@ -141,14 +146,15 @@ check();
         />
       </div>
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
-        Button
+      Sign Up
       </button>
       <Google/>
       {load&&<Loader/>}
       <div>{stat}</div>
-      <p className="text-xs mt-3">
-        Literally you probably haven't heard of them jean shorts.
+      <p className="text-l mt-3">
+       Please wait while we let you in!!
       </p>
+      <ToastContainer />
     </div>
   </div>
 </section>

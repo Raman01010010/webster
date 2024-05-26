@@ -3,7 +3,7 @@ import axios from '../api/axios';
 import { useContext } from 'react';
 import { User } from '../context/User';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const CommentSection = (props) => {
   const axiosPrivate=useAxiosPrivate()
   const {newUser}=useContext(User)
@@ -51,15 +51,11 @@ get()
         {/* Display existing comments */}
         <div className="comments" style={{ height: '28vh', overflowY: 'auto' }}>
           {comments.map((item,index) => (
-            <div key={index} className="flex space-x-2">
-              <img
-                src="https://via.placeholder.com/40"
-                alt="User Avatar"
-                className="w-10 h-10 rounded-full"
-              />
-              <div>
-                <p className="text-gray-800">{item?.user?.username}</p>
-                <p className="text-gray-600">{item.text}</p>
+            <div key={index} className="flex space-x-2 bg-[#7BC9FF] rounded-md m-2">
+             <AccountBoxIcon/>
+              <div className=''>
+                <p className="text-gray-800 text-s font-semibold">{item?.user?.username}</p>
+                <p className="text-gray-600 text-sm">{item.text}</p>
               </div>
             </div>
           ))}
@@ -67,11 +63,7 @@ get()
 
         {/* Comment input */}
         <div className="comment-input flex space-x-2">
-          <img
-            src="https://via.placeholder.com/40"
-            alt="User Avatar"
-            className="w-10 h-10 rounded-full"
-          />
+        <AccountBoxIcon sx={{ fontSize: 60 }}/>
           <div style={{display:"flex"}}>
             <textarea
             style={{height:"10vh"}}
@@ -82,7 +74,7 @@ get()
             ></textarea>
             <button
               onClick={handleCommentSubmit}
-              className="mt-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+              className=" bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
             >
               Comment
             </button>

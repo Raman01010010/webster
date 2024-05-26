@@ -3,9 +3,9 @@ import React, { useState, useEffect ,useContext} from "react";
 import {Reactions,Counter} from "./Reactions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useParams } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 //const url="http://localhost:3500/"
-import { SlackCounter }from '@charkour/react-reactions';
+import { GithubCounter, SlackCounter }from '@charkour/react-reactions';
 import { ReactionBarSelector } from '@charkour/react-reactions';
 import Test from "./Test";
 import { User } from "../context/User";
@@ -80,41 +80,63 @@ const {newUser}=useContext(User)
   // function body here
   return(<>
   
-<div style={{paddingTop:'15vh'}} className=" bg-gray-900 p-4 md:w-full  w-full">
-    <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
-    <div className=" p-6">
-            <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
-              {item.email}
-            </h2>
-            <h1 className="title-font text-lg font-medium text-white mb-3">
-                {item.head}
-            </h1>
-            <p className="leading-relaxed mb-3">
-                {item.content}
-            </p>
-            <ul className="flex flex-wrap text-xs font-medium -m-1">
-                      {item.hashtag?.map(it=>{
-                        return(<><li className="m-1">
-                        <a className="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out" href="#0">{it}</a>
-                      </li></>)
-                      })}
+  <div className="  p-4 md:w-full  w-full">
+                    <a 
+                  //  href={`/post1/${item._id}`}
+                    >
+                      <div className="h-full bg-[#1C1678] border-2 border-gray-800 rounded-lg ">
+                        <div className=" p-6">
+                          <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
                       
-                     
-                    </ul>
-                  
-        </div>
-        <FilePreview fileList={item.file}/>
-        <div className="flex justify-center p-6">
-                    
-                    <SlackCounter  counters={item.react}/>
-               <br/>
-                    <ReactionBarSelector iconSize={15}  onSelect={(key)=>handleSelect(item,key)} reactions={[{label: "👍", node: <div>👍</div>, key: "👍"},{label: "🎉", node: <div>🎉</div>, key: "🎉"},{label: "🎊", node: <div>🎊</div>, key: "🎊"},{label: "💓", node: <div>💓</div>, key: "💓"}]} />
-             
+                          </h2>
+                          <h1 className="title-font text-lg font-medium text-white mb-3">
+                            {item.head}
+                          </h1>
+                          <p className="leading-relaxed mb-3">{item.content}</p>
+                          <ul className="flex flex-wrap text-xs font-medium -m-1">
+                            {item.hashtag?.map((it) => {
+                              return (
+                                <>
+                                  <li className="m-1">
+                                    <a
+                                      className="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out"
+                                      href="#0"
+                                    >
+                                      {it}
+                                    </a>
+                                  </li>
+                                </>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                        <FilePreview fileList={item.file} />
+                      
+                        <br />
+                       
+                       
+                        <div className="bg-white  flex justify-between w-[100%] mx-4px">
+                          {" "}
+                         
+                    <div className="mt-[4px]">
+                          <GithubCounter counters={item.react}/>
+                          </div>
+                          <ReactionBarSelector
+                            iconSize={25}
+                            onSelect={(key) => handleSelect(item, key)}
+                            reactions={[
+                              { label: "👍", node: <div>👍</div>, key: "👍" },
+                              { label: "🎉", node: <div>🎉</div>, key: "🎉" },
+                              { label: "🎊", node: <div>🎊</div>, key: "🎊" },
+                              { label: "💓", node: <div>💓</div>, key: "💓" },
+                            ]}
+                          />
+                          <Test id={item._id} />
+                         
+                        </div>
+                      </div>
+                    </a>
                   </div>
-                  <br/>
-                 <div className="flex justify-center"> <Test id={item._id}/></div>
-    </div>
-</div>
 
   </>)
 }
