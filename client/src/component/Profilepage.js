@@ -10,8 +10,10 @@ import Dropzone from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell as solidBell } from "@fortawesome/free-solid-svg-icons"; // Import solid bell
 import { faBellSlash as solidBellSlash } from "@fortawesome/free-solid-svg-icons"; // Import solid bell-slash
-
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Button from "@mui/material/Button";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import AttachFile from "@mui/icons-material/AttachFile";
 
 const Profilepage = () => {
   const [file, setFile] = useState(null);
@@ -30,7 +32,7 @@ const Profilepage = () => {
 
   const [profileImageFilename, setProfileImageFilename] = useState("");
   const [data, setData] = useState([]);
-const [alert,setAlert]=useState([]);
+  const [alert, setAlert] = useState([]);
   useEffect(() => {
     const fetchingData = async () => {
       try {
@@ -56,13 +58,18 @@ const [alert,setAlert]=useState([]);
       const res = await axiosPrivate.post("/connect/addskill", d);
 
       toast.success("Added Skill Successfully");
+
+
+
+
+
     } catch (err) {
       console.log(err);
       toast.error("Can't Add Skill Due to Some Err");
     }
     setSaveskill(true);
   };
-
+  console.log("dataaaaaaaaa", data);
   const Endorse = async (skill, newUseremail, otheruser) => {
     const d = {
       skill: skill,
@@ -123,7 +130,7 @@ const [alert,setAlert]=useState([]);
       console.error("Upload failed:", error);
     }
   };
-  
+
   console.log("viv" + profileImageFilename);
   const fetchingEndorse = async (email, skill) => {
     const d = {
@@ -253,26 +260,24 @@ const [alert,setAlert]=useState([]);
               </div>
             </Link>
             {
-              newUser.email===data.email&&
-<div>
-            {/* File upload */}
-            <Dropzone onDrop={handleDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="dropzone">
-                  <input {...getInputProps()} />
-                  <p>Drop files here or click to select files</p>
-                </div>
-              )}
-            </Dropzone>
-            {file && (
+              newUser.email === data.email &&
               <div>
-                <p>Selected file: {file.name}</p>
-                <button onClick={handleUpload}>Upload</button>
-              </div>
-            )}
-
-</div>}
-
+                {/* File upload */}
+                <Dropzone onDrop={handleDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()} className="dropzone">
+                      <input {...getInputProps()} />
+                      <p>Drop files here or click to select files</p>
+                    </div>
+                  )}
+                </Dropzone>
+                {file && (
+                  <div>
+                    <p>Selected file: {file.name}</p>
+                    <button onClick={handleUpload}>Upload</button>
+                  </div>
+                )}
+              </div>}
           </div>
         );
     }
@@ -280,15 +285,12 @@ const [alert,setAlert]=useState([]);
   console.log("vi" + newUser.picture);
   const t = `http://localhost:3500/${data.picture}`;
 
-  
-
-
   useEffect(() => {
     const fetchingData = async () => {
       try {
         const userId = newUser.userid; // Assuming userid is the user ID, adjust it accordingly
-        const res = await axiosPrivate.post("/connect/getalert", {userId} );
-        console.log("vivv"+res);
+        const res = await axiosPrivate.post("/connect/getalert", { userId });
+        console.log("vivv" + res);
         // Assuming the response structure is { alertingTo: [...array] }
         console.log(res.data)
         setAlert(res.data.alertingTo);
@@ -299,17 +301,17 @@ const [alert,setAlert]=useState([]);
     };
 
     fetchingData();
-  }, []); 
+  }, []);
 
 
   const handleBellClick = async () => {
     try {
-      
+
       const response = await axiosPrivate.post("/connect/bell", {
         userId: newUser.userid, // Assuming userid is the user ID, adjust it accordingly
         userEmail: data.email,
       });
-  
+
       // Check the response if needed
       if (response.data.success) {
         // If the server successfully processed the request
@@ -327,87 +329,249 @@ const [alert,setAlert]=useState([]);
     }
   };
   // console.log(alert);
-  console.log("vivek"+alert);
+  console.log("vivek" + alert);
   console.log(data._id);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const AttachFile = async (e) => {
+    setSelectedFile(e.target.files[0]);
+    console.log(selectedFile);
+  }
+
+  const uploadProfilePic = async () => {
+    if (!selectedFile) {
+      alert('Please select a file');
+      return;
+    }
+
+    try {
+      const data = new FormData();
+      data.append("file", selectedFile);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "piyushproj");
+
+      const response = await fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      const imgUrl = result.url.toString();
+
+      const payload = {
+        imgurl: imgUrl,
+        email: newUser.email
+      };
+
+      try {
+        const res = await axiosPrivate.post("/upload/uploadProfilePic", payload);
+        if (res.status === 200) {
+          console.log('Profile picture uploaded successfully');
+        } else {
+          console.error('Failed to upload profile picture');
+        }
+      } catch (uploadError) {
+        console.error('Error uploading profile picture:', uploadError);
+      }
+
+
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  const fun = () => {
+    navigate('/otherusers')
+  }
+
   return (
-    <div>
-      <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">
-            {" "}
-            {/* Updated this line */}
-            {/* Circular profile icon */}
-            <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-              <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
-                {newUser.picture !== "xx" ? (
-                  <img
-                    alt="profile"
-                    className="object-cover object-center w-full h-full"
-                    src={t}
-                  />
-                ) : (
-                  <p>No profile image available</p>
-                )}
+    //     <div>
+    //       <section className="text-gray-600 body-font overflow-hidden bg-blue-200">
+    //         <div className="container px-5 py-24 mx-auto">
+    //           <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center">
+    //             {" "}
+    //             {/* Updated this line */}
+    //             {/* Circular profile icon */}
+    //             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+    //               <div className="rounded-full overflow-hidden w-32 h-32 mx-auto mb-4">
+    //                 {newUser.picture !== "xx" ? (
+    //                   <img
+    //                     alt="profile"
+    //                     className="object-cover object-center w-full h-full"
+    //                     src={t}
+    //                   />
+    //                 ) : (
+    //                   <p>No profile image available</p>
+    //                 )}
+    //               </div>
+
+
+    //               <h2 className="text-sm title-font text-gray-500 tracking-widest">
+    //                 {data.username}
+    //               </h2>
+    //               <Button
+    //                 color={buttonColor}
+    //                 component={Link}
+    //                 onClick={handleBellClick}
+    //               >
+    //                {
+
+    //                 alert.includes(data._id) ? (
+    //   <FontAwesomeIcon icon={solidBell} />
+    // ) : (
+    //   <FontAwesomeIcon icon={solidBellSlash} />
+    // )}
+
+    //               </Button>
+
+    //               <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+    //                 {data.name}
+    //               </h1>
+    //               <div className="flex mb-4">
+    //                 <button
+    //                   onClick={() => handleTabClick("description")}
+    //                   className={`flex-grow text-indigo-500 border-b-2 ${
+    //                     activeTab === "description" && "border-indigo-500"
+    //                   } py-2 text-lg px-1`}
+    //                 >
+    //                   Description
+    //                 </button>
+    //                 <button
+
+    //                   onClick={() => handleTabClick("reviews")}
+    //                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
+    //                     activeTab === "reviews" &&
+    //                     "text-indigo-500 border-indigo-500"
+    //                   }`}
+    //                 >
+    //                   Connections
+    //                 </button>
+    //                 <button
+    //                   onClick={() => handleTabClick("details")}
+    //                   className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
+    //                     activeTab === "details" &&
+    //                     "text-indigo-500 border-indigo-500"
+    //                   }`}
+    //                 >
+    //                   Skills
+    //                 </button>
+    //               </div>
+    //               {renderContent()}
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </section>
+    //       <ToastContainer />
+    //     </div>
+    <>
+      <div>
+
+        <div className="container h-[30vh] mt-[30vh] mx-auto  ">
+          <div>
+            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto bg-violet-400	">
+
+              <div className="flex justify-center">
+                <img
+                  // src={t !== undefined && t !== null ? t : "https://avatars0.githubusercontent.com/u/35900628?v=4"}
+                  src={data.picture}
+                  alt=""
+                  className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
+                />
+
               </div>
 
-                     
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {data.username}
-              </h2>
-              <Button
-                color={buttonColor}
-                component={Link}
-                onClick={handleBellClick}
-              >
-               {
+              <div className="mt-16">
+                <h1 className="font-bold text-center text-3xl text-gray-900">
+                  {data.username}
+                </h1>
+
+                <p>
+                  <span></span>
+                </p>
+                {/* <button > */}
+                <div onClick={fun} className="my-5 px-6">
+                  <a
+                    href="#"
+                    className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white"
+                  >
+                    Connect with <span className="font-bold">Proffessionals</span>
+                  </a>
+                </div>
+                {/* </button> */}
+                <div className="flex flex-wrap justify-between items-center my-5 px-6">
+                  <Link to={`/connection/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 py-2 m-2 w-28 text-black">Connections</button>
+                    </a>
+                  </Link>
+                  <Link to={`/projects/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Projects</button>
+                    </a>
+                  </Link>
+                  <Link to={`/particularpost/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Posts</button>
+                    </a>
+                  </Link>
+                  <Link to={`/education/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Education</button>
+                    </a>
+                  </Link>
+
+                  <Link to={`/skills/${email}`}>
+                    <a
+                      href=""
+                      className="text-gray-900 py-3"
+                    >
+                      <button className="bg-slate-500 rounded-md px-4 m-2 py-2 w-28 text-black">Skills</button>
+                    </a>
+                  </Link>
+
+                  {newUser.email === data.email && (
+                    <>
+                      <button style={{ width: '80px', height: '80px' }} onClick={uploadProfilePic}>
+                        <CloudUploadIcon style={{ width: '40px', height: '40px' }} />
+                      </button>
+
+                      <div className="mt-4">
+                        <label
+                          htmlFor="id-card"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold"
+                        >
+                        </label>
+                        <input
+                          type="file"
+                          id="id-card"
+                          className="bg-gray-50 border border-gray-300 font-bold text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          onChange={AttachFile}
+                        />
+                      </div>
+                    </>
+                  )}
+
+                </div>
                 
-                alert.includes(data._id) ? (
-  <FontAwesomeIcon icon={solidBell} />
-) : (
-  <FontAwesomeIcon icon={solidBellSlash} />
-)}
-
-              </Button>
-             
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
-                {data.name}
-              </h1>
-              <div className="flex mb-4">
-                <button
-                  onClick={() => handleTabClick("description")}
-                  className={`flex-grow text-indigo-500 border-b-2 ${
-                    activeTab === "description" && "border-indigo-500"
-                  } py-2 text-lg px-1`}
-                >
-                  Description
-                </button>
-                <button
-
-                  onClick={() => handleTabClick("reviews")}
-                  className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
-                    activeTab === "reviews" &&
-                    "text-indigo-500 border-indigo-500"
-                  }`}
-                >
-                  Connections
-                </button>
-                <button
-                  onClick={() => handleTabClick("details")}
-                  className={`flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 ${
-                    activeTab === "details" &&
-                    "text-indigo-500 border-indigo-500"
-                  }`}
-                >
-                  Skills
-                </button>
               </div>
-              {renderContent()}
             </div>
           </div>
         </div>
-      </section>
-      <ToastContainer />
-    </div>
+      </div>
+    </>
   );
 };
 

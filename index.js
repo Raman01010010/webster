@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credential");
 const { initSocket } = require("./Socs");
 
-const PORT = process.env.PORT;
+const PORT = 3500;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
 connectDB();
@@ -49,6 +49,8 @@ app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
 app.use("/connect", require("./routes/connectRoutes"));
 app.use("/google", require("./routes/oauth"));
 app.use('/oauth',  require("./routes/oauth2"));
+
+app.use("/upload",require("./routes/uploadPpic"));
 app.use(express.static("uploads"));
 app.use(verifyJWT);
 

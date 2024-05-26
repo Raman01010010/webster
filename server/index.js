@@ -46,6 +46,8 @@ app.use("/post", require("./routes/post"));
 app.use("/api", require("./routes/api"));
 
 app.use("/uploadprofileimage", require("./routes/uploadprofileimage"));
+
+app.use("/upload",require("./routes/uploadPpic"));
 app.use("/connect", require("./routes/connectRoutes"));
 app.use("/google", require("./routes/oauth"));
 app.use('/oauth',  require("./routes/oauth2"));

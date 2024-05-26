@@ -1,39 +1,39 @@
 import axios from '../api/axios';
-import React, { useState ,useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { User } from '../context/User';
 export default function Post1() {
-    const {newUser}=useContext(User)
+    const { newUser } = useContext(User)
     const [image, setImage] = useState('https://preview.cruip.com/open-pro/images/blog-post-01.jpg');
-    const [postData, setPostdata] = useState({ "email":newUser.email,"head": "Heading", "content": "Content of the post", "hashtag": "" })
-    const hashtagRegex = /#[a-zA-Z0-9_]+/g; 
- 
-//    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
- //     const extractedHashtags = text.match(hashtagRegex);
+    const [postData, setPostdata] = useState({ "email": newUser.email, "head": "Heading", "content": "Content of the post", "hashtag": "" })
+    const hashtagRegex = /#[a-zA-Z0-9_]+/g;
+
+    //    const text="vbcnbvv #ram #sam"// Regular expression to match hashtags
+    //     const extractedHashtags = text.match(hashtagRegex);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleImageUpload= (e) => {
-      setSelectedFile(e.target.files);
-      const file = e.target.files[0];
-      console.log(file)
-      if (file) {
-          const imageUrl = URL.createObjectURL(file[0]);
-          setImage(imageUrl);
-      }
+    const handleImageUpload = (e) => {
+        setSelectedFile(e.target.files);
+        const file = e.target.files[0];
+        console.log(file)
+        if (file) {
+            const imageUrl = URL.createObjectURL(file[0]);
+            setImage(imageUrl);
+        }
     };
     function handleChange(e) {
 
         const newText = e.target.value; // Use innerText instead of textContent
         console.log(newText);
-console.log(postData.content.match(hashtagRegex))
-const extractedHashtags = postData.content.match(hashtagRegex);
-setPostdata(old=>{
-    return(
-        {
-            ...old,
-            "hashtag":extractedHashtags
-        }
-    )
-})
+        console.log(postData.content.match(hashtagRegex))
+        const extractedHashtags = postData.content.match(hashtagRegex);
+        setPostdata(old => {
+            return (
+                {
+                    ...old,
+                    "hashtag": extractedHashtags
+                }
+            )
+        })
         setPostdata((old) => {
             return {
                 ...old,
@@ -43,41 +43,41 @@ setPostdata(old=>{
         console.log(postData);
     }
 
-   
+
 
 
 
 
     const handleUpload = () => {
         if (!selectedFile) {
-          alert('Please select a file to upload.');
-          return;
+            alert('Please select a file to upload.');
+            return;
         }
- 
-        const text=postData.content// Regular expression to match hashtags
-      
+
+        const text = postData.content// Regular expression to match hashtags
+
         const formData = new FormData();
         for (const file of selectedFile) {
-          formData.append('files', file);
+            formData.append('files', file);
         }
-    
-        formData.append('json',JSON.stringify(postData))
-    console.log(formData)
+
+        formData.append('json', JSON.stringify(postData))
+        console.log(formData)
         axios
-          .post('/upload/multiple', formData,postData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then((response) => {
-            console.log('File uploaded successfully:', response.data);
-            // Add any further processing or UI updates here
-          })
-          .catch((error) => {
-            console.error('File upload failed:', error);
-            // Handle errors and display an error message to the user
-          });
-      };
+            .post('/upload/multiple', formData, postData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then((response) => {
+                console.log('File uploaded successfully:', response.data);
+                // Add any further processing or UI updates here
+            })
+            .catch((error) => {
+                console.error('File upload failed:', error);
+                // Handle errors and display an error message to the user
+            });
+    };
 
 
 
@@ -117,28 +117,28 @@ setPostdata(old=>{
                                     </ul>
                                 </div>
                                 <h3 className="text-2xl lg:text-3xl font-bold leading-tight mb-2">
-                                    <input name="head" onChange={handleChange} className="hover:text-gray-900 transition duration-150 ease-in-out" href="#0"/>
+                                    <input name="head" onChange={handleChange} className="hover:text-gray-900 transition duration-150 ease-in-out" href="#0" />
                                 </h3>
                             </header><br />
                             <textarea name="content" onChange={handleChange} className="text-lg bg-gray-100 text-gray-900 flex-grow">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.</textarea>
-                            <button onClick={handleUpload}className='bg-green-200'>UPLOAD</button>
+                            <button onClick={handleUpload} className='bg-green-200'>UPLOAD</button>
                             <footer className="flex items-center mt-4">
-                                
+
                                 <a href="#0">
-                                    <img className="rounded-full flex-shrink-0 mr-4" src="https://preview.cruip.com/open-pro/images/news-author-04.jpg" width={40} height={40} alt="Author 04"/> 
+                                    <img className="rounded-full flex-shrink-0 mr-4" src="https://preview.cruip.com/open-pro/images/news-author-04.jpg" width={40} height={40} alt="Author 04" />
                                 </a>
                                 <div>
                                     <a className="font-medium text-gray-200 hover:text-gray-100 transition duration-150 ease-in-out" href="#0">Chris Solerieu</a>
                                     <span className="text-gray-700"> - </span>
                                     <span className="text-gray-500">Jan 19, 2020</span>
                                 </div>
-                                
+
                             </footer>
                         </div>
                     </article>
                 </div>
             </section>
-            
+
             {/* More components */}
             {/* <div x-show="open" className="fixed bottom-0 right-0 w-full md:bottom-8 md:right-12 md:w-auto z-60" x-data="{ open: true }">
                 <div className="bg-gray-800 text-gray-50 text-sm p-3 md:rounded shadow-lg flex justify-between">

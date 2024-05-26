@@ -39,11 +39,12 @@ import Projects from "./Projects";
 import Addproject from "./Addproject";
 import App from "./Video";
 import Google1 from "./Google1";
+import Connections1 from "./Connections1";
+import Skills from "./Skills";
+import Skills1 from './Skills1.js'
 export default function Container1(){
     const {sh,setSh}=useContext(User)
     return(<>
-    
-
 
    { sh&&<NotifiButton/>}
 
@@ -52,7 +53,9 @@ export default function Container1(){
       
           <Route path="/post1/:id" element={<>            
      <SinglePost/></>} />
-        
+           
+         <Route path="/connection/:email" element={<><Connections1/></>}/> 
+
           <Route path="/" element={<><Dashboard/></>} />
           <Route path="/chat/:id" element={<><Chat/></>} />
           <Route path="/chatr/:id" element={<><ChatR/></>} />
@@ -65,6 +68,7 @@ export default function Container1(){
           <Route path="/particularpost/:email" element={<><ParticularPost/></>} />
           <Route path="/particularjob/:email" element={<><ParticularJob/></>} />
           <Route path="/education/:email" element={<><Education/></>} />
+          <Route path="/skills/:email" element={<><Skills1/></>} />
           <Route path="/addeducation/:email" element={<><AddEducation/></>} />
           <Route path="/projects/:email" element={<><Projects/></>} />
           <Route path="/addproject/:email" element={<><Addproject/></>} />

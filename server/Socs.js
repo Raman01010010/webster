@@ -16,7 +16,7 @@ function splitStringByUnderscore(str) {
 const myMap = new Map();
 const myMap1 = new Map();
 const myMap2 = new Map();
-function initSocket(server) {
+function initSocket(server) { 
   io = new Server(server, {
     cors: {
       origin: allowedOrigin
@@ -46,7 +46,7 @@ function initSocket(server) {
       console.log("cnxnm")
 
       //const user = activateUser(socket.id, name, room)
-console.log(name,socket.id)
+    console.log(name,socket.id)
       // Cannot update previous room users list until after the state update in activate user 
       myMap1.set(name,socket.id);
       myMap2.set(socket.id,name);
