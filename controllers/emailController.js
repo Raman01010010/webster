@@ -14,7 +14,7 @@ const sendEmail = async (subjects, message, send_to, send_from, reply_to) => {
     },
   });
   const options = {
-    from: "collegeconnect121@gmail.com",
+    from: "20223177.gdscmnnit.24@gmail.com",
     to: send_to,
     replyTo: reply_to,
     subject: "One time password for Connexa is",
