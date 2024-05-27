@@ -94,7 +94,7 @@ router.get('/', async function (req, res, next) {
     console.log(r1)
    // res.cookie('gwt',oAuth2Client.credentials.access_token , { maxAge: 900000, httpOnly: true }); // Adjust options as needed
    res.cookie('jwt',r1, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
-   res.redirect(303, `connxa.netlify.app/post/`);
+   res.redirect(303, `https://connxa.netlify.app/post/`);
    
   } catch (err) {
     console.log('Error logging in with OAuth2 user', err);
