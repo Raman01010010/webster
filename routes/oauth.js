@@ -10,10 +10,10 @@ const User = require('../model/User');
 
 /* GET users listing. */
 router.post('/', async function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'http://127.0.0.1:3000');
+  res.header("Access-Control-Allow-Origin", 'https://connxa.netlify.app');
   res.header("Access-Control-Allow-Credentials", 'true');
   res.header("Referrer-Policy","no-referrer-when-downgrade");
-  const redirectURL = 'http://127.0.0.1:3500/oauth';
+  const redirectURL = 'https://r-m-n.azurewebsites.net/oauth';
 
   const oAuth2Client = new OAuth2Client(
     process.env.CLIENT_ID,

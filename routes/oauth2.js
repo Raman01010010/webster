@@ -67,7 +67,7 @@ router.get('/', async function (req, res, next) {
 
   console.log(code);
   try {
-    const redirectURL = "http://127.0.0.1:3500/oauth"
+    const redirectURL = "https://r-m-n.azurewebsites.net/oauth"
     const oAuth2Client = new OAuth2Client(
       process.env.CLIENT_ID,
       process.env.CLIENT_SECRET,
@@ -94,7 +94,7 @@ router.get('/', async function (req, res, next) {
     console.log(r1)
    // res.cookie('gwt',oAuth2Client.credentials.access_token , { maxAge: 900000, httpOnly: true }); // Adjust options as needed
    res.cookie('jwt',r1, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
-   res.redirect(303, `http://127.0.0.1:3000/post/`);
+   res.redirect(303, `connxa.netlify.app/post/`);
    
   } catch (err) {
     console.log('Error logging in with OAuth2 user', err);
