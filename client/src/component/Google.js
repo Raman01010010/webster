@@ -8,7 +8,7 @@ function navigate(url){
 }
 
 async function auth(){
-  const response =await fetch('http://localhost:3500/google',{method:'post'});
+  const response =await fetch('https://r-m-n.azurewebsites.net/google',{method:'post'});
 
   const data = await response.json();
   console.log(data);
