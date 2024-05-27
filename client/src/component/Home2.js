@@ -9,6 +9,7 @@ import 'animate.css/animate.css';
 import { useInView } from 'react-intersection-observer';
 import About from "./AboutUs"
 import Footer from "./Footer"
+import Google from './Google';
 const Home2 = () => {
   const pageStyle = {
     background: '#212534',
@@ -87,7 +88,10 @@ const [thresholdRange5, thresholdRange6] = [600, 900];
               <button className="border border-green-500 hover:bg-green-500 hover:text-white text-green-500 font-bold py-2 px-4 rounded">
                 Sign Up
               </button>
+
             </Link>
+            <div className='mt-5'>            <Google/></div>
+
           </div>
           <div className="space-y-8">
             <motion.div className="flex items-center p-4 animate__animated animate__fadeInRight ">

@@ -2,7 +2,7 @@
 
 //import googleButton from './assets/google_signin_buttons/web/1x/btn_google_signin_dark_pressed_web.png'
 //import './App.css'
-
+import GoogleIcon from '@mui/icons-material/Google';
 function navigate(url){
   window.location.href = url;
 }
@@ -24,7 +24,7 @@ function Google() {
     <>
 
 <button className="bg-blue-500 text-white h-10"  type="button" onClick={()=> auth()}>
-           Sign In with Google
+          <GoogleIcon  sx={{fontSize:40}}/> Sign In with Google
             </button>
     </>
   )
