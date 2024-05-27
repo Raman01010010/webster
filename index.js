@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credential");
 const { initSocket } = require("./Socs");
 
-const PORT = 3500;
+const PORT =process.env.PORT|| 3500;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
 connectDB();
