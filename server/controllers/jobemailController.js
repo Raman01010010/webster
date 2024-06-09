@@ -26,8 +26,6 @@ const sendEmail = async (subject, message, send_to, send_from, reply_to) => {
                 <p>you have posted a new job!</p>
                 <p>${message}</p>`
         };
-    
-
     transporter.sendMail(options, function (err, info) {
         if (err) {
             console.log("Error sending email", err);
