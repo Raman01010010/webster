@@ -121,7 +121,6 @@ export default function AllPost() {
         if (it._id === item._id) {
           // Check if the user has already reacted with the same emoji
           const existingReactionIndex = it.react.findIndex(reaction => reaction.by === newUser.email && reaction.emoji === key);
-    
           if (existingReactionIndex !== -1) {
             // Remove the existing reaction if found
             const updatedReactions = [...it.react];
@@ -145,12 +144,7 @@ export default function AllPost() {
         return it;
       });
     });
-    
-    
-    
-    
     console.log(updatedLike);
-
     const res = await axiosPrivate.post("/post/react", updatedLike);
     console.log(res);
   }

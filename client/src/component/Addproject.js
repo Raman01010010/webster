@@ -5,7 +5,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { User } from "../context/User";
-
 const Addproject = () => {
     const { email } = useParams();
     const axiosPrivate = useAxiosPrivate();

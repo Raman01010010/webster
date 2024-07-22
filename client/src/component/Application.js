@@ -2,18 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 import {
-  
   Typography,
   Button,
-
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   IconButton,
-} from "@mui/material";
+}from "@mui/material";
+
 import Fab from "@mui/material/Fab";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -29,7 +27,6 @@ const skillsList = [
   'Java',
   'C++',
   'Kotlin',
-  // Add more skills here
 ];
 const englishlevel=[
   'Conversational',
@@ -39,19 +36,16 @@ const englishlevel=[
 const Application = () => {
   const { jobId } = useParams();
   const [myapp, setMyapp] = useState([]);
-
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
   const [data,setData]=useState({
     skill:[],
     english:[],
     jobid: jobId
-
   })
   const [maxHeight, setMaxHeight] = useState(10);
   useEffect(() => {
     const fetchData = async () => {
       try {
-       
         const response = await axios.post("/job/app", data);
         setMyapp(response.data);
       } catch (error) {
@@ -63,7 +57,7 @@ const Application = () => {
 
   useEffect(() => {
     // Calculate the maximum height among all cards
-    const maxCardHeight = Math.max(
+    const maxCardHeight = Math.max (
       ...myapp.map((applicant) => {
         const cardHeight = document.getElementById(
           `card-${applicant._id}`
@@ -73,15 +67,12 @@ const Application = () => {
     );
     setMaxHeight(maxCardHeight);
   }, [myapp]);
-
   const [showResume, setShowResume] = useState(false);
-
   const handleShowResume = () => {
     setShowResume((prevShowResume) => !prevShowResume);
   };
   const PostJob = async () => {
     try {
-    
       const response = await axios.post("/job/app", data);
       setMyapp(response.data);
     } catch (error) {
@@ -95,7 +86,6 @@ const Application = () => {
     setOpenFilterDialog(false);
     try {
       await PostJob(); // Wait for the job to be posted
-
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to post job or send email. Please try again.");
@@ -306,5 +296,4 @@ const Application = () => {
     </>
   );
 };
-
 export default Application;

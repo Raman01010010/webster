@@ -7,9 +7,8 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const AddEducation = () => {
   const currentYear = new Date().getFullYear();
-
   const { email } = useParams();
-  const axiosPrivate=useAxiosPrivate()
+  const axiosPrivate=useAxiosPrivate();
   const [institute, setInstitute] = useState('');
   const [degree, setDegree] = useState('');
   const [year, setYear] = useState('');
@@ -21,11 +20,9 @@ const AddEducation = () => {
       year: year,
       email: email,
     };
-
     try {
       const res = await axiosPrivate.post("/connect/addeducation", educationData);
       console.log(res.data);
-
       // Show success toast
       toast.success('Education added successfully', {
         position: 'top-right',
@@ -48,7 +45,6 @@ const AddEducation = () => {
       });
     }
   };
-
   return (
     <div>
       <section className="text-gray-600 body-font">
