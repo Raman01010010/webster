@@ -4,6 +4,7 @@ import React from "react"
 import { useNavigate } from 'react-router-dom';
 import Loader from "./Loader";
 import { addClient, addUser, verifyOtp } from "../api/api"
+import { ToastContainer, toast } from "react-toastify";
 export default function Otp(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -26,10 +27,13 @@ setLoad(1)
 setLoad(0)
    if(res?.response?.status===401||res?.response?.status===404){
     setStat(res?.response?.data)
+    toast(res.response.data)
    }else
-   if(res.status===201||res.status===202){
+   if(res.status===200||res.status===201||res.status===202){
+    toast('OTP Verified! Please sign in...')
     console.log("success")
-navigate('../signin')
+    setTimeout(() => { navigate('/signin')}, 2000);
+
   }}
   async function  handleChange(event){
     console.log(newUser)
@@ -85,9 +89,11 @@ navigate('../signin')
       </button>
       {load&&<Loader/>}
       {stat}
-      <p className="text-xs mt-3">
-        Literally you probably haven't heard of them jean shorts.
+      <p className="text-l mt-3">
+     OTP wille expire within 10 minutes.
+     Please check you spam folder also.
       </p>
+      <ToastContainer/>
     </div>
   </div>
 </section>

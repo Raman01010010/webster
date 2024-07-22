@@ -3,6 +3,8 @@ import React, { useState, useContext } from 'react';
 import { User } from '../context/User';
 import { useDropzone } from 'react-dropzone';
 import Loader from "./Loader";
+import { LinearProgress,Box } from '@mui/material';
+import { ToastContainer ,toast} from 'react-toastify';
 const PostForm = () => {
   const [load, setLoad] = React.useState(0)
   const [stat, setStat] = React.useState('')
@@ -72,6 +74,7 @@ const PostForm = () => {
         },
       })
       .then((response) => {
+        toast("Post Uploaded Successfully")
         console.log('File uploaded successfully:', response.data);
         // Add any further processing or UI updates here
       })
@@ -81,6 +84,7 @@ const PostForm = () => {
         // Handle errors and display an error message to the user
       });
     setLoad(0)
+    setPostdata({ "email": newUser.email, "head": "", "content": "", "hashtag": "" })
     console.log(res) 
   };
   const onDrop = (acceptedFiles) => {
@@ -94,7 +98,8 @@ const PostForm = () => {
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow-md">
+    <div className='h-[100vh]'>
+    <div className="max-w-md mx-auto p-4  bg-[#7BC9FF] rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create a Post</h2>
       <form>
         <div className="mb-4">
@@ -155,15 +160,20 @@ const PostForm = () => {
           ))}
         </div>
         <div>{stat}</div>
-        <button
-          onClick={handleUpload}
-          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
-        >
-          Post  
-        </button>
-        {load && <Loader />}
-      
+       
+        {load==1?
+           
+              <LinearProgress color="secondary" sx={{ height: '5vh' }} />
+            
+          :<button  onClick={handleUpload} className="text-white w-[100%] bg-[#1C1678] border-0  focus:outline-none hover:bg-green-600 rounded text-lg">
+         Upload Post
+
+          </button>
+
+         } 
+    <ToastContainer />
       </form>
+    </div>
     </div>
   );
 };

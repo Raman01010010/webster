@@ -7,6 +7,7 @@ import { addClient, addUser, getEmp, verifyUser } from "../api/api"
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Loader from "./Loader";
 import Google from "./Google";
+import { ToastContainer,toast } from "react-toastify";
 export default function Signin(){
   const [col,setCol]=React.useState('gray')
   const {newUser,setNewUser}=useContext(User)
@@ -30,17 +31,26 @@ const axiosPrivate=useAxiosPrivate()
    setLoad(0)
    console.log(res)
    //setStat(res.response.)
-   if(res?.response?.status===401){
+   if(res?.response?.status===400||res?.response?.status===401||res?.response?.status===403||res?.response?.status===404||res?.response?.status===500){
     setStat('Error Credentials')
     console.log("cbxnbznvbnbv")
+    console.log(res.response.data.message)
+    toast(res.response.data.message)
         }
    if(res.status==200||res.status==201||res.status==202){
+    toast('Login Success! Redirecting...')
     console.log(res)
     const accessToken = res?.data?.accessToken;
             const roles = res?.data?.roles;
             const tm=res?.data
             setNewUser({ "email":login.email,"pwd":login.pwd,roles, accessToken,"picture":tm?.picture,'username':tm.username,'userid':tm.userid });
-    navigate('/post')}
+            setTimeout(() => {
+              navigate('/post')
+            }, 2000);
+           
+         }else{
+          toast(res.response.data)
+         }
   
   }
   
@@ -109,11 +119,14 @@ const axiosPrivate=useAxiosPrivate()
       <button onClick={handleSubmit}className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
         Sign In
       </button>
-      {load&&<Loader/>}
-      <div>{stat}</div>
       
+      {load===1&&<Loader/>}
+      <div>{stat}</div>
+      <ToastContainer />
       <Google/>
-     
+      <p className="text-l mt-3">
+       Please wait while we let you in!!
+      </p>
     </div>
   </div>
 </section>
