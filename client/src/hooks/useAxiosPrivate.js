@@ -8,7 +8,7 @@ const useAxiosPrivate = () => {
     const { auth } = useAuth()
 
     const { newUser, setNewUser } = React.useContext(User)
-
+    
     console.log(newUser)
     React.useEffect(() => {
         const requestInterceptor = axiosPrivate.interceptors.request.use(

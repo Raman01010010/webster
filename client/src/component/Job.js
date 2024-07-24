@@ -40,7 +40,6 @@ const steps = [
 ];
 export default function Job() {
   const [loading, setLoading] = useState(false);
-
   const { jobId } = useParams();
   const { newUser } = useContext(User);
   const userid=newUser.userid;
@@ -54,14 +53,11 @@ export default function Job() {
     resume: "",
     skill:[],
     additionalQuestions: ["", "", ""],
-    
     location: "",
     jobid:jobId,
     userID: userid, // Set the userID directly here
   });
-  const [isFormComplete, setIsFormComplete] = useState(false);
-  // console.log(jobId)
-   
+  const [isFormComplete, setIsFormComplete] = useState(false);   
   const checkFormCompletion = () => {
     // Replace these conditions with your actual form validation logic
     const isStep1Complete =

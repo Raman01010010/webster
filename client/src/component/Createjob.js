@@ -74,7 +74,6 @@ export default function Checkout() {
 
 
   const PostJob = async () => {
-
     try {
       const res = await axios.post("/job/create", comp);
       console.log("posting")
@@ -122,7 +121,6 @@ export default function Checkout() {
     if (activeStep === 2) {
       try {
         await PostJob(); // Wait for the job to be posted
-  
         // Once the job is successfully posted, send an email
       } catch (error) {
         console.error('Error:', error);

@@ -12,6 +12,7 @@ import {
   IconButton,
 }from "@mui/material";
 
+
 import Fab from "@mui/material/Fab";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -54,7 +55,6 @@ const Application = () => {
     };
     fetchData();
   }, [jobId]);
-
   useEffect(() => {
     // Calculate the maximum height among all cards
     const maxCardHeight = Math.max (

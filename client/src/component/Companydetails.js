@@ -25,7 +25,6 @@ export default function Companydetails() {
 /////
   const updateLocationSuggestions = async (query) => {
     const apiKey = "55810e9a0db5484fae278428320f9add";
-
     try {
       const response = await fetch(
         `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
@@ -35,14 +34,12 @@ export default function Companydetails() {
 
       if (response.ok) {
         const data = await response.json();
-
         if (data.results && data.results.length > 0) {
           const suggestions = data.results.map((result) => ({
             formatted: result.formatted,
             // You can include additional information from the API response if needed
             // For example: latitude: result.geometry.lat, longitude: result.geometry.lng
           }));
-
           setLocationSuggestions(suggestions);
         } else {
           setLocationSuggestions([]);
@@ -89,10 +86,8 @@ export default function Companydetails() {
   const handleMobileNumberChange = (event) => {
     const newMobileNumber = event.target.value;
     setMobileNumber(newMobileNumber);
-
     // Regular expression for a 10-digit mobile number (you can adjust it based on your needs)
     const mobileNumberRegex = /^[0-9]{10}$/;
-
     // Check if the entered mobile number matches the regex pattern
     setIsValid(mobileNumberRegex.test(newMobileNumber));
   };
@@ -289,7 +284,7 @@ export default function Companydetails() {
               <DatePicker
                 label="Date Picker"
                 format="M/D/YYYY"
-                defaultValue={dayjs(comp.lastdate)} // Convert the date to a Day.js object
+                defaultValue={dayjs(comp.lastdate)}  // Convert the date to a Day.js object
                 slotProps={{ field: { shouldRespectLeadingZeros: true } }}
                 value={dayjs(comp.lastdate)} // Convert the date to a Day.js object
                 onChange={(newDate) => {

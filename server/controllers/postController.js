@@ -105,24 +105,26 @@ const react = async (req, res) => {
       });
     // Check if 'id' is provided in the request body
     const id = req.body?.id;
-
     if (!id) {
       return res.status(400).send("Blank"); // 400 Bad Request
     }
-
     // Assuming you have a 'Post' model for MongoDB
     const upd = await post.findByIdAndUpdate(
       id,
       { $push: { react: req.body.react } },
       { new: true }
     );
-
     // console.log(upd);
-
     if (!upd) {
       return res.status(404).send("Post not found"); // 404 Not Found
     }
 
+
+
+
+
+
+    
     res.status(201).send("Success"); // 201 Created
   } catch (error) {
     console.error(error);
