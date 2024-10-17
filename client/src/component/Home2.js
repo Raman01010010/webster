@@ -93,7 +93,7 @@ const [thresholdRange5, thresholdRange6] = [600, 900];
             <div className='mt-5'>            <Google/></div>
 
           </div>
-          <div className="space-y-8">
+          {/* <div className="space-y-8">
             <motion.div className="flex items-center p-4 animate__animated animate__fadeInRight ">
               <motion.img
                 ref={ref1}
@@ -144,13 +144,13 @@ const [thresholdRange5, thresholdRange6] = [600, 900];
 </p>
               </div>
             </motion.div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Element>
    
     <div style={{ padding: '10vh' }}>
-  <About />
+  {/* <About /> */}
 </div>
 <div style={{ padding: '10vh' }}>
   <Footer />

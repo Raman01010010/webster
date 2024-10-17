@@ -135,7 +135,7 @@ const Footer = () => {
     <div>
           <style>{styles}</style>
 
-      <footer className="footer">
+      {/* <footer className="footer">
   <div className="waves">
     <div className="wave" id="wave1" />
     <div className="wave" id="wave2" />
@@ -192,7 +192,7 @@ const Footer = () => {
     </li>
   </ul>
   <p>©{new Date().getFullYear()} Connexa | All Rights Reserved</p>
-</footer>
+</footer> */}
      
     </div>
   )
